@@ -1,0 +1,98 @@
+$primary-color: #4d5fff;
+$primary-color-lighter:rgb(132, 144, 253);
+$secondary-color: #ffcd1f;
+$secondary-color-hover: #ffda54;
+$secondary-color-darker: #ffc003;
+$border-color: #cbcbcb;
+$bg-color-grey: #e9e9e9;
+$bg-color-primary: #f6f7fb;
+$text-color: #282e3e;
+$white-color: #ffffff;
+$text-color-blur: #677788;
+$test-page-cl: #4c4c4c;
+
+@mixin absoluteType() {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@mixin item() {
+    box-shadow: 0 4px 0 0 rgba(143, 156, 173, .2);
+    border: 1px solid #e0e0e0;
+    border-radius: 0.65rem;
+    padding: 1rem;
+    font-size: .9rem;
+    position: relative;
+    padding-bottom: 3.6rem;
+    transition: all 0.3s;
+
+    &>a.hidden {
+        display: block;
+        width: 100%;
+        height: 100%;
+        @include absoluteType;
+    }
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+        transform: translateY(-.1rem);
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    span {
+        font-weight: 600;
+        color: $text-color-blur;
+        line-height: 1.6;
+
+        i {
+            margin-right: 6px;
+        }
+    }
+
+    a.do {
+        text-align: center;
+        margin-top: 20px;
+        border: 0.5px solid $primary-color;
+        background-color: transparent;
+        padding: 0.6rem 0.75rem;
+        font-size: 1rem;
+        border-radius: 0.35rem;
+        color: $primary-color;
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        transition: all 0.2s;
+
+        &:hover {
+            color: $white-color;
+            background-color: $primary-color;
+        }
+    }
+
+    .tag {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 12px;
+        border-radius: 15px;
+        text-align: left;
+        background-color: #f0f8ff;
+        padding: 0.2rem 0.4rem;
+        color: #35509a;
+    }
+}
+
+@mixin fishTail($color, $position1, $position2) {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-#{$position2}: 50px solid $secondary-color;
+    border-#{$position1}: 50px solid transparent;
+    #{$position2}: 0;
+    #{$position1}: -50px;
+}

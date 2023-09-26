@@ -1,0 +1,178 @@
+@import "reset";
+@import "config";
+
+.lv {
+    padding-top: 50px;
+    &__wrapper {
+        width: 1080px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+        margin-bottom: 1.8rem;
+    }
+
+    &__content {
+        display: flex;
+
+        &--left {
+            flex: 5 5 0;
+
+
+            .search--control {
+                position: relative;
+                width: 88%;
+            }
+
+            .search--box {
+                display: block;
+                border: 1px solid $border-color;
+                overflow: hidden;
+                border-radius: 0.4rem;
+                
+                input {
+                    padding: 0.65rem 1rem;
+                    font-size: 1rem;
+                    width: 100%;
+                }
+
+                i {
+                    position: absolute;
+                    right: 0.8rem;
+                    line-height: 40px;
+                    font-weight: bolder;
+                }
+            }
+
+            button {
+                float: right;
+                margin-top: 20px;
+                color: #fff;
+                background-color: $primary-color;
+                border-color: $primary-color;
+                padding: 0.45rem 0.8rem;
+                font-size: 1rem;
+                cursor: pointer;
+                border-radius: 0.4rem;
+            }
+        }
+
+        &--right {
+            flex: 2 2 0;
+
+            .profile {
+                text-align: center;
+                width: 80%;
+                padding: 0.9rem;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                border-radius: 0.4rem;
+                margin-left: auto;
+
+                img {
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    border-radius: 50%;
+                    margin-bottom: 10px;
+                }
+
+                .name {
+                    font-size: 1.1rem;
+                    padding-bottom: 0.3rem;
+                }
+
+                .note {
+                    font-size: 0.9rem;
+                    color: $text-color-blur;
+                }
+
+                .divide {
+                    margin: 0.6rem auto;
+                    border: 0.5px solid $border-color;
+                }
+
+                .statistic {
+                    border: 1px solid $primary-color;
+                    background-color: #e8f2ff;
+                    padding: 0.4rem 0.7rem;
+                    font-size: .875rem;
+                    line-height: 1.5;
+                    border-radius: 20px;
+                    margin-top: 0.5rem;
+                    display: inline-block;
+                    width: 100%;
+                    font-weight: 600;
+                    transition: 0.2s;
+
+                    &:hover {
+                        background-color: $primary-color;
+                        color: $white-color;
+                    }
+                }
+            }
+        }
+    }
+
+    &__main {
+        margin-top: 30px;
+
+        &--navtab {
+            display: flex;
+            border-bottom: solid 1px $border-color;
+
+            a {
+                padding: 1rem 0.7rem;
+                color: $text-color-blur;
+                font-weight: 600;
+                display: inline-block;
+                font-size: 1.1rem;
+
+                &.active {
+                    color: $primary-color;
+                    border-bottom: solid 3px $primary-color;
+                }
+
+                &:hover {
+                    color: $primary-color;
+                    border-bottom: solid 3px $primary-color;
+                }
+            }
+        }
+
+        &--row {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+
+            .row__left {
+                flex: 7 7 0;
+                display: grid;
+                grid-template-columns: repeat(4, 25%);
+
+                &--column {
+                    width: 94%;
+                    @include item();
+                    margin-top: 18px;
+                }
+            }
+
+            .row__right {
+                flex: 2 2 0;
+                margin-top: 8px;
+
+                &--imgs {
+                    margin-left: auto;
+                    width: 220px;
+                    height: 100px;
+                }
+
+                img {
+                    width: 220px;
+                    height: 100px;
+                    margin-top: 10px;
+                    cursor: text;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.banner {
+    position: relative;
+    background: url(../imgs/banner.png) no-repeat top / contain;
+    height: 540px;
+
+    &__contents {
+        transition: all 0.2s;
+        position: absolute;
+        top: 38%;
+        left: 10%;
+        width: 60%;
+        color: $white-color;
+    }
+
+    &__title {
+        font-size: 2.75rem;
+    }
+
+    &__paragraph {
+        font-size: 1.2rem;
+        margin: 10px 0;
+        line-height: 1.8rem;
+    }
+
+    &__input {
+        width: 100%;
+        position: relative;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        margin-top: 2.5rem;
+
+        input, button {
+            padding: 1rem 1rem;
+            font-size: 1.1rem;
+        }
+
+        input {
+            width: 100%;
+            padding-right: 10rem;
+        }
+
+        button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: $white-color;
+            background-color: $secondary-color-darker;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    }
+}

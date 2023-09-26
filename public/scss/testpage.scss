@@ -1,0 +1,149 @@
+@import "reset";
+@import "config";
+
+.dotest {
+    margin-top: 1.6rem;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    
+    .ribbon {
+        font-weight: lighter;
+        text-align: center;
+        font-size: 2.2rem;
+        text-transform: uppercase;
+        padding: 1.5rem 2rem;
+        display: inline-block;
+        // background-color: $bg-color-grey
+        background: $secondary-color;
+        color: $test-page-cl;
+        position: relative;
+
+        .lt-tail {
+            @include fishTail($secondary-color, left, top);
+        }
+
+        .lb-tail {
+            @include fishTail($secondary-color, left, bottom);
+        }
+
+        .rt-tail {
+            @include fishTail($secondary-color, right, top);
+        }
+
+        .rb-tail {
+            @include fishTail($secondary-color, right, bottom);
+        }
+    }
+
+    &__container {
+        text-align: center;
+        margin: 0 auto;
+        width: 1080px;
+        
+        &--title {
+            font-weight: lighter;
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 2rem;
+            padding-bottom: 0.7rem;
+            position: relative;
+    
+            &::after {
+                content: "";
+                height: 2px;
+                width: 30%;
+                position: absolute;
+                background-color: $test-page-cl;
+                bottom: 0;
+                left: 40%;
+            }
+        }
+    
+        &--info {
+            margin-top: 30px;
+            display: flex;
+            text-align: left;
+            color: $test-page-cl;
+    
+            .rules--test {
+                flex: 7 7 0;
+                line-height: 1.6;
+                list-style: square inside;
+            }
+    
+            .time--test {
+                flex: 3 3 0;
+                font-size: 1.4rem;
+                text-align: center;
+                position: relative;
+    
+                .down {
+                    font-size: 1.8rem;
+                }
+
+                .start--btn button {
+                    position: absolute;
+                    bottom: 0;
+                    padding: 0.4rem 1rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    background-color: $secondary-color-darker;
+                }
+            }
+        }
+    
+        &--boxquest {
+            margin-top: 4rem;
+            text-align: left;
+
+            .number--ques {
+                font-size: 1.1rem;
+            }
+
+            .ques {
+                padding-top: 0.9rem;
+                padding-bottom: 0.7rem;
+            }
+
+            .anwser--item {
+                margin-top: 0.9rem;
+            }
+
+            .answer {
+                display: flex;
+                width: 100%;
+                border: 2px solid $bg-color-grey;
+                border-radius: 6px;
+                padding: 1rem 1.4rem;
+
+                &:has(input:focus) {
+                    border: 2px solid $primary-color;
+                }
+
+                input {
+                    margin-right: 1.4rem;
+                }
+            }
+
+            .move--ques {
+                padding: .8rem;
+                border-radius: 20px;
+                border: none;
+                outline: none;
+                background-color: $primary-color;
+                color: $white-color;
+                margin: 1.8rem 0;
+                cursor: pointer;
+                transition: 0.2s;
+
+                &:hover {
+                    background-color: $primary-color-lighter;  
+                }
+
+                &.next {
+                    float: right;
+                }
+            }
+        }
+    }
+}
