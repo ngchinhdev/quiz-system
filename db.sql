@@ -55,7 +55,7 @@ create table lich_su_lam_bai(
     ma_lich_su int(10) primary key not null AUTO_INCREMENT,
     thoi_gian_lam int(10) not null,
     thoi_diem timestamp default current_timestamp(),
-    diem_so int(2) not null,
+    diem_so float not null,
     ma_nguoi_dung int(10) not null,
     ma_de int(5) not null,
     foreign key (ma_nguoi_dung) references nguoi_dung(ma_nguoi_dung),
@@ -63,7 +63,7 @@ create table lich_su_lam_bai(
 );
 
 create table dap_an_chon(
-    id int(10) primary key AUTO_INCREMENT,
+    ma_dap_an_chon int(10) primary key AUTO_INCREMENT,
     dap_an_chon int(1) not null,
     ma_lich_su int(10) not null,
     ma_cau_hoi int(10) not null,

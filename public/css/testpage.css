@@ -157,13 +157,12 @@ input {
   margin-right: 1.4rem;
 }
 .dotest__container--boxquest .move--ques {
-  padding: 0.8rem;
+  display: inline-block;
+  padding: 0.6rem 1rem;
   border-radius: 20px;
-  border: none;
-  outline: none;
   background-color: #4d5fff;
   color: #ffffff;
-  margin: 1.8rem 0;
+  margin: 1.4rem 0;
   cursor: pointer;
   transition: 0.2s;
 }

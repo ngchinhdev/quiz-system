@@ -19,8 +19,5 @@ subNav.addEventListener('mouseover', function (e) {
 
     navLevelLinks.forEach((l, i) => {
         l.href = link[i];
-        console.log(dataLink);
     });
-    console.log(navLevelLinks);
-
 })

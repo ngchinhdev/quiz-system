@@ -4,10 +4,10 @@
         "exam" => "đề thi",
         "vocab" => "từ vựng",
         "grammar" => "ngữ pháp",
-        "listening" => "kỹ năng nghe",
-        "reading" => "đọc hiểu",
+        "listening" => "nghe",
+        "reading" => "đọc",
         "easy" => "dễ",
         "medium" => "trung bình",
-        "advance" => "nâng cao"
+        "advance" => "khó"
     )
 ?>
