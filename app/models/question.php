@@ -67,5 +67,14 @@
 
             return $data['cau_hoi'];
         }
+
+        public function getAudiosData($question_id) {
+            $sql = "SELECT duong_dan from am_thanh WHERE ma_cau_hoi = $question_id";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+
+            return $data['duong_dan'];
+        }
     }
 ?>

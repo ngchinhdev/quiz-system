@@ -140,6 +140,20 @@ input {
   padding-top: 0.9rem;
   padding-bottom: 0.7rem;
 }
+.dotest__container--boxquest .ques span:first-child {
+  margin-right: 20px;
+}
+.dotest__container--boxquest .ques .audio--btn::after {
+  background-size: 26px 26px;
+  content: "";
+  vertical-align: middle;
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url("../imgs/btnaudio.png");
+  cursor: pointer;
+}
 .dotest__container--boxquest .anwser--item {
   margin-top: 0.9rem;
 }

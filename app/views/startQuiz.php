@@ -30,7 +30,14 @@
                 <strong><?= $order ?></strong> trên <strong><?= $questions_quantity ?></strong>
             </div>
             <div class="ques">
-                <?= $question_data[0]['cau_hoi'] ?>
+                <span><?= $question_data[0]['cau_hoi'] ?></span>
+                <?php 
+                    if(isset($audio_link)) {
+                        echo '<span class="audio--btn">
+                                <a href="../../public/audios/'.$audio_link.'"></a>
+                            </span>';
+                    }
+                ?>
             </div>
             <ul class="anwsers--box">
                 <?php foreach($question_data as $index => $anwser) { ?>

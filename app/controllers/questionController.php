@@ -18,6 +18,10 @@
 
     $question_data = $question->getCurQuestionData($cur_question_number, $id_exam);
 
+    if(isset($_GET['topic']) && $_GET['topic'] === 'listening') {
+        $audio_link = $question->getAudiosData($cur_question_number);
+    }
+
     $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
     $next_question = $order > $question->getNextQuestionData($cur_question_number, $id_exam) ?

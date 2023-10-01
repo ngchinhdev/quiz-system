@@ -18,7 +18,7 @@
 
         function getTotalRecords($bo_de, $cap_do) {
             $sql = "SELECT COUNT(*) AS so_de FROM de WHERE
-                                de.loai = 0 AND de.bo_de = '$bo_de' AND de.cap_do = '$cap_do'";
+                                de.loai = 0 AND de.bo_de LIKE '%$bo_de' AND de.cap_do = '$cap_do'";
             $result = $this->dbConnection->query($sql);
 
             $data = $result->fetch(PDO::FETCH_ASSOC);

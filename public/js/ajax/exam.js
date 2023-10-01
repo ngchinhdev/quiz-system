@@ -12,6 +12,7 @@ function generatePagination(totalPages, activePage) {
                 <a onclick=loadExam(${i}) class="pagi-link" data-active-page=${i}>${i}</a>
             </li>
         `;
+        console.log(1);
     }
 
     paginationContainer.innerHTML = '';
@@ -28,6 +29,7 @@ function generatePagination(totalPages, activePage) {
     if (totalPages > 1) {
         paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
     }
+
 }
 
 function loadExam(page) {
@@ -81,7 +83,10 @@ function loadExam(page) {
             itemContainer.insertAdjacentHTML('afterbegin', html);
 
             generatePagination(totalPages, page);
-        });
+        })
+        .catch(err => {
+            console.log(err.message);
+        }) 
 }
 
 window.loadExam = loadExam;
