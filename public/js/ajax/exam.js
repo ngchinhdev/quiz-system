@@ -1,3 +1,5 @@
+// import { convention } from "../convention.js";
+
 const itemContainer = document.querySelector('.row__left');
 const paginationContainer = document.querySelector('.exams__pagination');
 
@@ -32,20 +34,20 @@ function loadExam(page) {
     const url = window.location.href;
     const subUrl = url.slice(url.indexOf('?'));
 
+    const urlToStart = url.replace('list', 'start');
+
     fetch(`../controllers/examController.php${subUrl}&curpage=${page}`)
         .then(res => res.json())
         .then(data => {
 
             let html = '';
 
-            const { data: dataItem, totalPages } = data;
+            const { data: dataExams, totalPages } = data;
 
-            dataItem.forEach(exam => {
+            dataExams.forEach(exam => {
                 html += `
-                    <div class="row__left--column" data-id=${exam.ma_de}>
-                        <a href="index.php?page=start&type=test&id=1&topic=vocab&level=easy&question=1" 
-                            class="hidden">
-                        </a>
+                    <div class="row__left--column">
+                        <a href="${urlToStart}&id=${exam.ma_de}&question=0&order=1" class="hidden"></a>
                         <div class="above">
                             <h3>${exam.ten_de}</h3>
                             <span>Bộ đề test: ${exam.bo_de}</span>
@@ -82,5 +84,6 @@ function loadExam(page) {
         });
 }
 
+window.loadExam = loadExam;
 
 loadExam(1);

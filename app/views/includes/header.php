@@ -8,7 +8,7 @@
     <?php include_once("../controllers/styleController.php") ?>
     <link rel="stylesheet" href="../../public/css/fontawesome/css/all.css">
     <script defer src="../../main.js"></script>
-    <script defer src="../../public/js/ajax/exam.js"></script>
+    <script defer type="module" src="../../public/js/ajax/exam.js"></script>
     <title>English Test Pro</title>
 </head>
 <body>

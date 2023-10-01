@@ -18,7 +18,7 @@ create table nguoi_dung(
 
 create table phan_hoi(
     ma_phan_hoi int(10) primary key not null AUTO_INCREMENT,
-    noi_dung varchar(200) not null,
+    noi_dung varchar(60000) not null,
     thoi_diem timestamp default current_timestamp(),
     ma_nguoi_dung int(10) not null,
     foreign key (ma_nguoi_dung) references nguoi_dung(ma_nguoi_dung)
@@ -37,16 +37,17 @@ create table de(
 
 create table cau_hoi(
     ma_cau_hoi int(10) primary key not null AUTO_INCREMENT,
-    noi_dung varchar(200) not null,
-    giai_thich varchar(250) not null,
+    noi_dung varchar(60000) not null,
+    am_thanh varchar(200),
+    giai_thich varchar(60000) not null,
     ma_de int(5) not null,
     foreign key (ma_de) references de(ma_de)
 );
 
-create table dap_an(
-    ma_dap_an int(10) primary key not null AUTO_INCREMENT,
-    noi_dung varchar(100) not null,
-    dap_an_dung int(1) not null,
+create table phuong_an(
+    ma_phuong_an int(10) primary key not null AUTO_INCREMENT,
+    noi_dung varchar(1000) not null,
+    phuong_an_dung int(1) not null,
     ma_cau_hoi int(10) not null,
     foreign key (ma_cau_hoi) references cau_hoi(ma_cau_hoi)
 );
@@ -64,9 +65,10 @@ create table lich_su_lam_bai(
 
 create table dap_an_chon(
     ma_dap_an_chon int(10) primary key AUTO_INCREMENT,
-    dap_an_chon int(1) not null,
+    dap_an_chon int(10) not null,
     ma_lich_su int(10) not null,
     ma_cau_hoi int(10) not null,
+    foreign key (dap_an_chon) references phuong_an(ma_phuong_an), 
     foreign key (ma_lich_su) references lich_su_lam_bai(ma_lich_su), 
     foreign key (ma_cau_hoi) references cau_hoi(ma_cau_hoi)
 );

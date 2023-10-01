@@ -1,5 +1,3 @@
-
-
 <section class="dotest">
     <div class="ribbon">
         <div class="lt-tail"></div>
@@ -27,30 +25,15 @@
                 </div>
             </div>
         </div>
-
-        <?php require_once ("../models/question.php");
-            $question = new Question($conn);
-            $data = $question->getQuestions($_GET['question'], $_GET['id']);
-            // var_dump($data);
-            $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-            $cur_question = (int)$_GET['question'];
-            echo $cur_question;
-            $next_url_question = str_replace('question='.$cur_question, 'question='.$cur_question + 1, $url);
-            $prev_url_question = str_replace('question='.$cur_question, 'question='.$cur_question - 1, $url);
-            echo $url."<br>";
-            echo $next_url_question."<br>";
-            echo $prev_url_question."<br>";
-
-
-        ?>
         <div class="dotest__container--boxquest">
-            <div class="number--ques">Câu <strong><?= $cur_question ?></strong> trên <strong>10</strong></div>
+            <div class="number--ques">Câu 
+                <strong><?= $order ?></strong> trên <strong><?= $questions_quantity ?></strong>
+            </div>
             <div class="ques">
-                <?= $data[0]['cau_hoi'] ?>
+                <?= $question_data[0]['cau_hoi'] ?>
             </div>
             <ul class="anwsers--box">
-                <?php foreach($data as $index => $anwser) { ?>
+                <?php foreach($question_data as $index => $anwser) { ?>
                 <li class="anwser--item">
                     <label class="answer" for="anwser-<?= $index ?>">
                         <input type="radio" name="anws" id="anwser-<?= $index ?>">
@@ -61,6 +44,7 @@
             </ul>
             <a href="<?= $prev_url_question ?>" class="move--ques prev">Prev</a>
             <a href="<?= $next_url_question ?>" class="move--ques next">Next</a>
+
         </div>
     </div>
 </section>

@@ -6,25 +6,66 @@
             $this->dbConnection = $conn;
         }
 
-        public function getCurrentExam($ma_de, $loai) {
-            $sql = "SELECT ma_de from de
-                    where ma_de = $ma_de && loai = $loai";
+        public function getQuestionsQuantity($ma_de) {
+            $sql = "SELECT COUNT(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
+                    ON d.ma_de = ch.ma_de WHERE d.ma_de = $ma_de";
 
             $result = $this->dbConnection->query($sql);
             $data = $result->fetch(PDO::FETCH_ASSOC);
 
-            return $data['ma_de'];
+            return $data['cau_hoi'];
         }
 
-        public function getQuestions($quesntion_id, $ma_de) {
-            $sql = "SELECT ch.noi_dung as cau_hoi, da.noi_dung as dap_an from cau_hoi ch join dap_an da 
-                    on ch.ma_cau_hoi = da.ma_cau_hoi join de d on ch.ma_de = d.ma_de
-                    WHERE ch.ma_cau_hoi = $quesntion_id && d.ma_de = $ma_de";
+        public function getFirstQuestion($ma_de) {
+            $sql = "SELECT MIN(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
+                    ON d.ma_de = ch.ma_de WHERE d.ma_de = $ma_de";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+
+            return $data['cau_hoi'];
+        }
+
+        public function getLastQuestion($ma_de) {
+            $sql = "SELECT MAX(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
+                    ON d.ma_de = ch.ma_de WHERE d.ma_de = $ma_de";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+
+            return $data['cau_hoi'];
+        }
+
+        public function getCurQuestionData($question_id, $ma_de) {
+            $sql = "SELECT ch.noi_dung AS cau_hoi, pa.noi_dung AS dap_an from cau_hoi 
+                    AS ch JOIN phuong_an pa ON pa.ma_cau_hoi = ch.ma_cau_hoi
+                    JOIN de d ON d.ma_de = ch.ma_de
+                    WHERE ch.ma_cau_hoi = $question_id && d.ma_de = $ma_de";
 
             $result = $this->dbConnection->query($sql);
             $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
             return $data;
+        }
+
+        public function getPrevQuestionData($question_id, $ma_de) {
+            $sql = "SELECT MAX(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
+            ON d.ma_de = ch.ma_de WHERE ch.ma_cau_hoi < $question_id && d.ma_de = $ma_de";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+
+            return $data['cau_hoi'];
+        }
+
+        public function getNextQuestionData($question_id, $ma_de) {
+            $sql = "SELECT MIN(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
+            ON d.ma_de = ch.ma_de WHERE ch.ma_cau_hoi > $question_id && d.ma_de = $ma_de";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+
+            return $data['cau_hoi'];
         }
     }
 ?>

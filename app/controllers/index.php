@@ -8,7 +8,7 @@ require_once "../views/includes/header.php" ?>
     if($isPage && $isPage && $_GET['page'] === 'list' && $isTestPage) {
         require_once "../views/exam.php";
     } else if($isPage && $_GET['page'] === 'start') {
-        require_once "../views/startQuiz.php";
+        require_once "../controllers/questionController.php";
     } else {
         require_once "../views/home.php";
     }

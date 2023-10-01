@@ -4,6 +4,6 @@
         'host' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'dbname' => 'thunghiem'
+        'dbname' => 'quiz_system'
     );
 ?>
