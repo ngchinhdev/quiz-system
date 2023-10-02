@@ -1,38 +1,27 @@
 <?php
+    require_once("../models/dbConnect.php");
     require_once ("../models/question.php");
     $question = new Question($conn);
-    $first_question = $question->getFirstQuestion($_GET['id']);
 
-    if(!isset($_GET['id'])) return;
-
-    $id_exam = $_GET['id'];
-    $order = (int)$_GET['order'];
-    $change_question = $_GET['question'];
-
-    $first_question_number = $question->getFirstQuestion($id_exam);
-    $last_question_number = $question->getLastQuestion($id_exam);
-
-    $cur_question_number = !($_GET['question'] === '0') ? $_GET['question'] : $first_question_number;
-
-    $questions_quantity = $question->getQuestionsQuantity($id_exam);
-
-    $question_data = $question->getCurQuestionData($cur_question_number, $id_exam);
+    $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
+    $per_page = 1;
+    $off_set = ($cur_page - 1) * $per_page;
+    $ma_de = $_GET['id'];
+    $quantity_questions = $question->getQuestionsQuantity($ma_de);
+    $question_data = $question->getCurQuestionData($ma_de, $per_page, $off_set);
+    $answer_data = $question->getCurAnswerData($question_data['ma_cau_hoi']);
+    
+    $response = array(
+        "dataQuestions" => $question_data,
+        "questionQuantity" => $quantity_questions,
+        "dataAnswers" => $answer_data
+    );
 
     if(isset($_GET['topic']) && $_GET['topic'] === 'listening') {
-        $audio_link = $question->getAudiosData($cur_question_number);
+        $audio_link = $question->getAudiosData($question_data['ma_cau_hoi']);
+        $response["audioLink"] = $audio_link;
     }
-
-    $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-    $next_question = $order > $question->getNextQuestionData($cur_question_number, $id_exam) ?
-                     $first_question_number : $question->getNextQuestionData($cur_question_number, $id_exam);
-    $prev_question = $order < 2 ? $last_question_number : 
-                     $question->getPrevQuestionData($cur_question_number, $id_exam);
-
-    $next_url_question = str_replace(['question='.$change_question, 'order='.$order], 
-            ['question='.$next_question, 'order='.($order > $questions_quantity - 1 ? 1 : $order + 1)], $url);
-    $prev_url_question = str_replace(['question='.$change_question, 'order='.$order], 
-            ['question='.$prev_question, 'order='.($order < 2 ? $questions_quantity : $order - 1)], $url);
-
-    include ("../views/startQuiz.php");
+    
+    header('Content-Type: application/json');
+    echo json_encode($response);
 ?>

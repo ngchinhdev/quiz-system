@@ -16,56 +16,24 @@
             return $data['cau_hoi'];
         }
 
-        public function getFirstQuestion($ma_de) {
-            $sql = "SELECT MIN(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
-                    ON d.ma_de = ch.ma_de WHERE d.ma_de = $ma_de";
+        public function getCurQuestionData($ma_de, $per_page, $offset) {
+            $sql = "SELECT ma_cau_hoi, noi_dung FROM cau_hoi
+                    WHERE ma_de = $ma_de
+                    LIMIT $per_page OFFSET $offset";
 
             $result = $this->dbConnection->query($sql);
             $data = $result->fetch(PDO::FETCH_ASSOC);
 
-            return $data['cau_hoi'];
+            return $data;
         }
 
-        public function getLastQuestion($ma_de) {
-            $sql = "SELECT MAX(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
-                    ON d.ma_de = ch.ma_de WHERE d.ma_de = $ma_de";
-
-            $result = $this->dbConnection->query($sql);
-            $data = $result->fetch(PDO::FETCH_ASSOC);
-
-            return $data['cau_hoi'];
-        }
-
-        public function getCurQuestionData($question_id, $ma_de) {
-            $sql = "SELECT ch.noi_dung AS cau_hoi, pa.noi_dung AS dap_an, pa.ma_phuong_an from cau_hoi 
-                    AS ch JOIN phuong_an pa ON pa.ma_cau_hoi = ch.ma_cau_hoi
-                    JOIN de d ON d.ma_de = ch.ma_de
-                    WHERE ch.ma_cau_hoi = $question_id && d.ma_de = $ma_de";
+        public function getCurAnswerData($question_id) {
+            $sql = "SELECT ma_phuong_an, noi_dung FROM phuong_an WHERE ma_cau_hoi = $question_id";
 
             $result = $this->dbConnection->query($sql);
             $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
             return $data;
-        }
-
-        public function getPrevQuestionData($question_id, $ma_de) {
-            $sql = "SELECT MAX(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
-            ON d.ma_de = ch.ma_de WHERE ch.ma_cau_hoi < $question_id && d.ma_de = $ma_de";
-
-            $result = $this->dbConnection->query($sql);
-            $data = $result->fetch(PDO::FETCH_ASSOC);
-
-            return $data['cau_hoi'];
-        }
-
-        public function getNextQuestionData($question_id, $ma_de) {
-            $sql = "SELECT MIN(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
-            ON d.ma_de = ch.ma_de WHERE ch.ma_cau_hoi > $question_id && d.ma_de = $ma_de";
-
-            $result = $this->dbConnection->query($sql);
-            $data = $result->fetch(PDO::FETCH_ASSOC);
-
-            return $data['cau_hoi'];
         }
 
         public function getAudiosData($question_id) {

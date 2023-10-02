@@ -146,13 +146,14 @@
 
             .move--ques {
                 display: inline-block;
-                padding: .6rem 1rem;
+                padding: .7rem 1.2rem;
                 border-radius: 20px;
                 background-color: $primary-color;
                 color: $white-color;
                 margin: 1.4rem 0;
                 cursor: pointer;
                 transition: 0.2s;
+                border: none;
 
                 &:hover {
                     background-color: $primary-color-lighter;  

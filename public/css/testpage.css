@@ -172,13 +172,14 @@ input {
 }
 .dotest__container--boxquest .move--ques {
   display: inline-block;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.2rem;
   border-radius: 20px;
   background-color: #4d5fff;
   color: #ffffff;
   margin: 1.4rem 0;
   cursor: pointer;
   transition: 0.2s;
+  border: none;
 }
 .dotest__container--boxquest .move--ques:hover {
   background-color: rgb(132, 144, 253);
