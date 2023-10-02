@@ -37,7 +37,7 @@
         }
 
         public function getCurQuestionData($question_id, $ma_de) {
-            $sql = "SELECT ch.noi_dung AS cau_hoi, pa.noi_dung AS dap_an from cau_hoi 
+            $sql = "SELECT ch.noi_dung AS cau_hoi, pa.noi_dung AS dap_an, pa.ma_phuong_an from cau_hoi 
                     AS ch JOIN phuong_an pa ON pa.ma_cau_hoi = ch.ma_cau_hoi
                     JOIN de d ON d.ma_de = ch.ma_de
                     WHERE ch.ma_cau_hoi = $question_id && d.ma_de = $ma_de";

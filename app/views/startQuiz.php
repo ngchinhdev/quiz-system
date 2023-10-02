@@ -42,7 +42,7 @@
             <ul class="anwsers--box">
                 <?php foreach($question_data as $index => $anwser) { ?>
                 <li class="anwser--item">
-                    <label class="answer" for="anwser-<?= $index ?>">
+                    <label class="answer" for="anwser-<?= $index ?>" data-choose="<?= $anwser['ma_phuong_an'] ?>">
                         <input type="radio" name="anws" id="anwser-<?= $index ?>">
                         <?= $anwser['dap_an'] ?>
                     </label>

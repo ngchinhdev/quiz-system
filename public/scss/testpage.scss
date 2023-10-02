@@ -132,7 +132,10 @@
                 border-radius: 6px;
                 padding: 1rem 1.4rem;
 
-                &:has(input:focus) {
+                // &:has(input:focus) {
+                //     border: 2px solid $primary-color;
+                // }
+                &.active {
                     border: 2px solid $primary-color;
                 }
 
