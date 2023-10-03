@@ -1,4 +1,7 @@
 const containerQuestion = document.querySelector('.dotest__container--boxquest');
+const rule = document.querySelector('.rule-1');
+const countdown = document.querySelector('.down');
+
 // History anwser chose
 const historyAnwsers = {};
 
@@ -110,9 +113,12 @@ function loadQuestions(question) {
         .then(res => res.json())
         .then(data => {
 
-            const { dataQuestions, dataAnswers, questionQuantity, audioLink } = data;
+            const { dataQuestions, dataAnswers, questionQuantity, timeToDo, audioLink } = data;
 
             containerQuestion.innerHTML = '';
+
+            rule.textContent = questionQuantity;
+            countdown.textContent = timeToDo;
 
             generateQuestion(dataQuestions, questionQuantity, audioLink);
             generateAnswers(dataAnswers, dataQuestions);

@@ -7,5 +7,6 @@
 
     if($isPage && $_GET['page'] === 'start') {
         echo '<script src="../../public/js/ajax/question.js"></script>';
+        echo '<script src="../../public/js/start.js"></script>';
     }
 ?>

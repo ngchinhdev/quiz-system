@@ -31,6 +31,7 @@ input {
   margin-top: 1.6rem;
   font-family: "Lato", sans-serif;
   text-align: center;
+  transition: all 0.2s;
 }
 .dotest .ribbon {
   font-weight: lighter;

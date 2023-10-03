@@ -68,7 +68,7 @@ function generateExam(dataExams, totalPages, urlToStart) {
                 </div>
                 <br>
                 <div class="bottom">
-                    <a href="index.php?page=start" class="do">Làm bài</a>
+                    <a href="${urlToStart}&id=${exam.ma_de}" class="do">Làm bài</a>
                 </div>
             </div>
         `;
