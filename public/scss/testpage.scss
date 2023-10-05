@@ -96,6 +96,11 @@
         &--boxquest {
             margin-top: 4rem;
             text-align: left;
+            // filter: blur(1.2rem);
+
+            &.active {
+                filter: blur(0);
+            }
 
             .number--ques {
                 font-size: 1.1rem;
@@ -162,6 +167,75 @@
 
                 &.next {
                     float: right;
+                }
+            }
+
+            // Result
+            .result--title {
+                margin-bottom: 0.8rem;
+            }
+
+            .result--time {
+                font-size: .9rem;
+                margin-top: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .result--point {
+                background-color: #f0f3f6;
+                border-radius: 6px;
+                color: #728188;
+                margin: 1rem 0;
+                padding: 1rem;
+                text-align: center;
+                border: 2px solid;
+                border-image-slice: 1;
+                border-image-source: linear-gradient(to right, $secondary-color, $primary-color);
+            }
+
+            hr {
+                margin: 1rem 0;
+                border: 1px solid #e2e7ed;
+            }
+
+            .two--btn {
+                display: flex;
+                justify-content: center;
+                
+                button {
+                    padding: .7rem 1.2rem;
+                    border-radius: 20px;
+                    border: none;
+                    outline: none;
+                    margin: .6rem;
+                    color: $white-color;
+                    background-color: $primary-color;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: .2s;
+
+                    &:hover {
+                        background-color: $secondary-color-darker;
+                    }
+                }
+            }
+
+            .result--detail {
+                pointer-events: none;
+            }
+
+            .explaination {
+                background-color: #f0f3f6;
+                border: 2px solid #e2e7ed;
+                border-radius: 6px;
+                box-shadow: none;
+                color: #728188;
+                margin: 1em 0;
+                padding: 20px;
+                position: relative;
+
+                img {
+                    margin-right: 10px;
                 }
             }
         }

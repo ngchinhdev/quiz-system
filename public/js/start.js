@@ -1,4 +1,5 @@
 const startBtn = document.querySelector('.start--btn button');
+const containerBoxquest = document.querySelector('.dotest__container--boxquest');
 
 let timer;
 
@@ -10,6 +11,8 @@ const handleTimer = function() {
       const sec = String(time % 60).padStart(2, 0);
   
       if (time === 0) {
+        containerBoxquest.classList.remove('active');
+        startBtn.textContent = 'Kết thúc bài làm';
         clearInterval(timer);
       }
   
@@ -25,6 +28,7 @@ const handleTimer = function() {
   }
 
 startBtn.addEventListener('click', function() {
+    containerBoxquest.classList.add('active');
     console.log('ji');
     if(timer) clearInterval(timer);
     timer = handleTimer();

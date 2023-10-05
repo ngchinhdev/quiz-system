@@ -134,6 +134,9 @@ input {
   margin-top: 4rem;
   text-align: left;
 }
+.dotest__container--boxquest.active {
+  filter: blur(0);
+}
 .dotest__container--boxquest .number--ques {
   font-size: 1.1rem;
 }
@@ -187,4 +190,62 @@ input {
 }
 .dotest__container--boxquest .move--ques.next {
   float: right;
+}
+.dotest__container--boxquest .result--title {
+  margin-bottom: 0.8rem;
+}
+.dotest__container--boxquest .result--time {
+  font-size: 0.9rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+}
+.dotest__container--boxquest .result--point {
+  background-color: #f0f3f6;
+  border-radius: 6px;
+  color: #728188;
+  margin: 1rem 0;
+  padding: 1rem;
+  text-align: center;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right, #ffcd1f, #4d5fff);
+}
+.dotest__container--boxquest hr {
+  margin: 1rem 0;
+  border: 1px solid #e2e7ed;
+}
+.dotest__container--boxquest .two--btn {
+  display: flex;
+  justify-content: center;
+}
+.dotest__container--boxquest .two--btn button {
+  padding: 0.7rem 1.2rem;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  margin: 0.6rem;
+  color: #ffffff;
+  background-color: #4d5fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.dotest__container--boxquest .two--btn button:hover {
+  background-color: #ffc003;
+}
+.dotest__container--boxquest .result--detail {
+  pointer-events: none;
+}
+.dotest__container--boxquest .explaination {
+  background-color: #f0f3f6;
+  border: 2px solid #e2e7ed;
+  border-radius: 6px;
+  box-shadow: none;
+  color: #728188;
+  margin: 1em 0;
+  padding: 20px;
+  position: relative;
+}
+.dotest__container--boxquest .explaination img {
+  margin-right: 10px;
 }

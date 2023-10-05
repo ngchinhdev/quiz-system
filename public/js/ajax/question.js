@@ -56,6 +56,7 @@ function answerChoice() {
         const idQues = curQuestion.dataset.ques;
 
         historyAnwsers[idQues] = anwser.dataset.choose;
+        console.log(historyAnwsers);
 
         const currActive = document.querySelector('.answer.active') ?? null;
         currActive && currActive.classList.remove('active');
@@ -112,9 +113,21 @@ function loadQuestions(question) {
     fetch(`../controllers/questionController.php${subUrl}&id=${idExam}&curpage=${question}`)
         .then(res => res.json())
         .then(data => {
+            
+            const { dataQuestions, dataAnswers, questionQuantity, timeToDo, correctAnswers, audioLink } = data;
+            console.log(correctAnswers);
 
-            const { dataQuestions, dataAnswers, questionQuantity, timeToDo, audioLink } = data;
+            const newCorrectAnswer = correctAnswers.reduce((acc, cur) => {
+                const key = String(cur.ma_cau_hoi);
+                const value = String(cur.ma_phuong_an);
 
+                acc[key] = value;
+
+                return acc;
+            }, {});
+            
+            console.log(newCorrectAnswer);
+            
             containerQuestion.innerHTML = '';
 
             rule.textContent = questionQuantity;

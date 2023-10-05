@@ -1,4 +1,4 @@
 <?php
-    header("Location: app/controllers/index.php")
+    header("Location: app/controllers/index.php");
 ?>
 

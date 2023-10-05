@@ -53,5 +53,16 @@
 
             return $data['thoi_gian_lam_bai'];
         }
+
+        public function getCorretAnswers($ma_de) {
+            $sql = "SELECT ch.ma_cau_hoi, pa.ma_phuong_an FROM cau_hoi ch
+                    JOIN phuong_an pa ON ch.ma_cau_hoi = pa.ma_cau_hoi 
+                    WHERE ch.ma_de = $ma_de AND pa.phuong_an_dung = 1";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetchAll(PDO::FETCH_ASSOC);
+
+            return $data;
+        }
     }
 ?>
