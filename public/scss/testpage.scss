@@ -90,64 +90,44 @@
                     cursor: pointer;
                     background-color: $secondary-color-darker;
                 }
+
+                button[name="finish"] {
+                    display: none;
+
+                    &.active {
+                        display: inline-block;
+                    }
+                }
+
+                button[name="start"] {
+                    display: inline-block;
+
+                    &.hide {
+                        display: none;
+                    }
+                }
             }
         }
     
         &--boxquest {
             margin-top: 4rem;
             text-align: left;
-            // filter: blur(1.2rem);
+            filter: blur(1.2rem);
+            pointer-events: none;
+            user-select: none;
+
+            &.hide {
+                display: none;
+            }
 
             &.active {
                 filter: blur(0);
+                pointer-events: all;
+                user-select: text;
             }
 
             .number--ques {
                 font-size: 1.1rem;
-            }
-
-            .ques {
-                padding-top: 0.9rem;
-                padding-bottom: 0.7rem;
-
-                span:first-child {
-                    margin-right: 20px;
-                }
-
-                .audio--btn::after {
-                    background-size: 26px 26px;
-                    content: '';
-                    vertical-align: middle;
-                    width: 26px;
-                    height: 26px;
-                    display: inline-block;
-                    background-repeat: no-repeat;
-                    background-image: url('../imgs/btnaudio.png');
-                    cursor: pointer;
-                }
-            }
-
-            .anwser--item {
-                margin-top: 0.9rem;
-            }
-
-            .answer {
-                display: flex;
-                width: 100%;
-                border: 2px solid $bg-color-grey;
-                border-radius: 6px;
-                padding: 1rem 1.4rem;
-
-                // &:has(input:focus) {
-                //     border: 2px solid $primary-color;
-                // }
-                &.active {
-                    border: 2px solid $primary-color;
-                }
-
-                input {
-                    margin-right: 1.4rem;
-                }
             }
 
             .move--ques {
@@ -169,74 +149,90 @@
                     float: right;
                 }
             }
+        }
+        
+        @include question();
 
-            // Result
-            .result--title {
-                margin-bottom: 0.8rem;
+        // Result
+        .list--results {
+            margin-bottom: 6rem;
+        }
+
+        .result--infomations {
+            text-align: left;
+            margin-top: 4rem;
+            display: none;
+
+            &.active {
+                display: block;
             }
+        }
 
-            .result--time {
-                font-size: .9rem;
-                margin-top: 1.2rem;
-                margin-bottom: 1rem;
-            }
+        .result--title {
+            margin-bottom: 0.8rem;
+        }
 
-            .result--point {
-                background-color: #f0f3f6;
-                border-radius: 6px;
-                color: #728188;
-                margin: 1rem 0;
-                padding: 1rem;
-                text-align: center;
-                border: 2px solid;
-                border-image-slice: 1;
-                border-image-source: linear-gradient(to right, $secondary-color, $primary-color);
-            }
+        .result--time {
+            font-size: .9rem;
+            margin-top: 1.2rem;
+            margin-bottom: 1rem;
+        }
 
-            hr {
-                margin: 1rem 0;
-                border: 1px solid #e2e7ed;
-            }
+        .result--point {
+            background-color: #f0f3f6;
+            border-radius: 6px;
+            color: #728188;
+            margin: 1rem 0;
+            padding: 1rem;
+            text-align: center;
+            border: 2px solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, $secondary-color, $primary-color);
+        }
 
-            .two--btn {
-                display: flex;
-                justify-content: center;
-                
-                button {
-                    padding: .7rem 1.2rem;
-                    border-radius: 20px;
-                    border: none;
-                    outline: none;
-                    margin: .6rem;
-                    color: $white-color;
-                    background-color: $primary-color;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: .2s;
+        hr {
+            margin: 1rem 0;
+            border: 1px solid #e2e7ed;
+        }
 
-                    &:hover {
-                        background-color: $secondary-color-darker;
-                    }
+        .two--btn {
+            display: flex;
+            justify-content: center;
+            
+            button {
+                padding: .7rem 1.2rem;
+                border-radius: 20px;
+                border: none;
+                outline: none;
+                margin: .6rem;
+                color: $white-color;
+                background-color: $primary-color;
+                font-weight: 600;
+                cursor: pointer;
+                transition: .2s;
+
+                &:hover {
+                    background-color: $secondary-color-darker;
                 }
             }
+        }
 
-            .result--detail {
-                pointer-events: none;
-            }
+        .result--detail {
+            pointer-events: none;
+        }
 
-            .explaination {
-                background-color: #f0f3f6;
-                border: 2px solid #e2e7ed;
-                border-radius: 6px;
-                box-shadow: none;
-                color: #728188;
-                margin: 1em 0;
-                padding: 20px;
-                position: relative;
+        .explaination {
+            background-color: #f0f3f6;
+            border: 2px solid #e2e7ed;
+            border-radius: 6px;
+            box-shadow: none;
+            color: #728188;
+            margin: 1em 0;
+            padding: 20px;
+            position: relative;
 
-                img {
-                    margin-right: 10px;
-                }
+            img {
+                margin-right: 10px;
             }
         }
     }

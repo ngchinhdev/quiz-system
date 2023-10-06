@@ -130,49 +130,39 @@ input {
   cursor: pointer;
   background-color: #ffc003;
 }
+.dotest__container--info .time--test button[name=finish] {
+  display: none;
+}
+.dotest__container--info .time--test button[name=finish].active {
+  display: inline-block;
+}
+.dotest__container--info .time--test button[name=start] {
+  display: inline-block;
+}
+.dotest__container--info .time--test button[name=start].hide {
+  display: none;
+}
 .dotest__container--boxquest {
   margin-top: 4rem;
   text-align: left;
+  filter: blur(1.2rem);
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.dotest__container--boxquest.hide {
+  display: none;
 }
 .dotest__container--boxquest.active {
   filter: blur(0);
+  pointer-events: all;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
 }
 .dotest__container--boxquest .number--ques {
   font-size: 1.1rem;
-}
-.dotest__container--boxquest .ques {
-  padding-top: 0.9rem;
-  padding-bottom: 0.7rem;
-}
-.dotest__container--boxquest .ques span:first-child {
-  margin-right: 20px;
-}
-.dotest__container--boxquest .ques .audio--btn::after {
-  background-size: 26px 26px;
-  content: "";
-  vertical-align: middle;
-  width: 26px;
-  height: 26px;
-  display: inline-block;
-  background-repeat: no-repeat;
-  background-image: url("../imgs/btnaudio.png");
-  cursor: pointer;
-}
-.dotest__container--boxquest .anwser--item {
-  margin-top: 0.9rem;
-}
-.dotest__container--boxquest .answer {
-  display: flex;
-  width: 100%;
-  border: 2px solid #e9e9e9;
-  border-radius: 6px;
-  padding: 1rem 1.4rem;
-}
-.dotest__container--boxquest .answer.active {
-  border: 2px solid #4d5fff;
-}
-.dotest__container--boxquest .answer input {
-  margin-right: 1.4rem;
 }
 .dotest__container--boxquest .move--ques {
   display: inline-block;
@@ -191,15 +181,66 @@ input {
 .dotest__container--boxquest .move--ques.next {
   float: right;
 }
-.dotest__container--boxquest .result--title {
+.dotest__container .ques {
+  padding-top: 0.9rem;
+  padding-bottom: 0.7rem;
+}
+.dotest__container .ques span:first-child {
+  margin-right: 20px;
+}
+.dotest__container .ques .audio--btn::after {
+  background-size: 26px 26px;
+  content: "";
+  vertical-align: middle;
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url("../imgs/btnaudio.png");
+  cursor: pointer;
+}
+.dotest__container .anwser--item {
+  margin-top: 0.9rem;
+}
+.dotest__container .answer {
+  display: flex;
+  width: 100%;
+  border: 2px solid #e9e9e9;
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+}
+.dotest__container .answer.active {
+  border: 2px solid #4d5fff;
+}
+.dotest__container .answer.correct {
+  border: 2px solid #00c349;
+}
+.dotest__container .answer.incorrect {
+  border: 2px solid #dc3545;
+}
+.dotest__container .answer input {
+  margin-right: 1.4rem;
+}
+.dotest__container .list--results {
+  margin-bottom: 6rem;
+}
+.dotest__container .result--infomations {
+  text-align: left;
+  margin-top: 4rem;
+  display: none;
+}
+.dotest__container .result--infomations.active {
+  display: block;
+}
+.dotest__container .result--title {
   margin-bottom: 0.8rem;
 }
-.dotest__container--boxquest .result--time {
+.dotest__container .result--time {
   font-size: 0.9rem;
   margin-top: 1.2rem;
   margin-bottom: 1rem;
 }
-.dotest__container--boxquest .result--point {
+.dotest__container .result--point {
   background-color: #f0f3f6;
   border-radius: 6px;
   color: #728188;
@@ -210,15 +251,15 @@ input {
   border-image-slice: 1;
   border-image-source: linear-gradient(to right, #ffcd1f, #4d5fff);
 }
-.dotest__container--boxquest hr {
+.dotest__container hr {
   margin: 1rem 0;
   border: 1px solid #e2e7ed;
 }
-.dotest__container--boxquest .two--btn {
+.dotest__container .two--btn {
   display: flex;
   justify-content: center;
 }
-.dotest__container--boxquest .two--btn button {
+.dotest__container .two--btn button {
   padding: 0.7rem 1.2rem;
   border-radius: 20px;
   border: none;
@@ -230,13 +271,13 @@ input {
   cursor: pointer;
   transition: 0.2s;
 }
-.dotest__container--boxquest .two--btn button:hover {
+.dotest__container .two--btn button:hover {
   background-color: #ffc003;
 }
-.dotest__container--boxquest .result--detail {
+.dotest__container .result--detail {
   pointer-events: none;
 }
-.dotest__container--boxquest .explaination {
+.dotest__container .explaination {
   background-color: #f0f3f6;
   border: 2px solid #e2e7ed;
   border-radius: 6px;
@@ -246,6 +287,6 @@ input {
   padding: 20px;
   position: relative;
 }
-.dotest__container--boxquest .explaination img {
+.dotest__container .explaination img {
   margin-right: 10px;
 }

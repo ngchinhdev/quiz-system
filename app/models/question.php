@@ -6,6 +6,17 @@
             $this->dbConnection = $conn;
         }
 
+        public function getAllQuestionsAnswers($ma_de) {
+            $sql = "SELECT ch.noi_dung AS cau_hoi, ch.giai_thich, pa.noi_dung AS phuong_an, pa.ma_phuong_an 
+                    FROM cau_hoi ch JOIN phuong_an pa ON ch.ma_cau_hoi = pa.ma_cau_hoi WHERE ch.ma_de = $ma_de";
+
+            $result = $this->dbConnection->query($sql);
+            $data = $result->fetchAll(PDO::FETCH_ASSOC);
+
+            return $data;
+        }
+
+
         public function getQuestionsQuantity($ma_de) {
             $sql = "SELECT COUNT(ch.ma_cau_hoi) AS cau_hoi FROM cau_hoi ch JOIN de d 
                     ON d.ma_de = ch.ma_de WHERE d.ma_de = $ma_de";
@@ -17,7 +28,7 @@
         }
 
         public function getCurQuestionData($ma_de, $per_page, $offset) {
-            $sql = "SELECT ma_cau_hoi, noi_dung FROM cau_hoi
+            $sql = "SELECT ma_cau_hoi, noi_dung, giai_thich FROM cau_hoi
                     WHERE ma_de = $ma_de
                     LIMIT $per_page OFFSET $offset";
 

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../../public/css/style.css">
     <?php include_once("../controllers/styleController.php") ?>
     <link rel="stylesheet" href="../../public/css/fontawesome/css/all.css">
+    <link rel="stylesheet" src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <script cript src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>English Test Pro</title>
 </head>
 <body>

@@ -12,13 +12,15 @@
     $answer_data = $question->getCurAnswerData($question_data['ma_cau_hoi']);
     $time_to_do = $question->getTimeToDo($ma_de);
     $correct_answers = $question->getCorretAnswers($ma_de);
+    $all_questions_answers = $question->getAllQuestionsAnswers($ma_de);
     
     $response = array(
         "dataQuestions" => $question_data,
         "questionQuantity" => $quantity_questions,
         "dataAnswers" => $answer_data,
         "timeToDo" => $time_to_do,
-        "correctAnswers" => $correct_answers
+        "correctAnswers" => $correct_answers,
+        "allQuestionsAnswers" => $all_questions_answers
     );
 
     if(isset($_GET['topic']) && $_GET['topic'] === 'listening') {

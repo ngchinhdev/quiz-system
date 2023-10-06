@@ -10,11 +10,64 @@ $text-color: #282e3e;
 $white-color: #ffffff;
 $text-color-blur: #677788;
 $test-page-cl: #4c4c4c;
+$success-color: #00c349;
+$danger-color: #dc3545;
 
 @mixin absoluteType() {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+@mixin question() {
+    .ques {
+        padding-top: 0.9rem;
+        padding-bottom: 0.7rem;
+
+        span:first-child {
+            margin-right: 20px;
+        }
+
+        .audio--btn::after {
+            background-size: 26px 26px;
+            content: '';
+            vertical-align: middle;
+            width: 26px;
+            height: 26px;
+            display: inline-block;
+            background-repeat: no-repeat;
+            background-image: url('../imgs/btnaudio.png');
+            cursor: pointer;
+        }
+    }
+
+    .anwser--item {
+        margin-top: 0.9rem;
+    }
+
+    .answer {
+        display: flex;
+        width: 100%;
+        border: 2px solid $bg-color-grey;
+        border-radius: 6px;
+        padding: 1rem 1.4rem;
+
+        &.active {
+            border: 2px solid $primary-color;
+        }
+
+        &.correct {
+            border: 2px solid $success-color;
+        }
+
+        &.incorrect {
+            border: 2px solid $danger-color;
+        }
+
+        input {
+            margin-right: 1.4rem;
+        }
+    }
 }
 
 @mixin item() {

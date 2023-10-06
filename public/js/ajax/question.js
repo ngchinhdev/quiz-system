@@ -1,9 +1,19 @@
 const containerQuestion = document.querySelector('.dotest__container--boxquest');
 const rule = document.querySelector('.rule-1');
-const countdown = document.querySelector('.down');
+export const countdown = document.querySelector('.down');
 
 // History anwser chose
-const historyAnwsers = {};
+export const state = {
+    questionQuantity: 0,
+    timeToDo: 0,
+    historyAnwsers: {},
+    dataQuestions: [],
+    dataAnswers: [],
+    allQuestionsAnswers: [],
+    correctAnswers: [],
+    wrongAnswers: {},
+    correctAnswersChose: {}
+};
 
 let count = 1;
 
@@ -55,8 +65,8 @@ function answerChoice() {
 
         const idQues = curQuestion.dataset.ques;
 
-        historyAnwsers[idQues] = anwser.dataset.choose;
-        console.log(historyAnwsers);
+        state.historyAnwsers[idQues] = anwser.dataset.choose;
+        console.log("History answer: ", state.historyAnwsers);
 
         const currActive = document.querySelector('.answer.active') ?? null;
         currActive && currActive.classList.remove('active');
@@ -85,8 +95,8 @@ function generateAnswers(dataAnswers, dataQuestions) {
     
     answerContainer.innerHTML = html;
 
-    const isFound = historyAnwsers[dataQuestions.ma_cau_hoi];
-    const answered = isFound && document.querySelector(`[data-choose="${historyAnwsers[dataQuestions.ma_cau_hoi]}"]`);
+    const isFound = state.historyAnwsers[dataQuestions.ma_cau_hoi];
+    const answered = isFound && document.querySelector(`[data-choose="${state.historyAnwsers[dataQuestions.ma_cau_hoi]}"]`);
     answered && answered.classList.add('active');
     answered && answered.click();
 
@@ -98,11 +108,17 @@ function generateButtonQuestion(questionQuantity) {
     const prev = count < 2 ? questionQuantity : count - 1;
 
     const html = `
-            <button class="move--ques prev" onclick=loadQuestions(${prev})>Prev</button>
-            <button class="move--ques next" onclick=loadQuestions(${next})>Next</button>
+            <button class="move--ques prev">Prev</button>
+            <button class="move--ques next">Next</button>
         `;
 
     containerQuestion.insertAdjacentHTML('beforeend', html);
+
+    const nextQues = document.querySelector('.move--ques.next');
+    const prevQues = document.querySelector('.move--ques.prev');
+
+    nextQues.addEventListener('click', () => loadQuestions(next));
+    prevQues.addEventListener('click', () => loadQuestions(prev));
 }
 
 function loadQuestions(question) {
@@ -113,9 +129,18 @@ function loadQuestions(question) {
     fetch(`../controllers/questionController.php${subUrl}&id=${idExam}&curpage=${question}`)
         .then(res => res.json())
         .then(data => {
+
+            console.log(data);
             
-            const { dataQuestions, dataAnswers, questionQuantity, timeToDo, correctAnswers, audioLink } = data;
-            console.log(correctAnswers);
+            const { dataQuestions, dataAnswers, questionQuantity, timeToDo, 
+                        correctAnswers, audioLink, allQuestionsAnswers } = data;
+
+            state.questionQuantity = questionQuantity;
+            state.dataAnswers = dataAnswers;
+            state.dataQuestions = dataQuestions;
+            state.allQuestionsAnswers = allQuestionsAnswers;
+            
+            console.log(state.allQuestionsAnswers);
 
             const newCorrectAnswer = correctAnswers.reduce((acc, cur) => {
                 const key = String(cur.ma_cau_hoi);
@@ -126,7 +151,26 @@ function loadQuestions(question) {
                 return acc;
             }, {});
             
-            console.log(newCorrectAnswer);
+            console.log("Correct answer: ", newCorrectAnswer);
+            state.correctAnswers = newCorrectAnswer;
+
+            // Check if anwser not true
+            const wrongAnswers = {};
+            for(const question in state.historyAnwsers) {
+                if(newCorrectAnswer[question] !== state.historyAnwsers[question])
+                    wrongAnswers[question] = state.historyAnwsers[question];
+            }
+
+            const correctAnswersChose = {};
+            for(const question in state.historyAnwsers) {
+                if(newCorrectAnswer[question] == state.historyAnwsers[question])
+                    correctAnswersChose[question] = state.historyAnwsers[question];
+            }
+
+            console.log("Wrong answer: ", wrongAnswers);
+            console.log("correctAnswersChose: ", correctAnswersChose);
+            state.wrongAnswers = wrongAnswers;
+            state.correctAnswersChose = correctAnswersChose;
             
             containerQuestion.innerHTML = '';
 
@@ -144,4 +188,4 @@ function loadQuestions(question) {
         count = question;
 }
 
-loadQuestions(1);
+export default loadQuestions;
