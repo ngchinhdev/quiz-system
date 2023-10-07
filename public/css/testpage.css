@@ -119,6 +119,9 @@ input {
   text-align: center;
   position: relative;
 }
+.dotest__container--info .time--test .timer.hide {
+  display: none;
+}
 .dotest__container--info .time--test .down {
   font-size: 1.8rem;
 }
@@ -157,9 +160,6 @@ input {
 .dotest__container--boxquest.active {
   filter: blur(0);
   pointer-events: all;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-          user-select: text;
 }
 .dotest__container--boxquest .number--ques {
   font-size: 1.1rem;

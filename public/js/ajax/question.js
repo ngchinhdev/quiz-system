@@ -4,6 +4,7 @@ export const countdown = document.querySelector('.down');
 
 // History anwser chose
 export const state = {
+    count: 1,
     questionQuantity: 0,
     timeToDo: 0,
     historyAnwsers: {},
@@ -12,21 +13,17 @@ export const state = {
     allQuestionsAnswers: [],
     correctAnswers: [],
     wrongAnswers: {},
-    correctAnswersChose: {}
+    correctAnswersChose: {},
+    transformedData: []
 };
 
-let count = 1;
-
 function generateAudio() {
-    const btnAudio = document.querySelector('.audio--btn');
+    document.querySelector('.audio--btn').addEventListener('click', (e) => handleControl(e));
 
-    btnAudio.addEventListener('click', function(e) {
+    const handleControl = function(e) {
         e.preventDefault();
-        const audioLink = btnAudio.querySelector('a').href;
-        
         const audio = new Audio();
-    
-        audio.src = audioLink;
+        audio.src = btnAudio.querySelector('a').href;
     
         if(audio.paused) {
             audio.play();
@@ -34,13 +31,13 @@ function generateAudio() {
             audio.pause();
             audio.currentTime = 0;
         }
-    })
+    }
 }
 
 function generateQuestion(dataQuestions, questionQuantity, audioLink) {
     const html = `
             <div class="number--ques">Câu
-                <strong>${count}</strong> trên <strong>${questionQuantity}</strong>
+                <strong>${state.count}</strong> trên <strong>${questionQuantity}</strong>
             </div>
             <div class="ques" data-ques=${dataQuestions.ma_cau_hoi}>
                 <span>${dataQuestions.noi_dung}</span>
@@ -55,8 +52,9 @@ function generateQuestion(dataQuestions, questionQuantity, audioLink) {
     audioLink && generateAudio();
 }
 
-function answerChoice() {
+function answerChoice(state) {
     const anwsersBox = document.querySelector('.anwsers--box');
+
     anwsersBox.addEventListener('click', function (e) {
         const curQuestion = containerQuestion.querySelector('.ques');
         const anwser = e.target.closest('.answer');
@@ -66,11 +64,16 @@ function answerChoice() {
         const idQues = curQuestion.dataset.ques;
 
         state.historyAnwsers[idQues] = anwser.dataset.choose;
-        console.log("History answer: ", state.historyAnwsers);
 
         const currActive = document.querySelector('.answer.active') ?? null;
         currActive && currActive.classList.remove('active');
         anwser.classList.add('active');
+
+        // Check if anwser not true
+        for (const question in state.historyAnwsers) {
+            if (state.correctAnswers[question] !== state.historyAnwsers[question])
+                state.wrongAnswers[question] = state.historyAnwsers[question];
+        }
     })
 }
 
@@ -96,17 +99,15 @@ function generateAnswers(dataAnswers, dataQuestions) {
     answerContainer.innerHTML = html;
 
     const isFound = state.historyAnwsers[dataQuestions.ma_cau_hoi];
-    const answered = isFound && document.querySelector(`[data-choose="${state.historyAnwsers[dataQuestions.ma_cau_hoi]}"]`);
+    const answered = isFound && 
+            document.querySelector(`[data-choose="${state.historyAnwsers[dataQuestions.ma_cau_hoi]}"]`);
     answered && answered.classList.add('active');
     answered && answered.click();
 
-    answerChoice();
+    answerChoice(state);
 }
 
-function generateButtonQuestion(questionQuantity) {
-    const next = count > questionQuantity - 1 ? 1 : count + 1;
-    const prev = count < 2 ? questionQuantity : count - 1;
-
+function generateButtonsControl(questionQuantity) {
     const html = `
             <button class="move--ques prev">Prev</button>
             <button class="move--ques next">Next</button>
@@ -114,78 +115,66 @@ function generateButtonQuestion(questionQuantity) {
 
     containerQuestion.insertAdjacentHTML('beforeend', html);
 
-    const nextQues = document.querySelector('.move--ques.next');
-    const prevQues = document.querySelector('.move--ques.prev');
-
-    nextQues.addEventListener('click', () => loadQuestions(next));
-    prevQues.addEventListener('click', () => loadQuestions(prev));
+    document.querySelector('.move--ques.next')
+            .addEventListener('click', () => {
+                state.count = state.count > questionQuantity - 1 ? 1 : state.count + 1;
+                loadQuestions(state.count);
+            });
+    document.querySelector('.move--ques.prev')
+            .addEventListener('click', () => {
+                state.count = state.count < 2 ? questionQuantity : state.count - 1;
+                loadQuestions(state.count);
+            });
 }
 
-function loadQuestions(question) {
-    const url = new URL(window.location.href);
-    const subUrl = window.location.href.slice(window.location.href.indexOf('?'));
-    const idExam = url.searchParams.get('id');
+const loadQuestions = async function(question) {
+    try {
+        const url = new URL(window.location.href);
+        const subUrl = window.location.href.slice(window.location.href.indexOf('?'));
+        const idExam = url.searchParams.get('examId');
 
-    fetch(`../controllers/questionController.php${subUrl}&id=${idExam}&curpage=${question}`)
-        .then(res => res.json())
-        .then(data => {
+        const res = await fetch(`../controllers/questionController.php${subUrl}&examId=${idExam}&curpage=${question}`);
+        const data = await res.json();
 
-            console.log(data);
-            
-            const { dataQuestions, dataAnswers, questionQuantity, timeToDo, 
-                        correctAnswers, audioLink, allQuestionsAnswers } = data;
+        const { dataQuestions, dataAnswers, questionQuantity, timeToDo,
+            correctAnswers, audioLink, allQuestionsAnswers } = data;
 
-            state.questionQuantity = questionQuantity;
-            state.dataAnswers = dataAnswers;
-            state.dataQuestions = dataQuestions;
-            state.allQuestionsAnswers = allQuestionsAnswers;
-            
-            console.log(state.allQuestionsAnswers);
+        state.questionQuantity = questionQuantity;
+        state.dataAnswers = dataAnswers;
+        state.dataQuestions = dataQuestions;
+        state.allQuestionsAnswers = allQuestionsAnswers;
+        state.timeToDo = timeToDo;
 
-            const newCorrectAnswer = correctAnswers.reduce((acc, cur) => {
-                const key = String(cur.ma_cau_hoi);
-                const value = String(cur.ma_phuong_an);
+        const newCorrectAnswer = correctAnswers.reduce((acc, cur) => {
+            const key = String(cur.ma_cau_hoi);
+            const value = String(cur.ma_phuong_an);
 
-                acc[key] = value;
+            acc[key] = value;
 
-                return acc;
-            }, {});
-            
-            console.log("Correct answer: ", newCorrectAnswer);
-            state.correctAnswers = newCorrectAnswer;
+            return acc;
+        }, {});
 
-            // Check if anwser not true
-            const wrongAnswers = {};
-            for(const question in state.historyAnwsers) {
-                if(newCorrectAnswer[question] !== state.historyAnwsers[question])
-                    wrongAnswers[question] = state.historyAnwsers[question];
-            }
+        state.correctAnswers = newCorrectAnswer;
 
-            const correctAnswersChose = {};
-            for(const question in state.historyAnwsers) {
-                if(newCorrectAnswer[question] == state.historyAnwsers[question])
-                    correctAnswersChose[question] = state.historyAnwsers[question];
-            }
+        const correctAnswersChose = {};
+        for (const question in state.historyAnwsers) {
+            if (newCorrectAnswer[question] == state.historyAnwsers[question])
+                correctAnswersChose[question] = state.historyAnwsers[question];
+        }
 
-            console.log("Wrong answer: ", wrongAnswers);
-            console.log("correctAnswersChose: ", correctAnswersChose);
-            state.wrongAnswers = wrongAnswers;
-            state.correctAnswersChose = correctAnswersChose;
-            
-            containerQuestion.innerHTML = '';
+        state.correctAnswersChose = correctAnswersChose;
 
-            rule.textContent = questionQuantity;
-            countdown.textContent = timeToDo;
+        containerQuestion.innerHTML = '';
 
-            generateQuestion(dataQuestions, questionQuantity, audioLink);
-            generateAnswers(dataAnswers, dataQuestions);
-            generateButtonQuestion(questionQuantity);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        rule.textContent = questionQuantity;
+        countdown.textContent = timeToDo;
 
-        count = question;
+        generateQuestion(dataQuestions, questionQuantity, audioLink);
+        generateAnswers(dataAnswers, dataQuestions);
+        generateButtonsControl(questionQuantity);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export default loadQuestions;

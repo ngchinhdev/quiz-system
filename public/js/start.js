@@ -6,44 +6,141 @@ const containerBoxquest = document.querySelector('.dotest__container--boxquest')
 const resultInfomations = document.querySelector('.result--infomations');
 const listResults = document.querySelector('.list--results');
 const showResultBtn = document.querySelector('.show--result');
-const totalPoints = document.querySelectorAll('.total--point');
+const totalPointLabels = document.querySelectorAll('.total--point');
 const correctAnswersLabel = document.querySelectorAll('.correct--answer');
 const percentLabel = document.querySelector('.percent');
 const timeDidLabel = document.querySelector('.time--did');
+const countTimeLabel = document.querySelector('.time--test .timer');
 const restartBtn = document.querySelector('.restart--quiz');
 
-let timer, startTime = 0, endTime = 0, onTime = true;
+let timer, startTime, endTime, onTime = true;
 
-loadQuestions(1);
+const transformDataAllQuestions = function(data, transformResult) {
+  data.forEach(qa => {
+    const existingQa = transformResult.find(q => q.question === qa.cau_hoi && q.explain === qa.giai_thich);
 
-const transformedData = [];
-
-setTimeout(() => {
-
-  state.allQuestionsAnswers.forEach(qa => {
-    const existingQa = transformedData.find(q => q.question === qa.cau_hoi && q.explain === qa.giai_thich);
-
-    if(existingQa) {
-      existingQa.answers[qa.ma_phuong_an] = (qa.phuong_an);
+    if (existingQa) {
+      existingQa.answers[qa.ma_phuong_an] = qa.phuong_an;
     } else {
-      transformedData.push({
+      transformResult.push({
         question: qa.cau_hoi,
         explain: qa.giai_thich,
         answers: {
-          [qa.ma_phuong_an] : qa.phuong_an
+          [qa.ma_phuong_an]: qa.phuong_an
         }
       })
     }
   })
+}
 
-  console.log(transformedData);
+const handleStyleCorrectAnswers = function (list) {
+  const idsCorrect = Object.values(list);
 
-}, 3000)
+  idsCorrect.forEach(id => {
+    document.querySelector(`[data-id-anwser="${id}"]`).classList.add('correct');
+  });
+}
 
+const handleStyleInCorrectAnswers = function (list) {
+  const idsCorrect = Object.values(list);
 
+  idsCorrect.forEach(id => {
+    document.querySelector(`[data-id-anwser="${id}"]`).classList.add('incorrect');
+  });
+}
 
-const handleFinish = function() {
-  if(Object.keys(state.historyAnwsers).length < state.questionQuantity && onTime) {
+const handleCheckAnswered = function (list) {
+  const idsCorrect = Object.values(list);
+
+  idsCorrect.forEach(id => {
+    document.querySelector(`label[data-id-anwser="${id}"] > input`).checked = true;
+  });
+}
+
+const handleResult = function (state, transformedData) {
+  listResults.innerHTML = '';
+  let html = '';
+
+  transformedData.forEach(item => {
+    let answers = '';
+
+    const entriesAnswer = Object.entries(item.answers);
+
+    for (const [id, answer] of entriesAnswer) {
+      answers += `
+          <li class="anwser--item">
+            <label class="answer" for="anwser-${id}" data-id-anwser="${id}">
+                <input type="radio" name="anws-${id}" id="anwser-${id}">
+                ${answer}
+            </label>
+          </li>
+      `;
+    }
+
+    html += `
+           <li class="result--detail">
+               <div class="ques">
+                   ${item.question}
+               </div>
+               <ul class="anwsers--box">
+                  ${answers}
+               </ul>
+               <div class="explaination">
+                   <img src="../../public/imgs/lightbulb.png" alt="">
+                   ${item.explain}
+               </div>
+           </li>
+         `;
+  })
+
+  listResults.insertAdjacentHTML('beforeend', html);
+
+  handleStyleCorrectAnswers(state.correctAnswers);
+  handleStyleInCorrectAnswers(state.wrongAnswers);
+  handleCheckAnswered(state.historyAnwsers);
+}
+
+const handleTimer = function (timeToDo) {
+  let time = timeToDo;
+
+  const tick = function () {
+    displayTimeToDo(time);
+
+    if (time === 0) {
+      onTime = false;
+      endTime = new Date().getTime();
+
+      containerBoxquest.classList.remove('active');
+      startBtn.classList.add('hide');
+      finishBtn.classList.add('active');
+      clearInterval(timer);
+    }
+    time--;
+  }
+
+  tick();
+  timer = setInterval(tick, 1000);
+
+  return timer;
+}
+
+const handleStartTimer = function(timeToDo) {
+  startTime = new Date().getTime();
+
+  containerBoxquest.classList.add('active');
+  finishBtn.classList.add('active');
+  if(timeToDo === 0) {
+    countTimeLabel.classList.add('hide'); 
+    return;
+  }
+  startBtn.classList.add('hide');
+
+  if (timer) clearInterval(timer);
+  timer = handleTimer(timeToDo);
+}
+
+const handleFinish = function (historyAnwsers, questionQuantity, correctAnswersChose, correctAnswers) {
+  if (Object.keys(historyAnwsers).length < questionQuantity && onTime) {
     Swal.fire({
       title: 'Thông báo',
       text: 'Bạn chưa làm hết các câu hỏi!!',
@@ -54,155 +151,59 @@ const handleFinish = function() {
     return;
   }
 
-  endTime = new Date().getTime();
-
-  finishBtn.classList.remove('active');
+  if (!endTime) endTime = new Date().getTime();
 
   clearInterval(timer);
+
+  finishBtn.classList.remove('active');
   containerBoxquest.classList.add('active');
   containerBoxquest.classList.add('hide');
   resultInfomations.classList.add('active');
 
-  const correctChose = Object.keys(state.correctAnswersChose).length;
-  const percent = (correctChose / Object.keys(state.correctAnswers).length) * 100;
+  displayInforResultsDid(questionQuantity, correctAnswersChose, correctAnswers)
+}
+
+const handleRestartQuiz = function () {
+  location.reload();
+}
+
+const displayInforResultsDid = function(questionQuantity, correctAnswersChose, correctAnswers) {
+  const correctChose = Object.keys(correctAnswersChose).length;
+  const percent = (correctChose / Object.keys(correctAnswers).length) * 100;
   const hour = `${Math.trunc(Math.floor((endTime - startTime) / 1000) / 3600)}`.padStart(2, 0);
   const min = `${Math.trunc(Math.floor((endTime - startTime) / 1000) / 60)}`.padStart(2, 0);
   const sec = String(Math.floor((endTime - startTime) / 1000) % 60).padStart(2, 0);
-  
-  totalPoints.forEach(el => el.textContent = state.questionQuantity);
+
+  totalPointLabels.forEach(el => el.textContent = questionQuantity);
   correctAnswersLabel.forEach(el => el.textContent = correctChose);
   timeDidLabel.textContent = `${hour}:${min}:${sec}`;
   percentLabel.textContent = percent;
-
-  console.log(Object.keys(state.wrongAnswers).length === 0 ? 10 : Object.keys(state.wrongAnswers).length);
 }
 
-finishBtn.addEventListener('click', () => handleFinish());
+const displayTimeToDo = function(time) {
+  const hour = `${Math.trunc(time / 3600)}`.padStart(2, 0);
+  const min = `${Math.trunc(time % 3600 / 60)}`.padStart(2, 0);
+  const sec = String(time % 60).padStart(2, 0);
 
-
-// const restartQuiz = function() {
-//   startBtn.classList.remove('hide');
-//   containerBoxquest.classList.remove('active');
-//   containerBoxquest.classList.remove('hide');
-//   resultInfomations.classList.remove('active');
-//   loadQuestions(1);
-// }
-// restartBtn.addEventListener('click', () => restartQuiz());
-
-const handleStyleCorrectAnswers = function(list) {
-  const idsCorrect = Object.values(list);
-
-  console.log(idsCorrect);
-  
-  idsCorrect.forEach(id => {
-    document.querySelector(`[data-id-anwser="${id}"]`).classList.add('correct');
-  });
+  countdown.textContent = `${hour}:${min}:${sec}`;
 }
 
-const handleStyleInCorrectAnswers = function(list) {
-  const idsCorrect = Object.values(list);
+const start = async function (state) {
+  try {
+    await loadQuestions(state.count);
+    
+    displayTimeToDo(state.timeToDo);
+    transformDataAllQuestions(state.allQuestionsAnswers, state.transformedData);
 
-  console.log(idsCorrect);
-  
-  idsCorrect.forEach(id => {
-    document.querySelector(`[data-id-anwser="${id}"]`).classList.add('incorrect');
-  });
-}
-
-const handleCheckAnswered = function(list) {
-  const idsCorrect = Object.values(list);
-
-  console.log(idsCorrect);
-  
-  idsCorrect.forEach(id => {
-    document.querySelector(`label[data-id-anwser="${id}"] > input`).checked =  true;
-  });
-}
-
-
-const handleResult = function() {
-  listResults.innerHTML = '';
-  let html = '';
-
-  console.log(transformedData);
-
-  transformedData.forEach(item => {
-    let answers = '';
-
-    const entriesAnswer = Object.entries(item.answers);
-
-    for(const [id, answer] of entriesAnswer) {
-      answers += `
-          <li class="anwser--item">
-            <label class="answer" for="anwser-${id}" data-id-anwser="${id}">
-                <input type="radio" name="anws-${id}" id="anwser-${id}">
-                ${answer}
-            </label>
-          </li>
-      `;                
-    }
-
-    html += `
-           <li class="result--detail">
-               <div class="ques">
-                   ${item.question}
-               </div>
-               <ul class="anwsers--box">
-                  ${ answers }
-               </ul>
-               <div class="explaination">
-                   <img src="../../public/imgs/lightbulb.png" alt="">
-                   ${item.explain}
-               </div>
-           </li>
-         `;
-         
-  })
-
-  listResults.insertAdjacentHTML('beforeend', html);
-
-  handleStyleCorrectAnswers(state.correctAnswers);
-  handleStyleInCorrectAnswers(state.wrongAnswers);
-  handleCheckAnswered(state.historyAnwsers);
-}
-
-showResultBtn.addEventListener('click', () => handleResult());
-
-const handleTimer = function() {
-    let time = 10;
-  
-    const tick = function () {
-      const hour = `${Math.trunc(time / 3600)}`.padStart(2, 0);
-      const min = `${Math.trunc(time % 3600 / 60)}`.padStart(2, 0);
-      const sec = String(time % 60).padStart(2, 0);
-  
-      if (time === 0) {
-        onTime = false;
-
-        containerBoxquest.classList.remove('active');
-        startBtn.classList.add('hide');
-        finishBtn.classList.add('active');
-        clearInterval(timer);
-      }
-  
-      time--;
-  
-      countdown.textContent = `${hour}:${min}:${sec}`;
-    }
-  
-    tick();
-    timer = setInterval(tick, 1000);
-  
-    return timer;
+    state.timeToDo === 0 ? handleStartTimer(state.timeToDo) 
+                         : startBtn.addEventListener('click', () => handleStartTimer(state.timeToDo));
+    finishBtn.addEventListener('click', () => handleFinish(state.historyAnwsers, state.questionQuantity, 
+                                                            state.correctAnswersChose, state.correctAnswers));
+    showResultBtn.addEventListener('click', () => handleResult(state, state.transformedData));
+    restartBtn.addEventListener('click', () => handleRestartQuiz());
+  } catch (error) {
+    console.error(error);
   }
+}
 
-startBtn.addEventListener('click', function() {
-    startTime = new Date().getTime();
-
-    containerBoxquest.classList.add('active');
-    startBtn.classList.add('hide');
-    finishBtn.classList.add('active');
-
-    if(timer) clearInterval(timer);
-    timer = handleTimer();
-})
+start(state);

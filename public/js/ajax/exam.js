@@ -27,7 +27,6 @@ function generatePagination(totalPages, activePage) {
     if (totalPages > 1) {
         paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
     }
-
 }
 
 function generateExam(dataExams, totalPages, urlToStart) {
@@ -44,7 +43,7 @@ function generateExam(dataExams, totalPages, urlToStart) {
     dataExams.forEach(exam => {
         html += `
             <div class="row__left--column">
-                <a href="${urlToStart}&id=${exam.ma_de}" class="hidden"></a>
+                <a href="${urlToStart}&examId=${exam.ma_de}" class="hidden"></a>
                 <div class="above">
                     <h3>${exam.ten_de}</h3>
                     <span>Bộ đề test: ${exam.bo_de}</span>
@@ -87,11 +86,9 @@ function loadExam(page) {
     fetch(`../controllers/examController.php${subUrl}&curpage=${page}`)
         .then(res => res.json())
         .then(data => {
-            
             const { data: dataExams, totalPages } = data;
             
             generateExam(dataExams, totalPages, urlToStart);
-
             generatePagination(totalPages, page);
         })
         .catch(error => {

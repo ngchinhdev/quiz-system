@@ -1,6 +1,5 @@
 <?php 
-require_once "../models/dbConnect.php";
-require_once "../views/includes/header.php" ?>
+    require_once "../views/includes/header.php" ?>
 
 <?php 
     $isPage = isset($_GET['page']);

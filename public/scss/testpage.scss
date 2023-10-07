@@ -77,6 +77,10 @@
                 font-size: 1.4rem;
                 text-align: center;
                 position: relative;
+
+                .timer.hide {
+                    display: none;
+                }
     
                 .down {
                     font-size: 1.8rem;
@@ -123,7 +127,6 @@
             &.active {
                 filter: blur(0);
                 pointer-events: all;
-                user-select: text;
             }
 
             .number--ques {

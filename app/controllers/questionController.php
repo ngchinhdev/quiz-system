@@ -1,18 +1,18 @@
 <?php
-    require_once("../models/dbConnect.php");
     require_once ("../models/question.php");
-    $question = new Question($conn);
+    $question = new Question();
 
     $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
     $per_page = 1;
     $off_set = ($cur_page - 1) * $per_page;
-    $ma_de = $_GET['id'];
-    $quantity_questions = $question->getQuestionsQuantity($ma_de);
-    $question_data = $question->getCurQuestionData($ma_de, $per_page, $off_set);
+
+    $exam_id = $_GET['examId'];
+    $quantity_questions = $question->getQuestionsQuantity($exam_id);
+    $question_data = $question->getCurQuestionData($exam_id, $per_page, $off_set);
     $answer_data = $question->getCurAnswerData($question_data['ma_cau_hoi']);
-    $time_to_do = $question->getTimeToDo($ma_de);
-    $correct_answers = $question->getCorretAnswers($ma_de);
-    $all_questions_answers = $question->getAllQuestionsAnswers($ma_de);
+    $time_to_do = $question->getTimeToDo($exam_id);
+    $correct_answers = $question->getCorretAnswers($exam_id);
+    $all_questions_answers = $question->getAllQuestionsAnswers($exam_id);
     
     $response = array(
         "dataQuestions" => $question_data,
@@ -27,6 +27,8 @@
         $audio_link = $question->getAudiosData($question_data['ma_cau_hoi']);
         $response["audioLink"] = $audio_link;
     }
+
+    $question->closeConnection();
     
     header('Content-Type: application/json');
     echo json_encode($response);
