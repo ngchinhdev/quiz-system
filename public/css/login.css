@@ -1,0 +1,60 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.pad {
+  height: 63px;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.login {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+.login--container {
+  width: 520px;
+  padding: 1.6rem;
+  margin: 0 auto;
+  border-radius: 0.65rem;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 0 0 rgba(143, 156, 173, 0.2);
+}
+.login--container .log {
+  background: #fff;
+  color: #db4a39;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  padding: 0.5rem 0;
+  margin-top: 1.2rem;
+}
+.login--container .privicy a {
+  color: #35509a;
+}
+.login--container .another a {
+  display: block;
+  padding-top: 2rem;
+  color: #35509a;
+}

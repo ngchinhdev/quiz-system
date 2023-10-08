@@ -1,4 +1,4 @@
-import loadQuestions, { state, countdown } from "./ajax/question.js";
+import loadQuestions, { state, countdown, handleAudioControl } from "./ajax/question.js";
 
 const startBtn = document.querySelector('.start--btn button[name="start"]');
 const finishBtn = document.querySelector('.start--btn button[name="finish"]');
@@ -15,15 +15,16 @@ const restartBtn = document.querySelector('.restart--quiz');
 
 let timer, startTime, endTime, onTime = true;
 
-const transformDataAllQuestions = function(data, transformResult) {
+const transformDataAllQuestions = function(data, state) {
   data.forEach(qa => {
-    const existingQa = transformResult.find(q => q.question === qa.cau_hoi && q.explain === qa.giai_thich);
+    const existingQa = state.transformedData.find(q => q.question === qa.cau_hoi && q.explain === qa.giai_thich);
 
     if (existingQa) {
       existingQa.answers[qa.ma_phuong_an] = qa.phuong_an;
     } else {
-      transformResult.push({
+      state.transformedData.push({
         question: qa.cau_hoi,
+        audioLink: qa.duong_dan,
         explain: qa.giai_thich,
         answers: {
           [qa.ma_phuong_an]: qa.phuong_an
@@ -57,11 +58,11 @@ const handleCheckAnswered = function (list) {
   });
 }
 
-const handleResult = function (state, transformedData) {
+const handleResult = function (state) {
   listResults.innerHTML = '';
   let html = '';
 
-  transformedData.forEach(item => {
+  state.transformedData.forEach(item => {
     let answers = '';
 
     const entriesAnswer = Object.entries(item.answers);
@@ -80,7 +81,10 @@ const handleResult = function (state, transformedData) {
     html += `
            <li class="result--detail">
                <div class="ques">
-                   ${item.question}
+                  <span>${item.question}</span>
+                  ${item.audioLink ? `<span class="audio--btn">
+                      <a href="../../public/audios/${item.audioLink}"></a>
+                  </span>` : ''}
                </div>
                <ul class="anwsers--box">
                   ${answers}
@@ -155,6 +159,7 @@ const handleFinish = function (historyAnwsers, questionQuantity, correctAnswersC
 
   clearInterval(timer);
 
+  startBtn.classList.add('hide');
   finishBtn.classList.remove('active');
   containerBoxquest.classList.add('active');
   containerBoxquest.classList.add('hide');
@@ -163,7 +168,7 @@ const handleFinish = function (historyAnwsers, questionQuantity, correctAnswersC
   displayInforResultsDid(questionQuantity, correctAnswersChose, correctAnswers)
 }
 
-const handleRestartQuiz = function () {
+const handleRestart = function () {
   location.reload();
 }
 
@@ -193,14 +198,15 @@ const start = async function (state) {
     await loadQuestions(state.count);
     
     displayTimeToDo(state.timeToDo);
-    transformDataAllQuestions(state.allQuestionsAnswers, state.transformedData);
+    transformDataAllQuestions(state.allQuestionsAnswers, state);
 
     state.timeToDo === 0 ? handleStartTimer(state.timeToDo) 
                          : startBtn.addEventListener('click', () => handleStartTimer(state.timeToDo));
     finishBtn.addEventListener('click', () => handleFinish(state.historyAnwsers, state.questionQuantity, 
                                                             state.correctAnswersChose, state.correctAnswers));
-    showResultBtn.addEventListener('click', () => handleResult(state, state.transformedData));
-    restartBtn.addEventListener('click', () => handleRestartQuiz());
+    showResultBtn.addEventListener('click', () => handleResult(state));   
+    restartBtn.addEventListener('click', () => handleRestart());
+    handleAudioControl();
   } catch (error) {
     console.error(error);
   }

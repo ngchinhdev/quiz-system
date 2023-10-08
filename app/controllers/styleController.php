@@ -8,4 +8,8 @@
     if($isPage && $_GET['page'] === 'start') {
         echo '<link rel="stylesheet" href="../../public/css/testpage.css">';
     }
+
+    if($isPage && $_GET['page'] === 'login') {
+        echo '<link rel="stylesheet" href="../../public/css/login.css">';
+    }
 ?>

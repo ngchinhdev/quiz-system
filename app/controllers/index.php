@@ -13,6 +13,10 @@
         require_once "../views/exam.php";
     } else if($isPage && $_GET['page'] === 'start') {
         require_once "../views/startQuiz.php";
+    } else if($isPage && $_GET['page'] === 'login') {
+        require_once "oauthController.php";
+    } else if($isPage && $_GET['page'] === 'profile') {
+        require_once "../views/profile.php";
     } else {
         require_once "../views/home.php";
     }

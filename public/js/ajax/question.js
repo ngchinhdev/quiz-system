@@ -17,22 +17,26 @@ export const state = {
     transformedData: []
 };
 
-function generateAudio() {
-    document.querySelector('.audio--btn').addEventListener('click', (e) => handleControl(e));
+export function handleAudioControl() {
+    document.querySelector('.dotest__container').addEventListener('click', (e) => {
+        const btn = e.target.closest('.audio--btn');
 
-    const handleControl = function(e) {
+        if (!btn) return;
+
         e.preventDefault();
+        console.log(btn);
         const audio = new Audio();
-        audio.src = btnAudio.querySelector('a').href;
-    
-        if(audio.paused) {
+        audio.src = btn.querySelector('a').href;
+
+        if (audio.paused) {
             audio.play();
         } else {
             audio.pause();
             audio.currentTime = 0;
         }
-    }
-}
+    })
+};
+
 
 function generateQuestion(dataQuestions, questionQuantity, audioLink) {
     const html = `
@@ -48,8 +52,6 @@ function generateQuestion(dataQuestions, questionQuantity, audioLink) {
         `;
 
     containerQuestion.insertAdjacentHTML('beforeend', html);
-
-    audioLink && generateAudio();
 }
 
 function answerChoice(state) {

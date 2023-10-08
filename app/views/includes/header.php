@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="header__login">
-            <a href="#" class="header__login--register">
+            <a href="index.php?page=login" class="header__login--register">
                 Đăng ký
             </a>
             <a href="#" class="header__login--login">

@@ -274,7 +274,7 @@ input {
 .dotest__container .two--btn button:hover {
   background-color: #ffc003;
 }
-.dotest__container .result--detail {
+.dotest__container .result--detail > .anwsers--box {
   pointer-events: none;
 }
 .dotest__container .explaination {
