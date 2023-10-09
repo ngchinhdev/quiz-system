@@ -6,7 +6,7 @@ function generatePagination(totalPages, activePage) {
 
     for (let i = 1; i <= totalPages; i++) {
         pagination += `
-            <li class="page--item">
+            <li class="pagination--item">
                 <a onclick=loadExam(${i}) class="pagi-link" data-active-page=${i}>${i}</a>
             </li>
         `;
@@ -18,7 +18,7 @@ function generatePagination(totalPages, activePage) {
     const active = document.querySelector(`.pagi-link[data-active-page="${activePage}"]`);
     active && active.classList.add('active');
 
-    let nextBtn = `<li class="page--item">
+    let nextBtn = `<li class="pagination--item">
                         <a onclick=loadExam(${activePage < totalPages ? activePage + 1 : activePage})>
                             <i class="fa-sharp fa-solid fa-angle-right"></i>
                         </a>

@@ -1,5 +1,6 @@
 <?php
     include_once ("pdoModel.php");
+    
     class Exam extends PDOModel {
 
         function getExam($bo_de, $cap_do, $per_page, $offset) {

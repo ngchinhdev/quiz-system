@@ -120,22 +120,46 @@ input {
   margin-left: 4px;
   margin-right: 0.5rem;
 }
-.header__login {
+.header__login .no--logged {
   display: flex;
 }
-.header__login > a {
+.header__login .no--logged > a {
   padding: 0.625rem;
   margin: 0 6px;
   font-size: 0.9rem;
   font-weight: 600;
 }
-.header__login--login {
+.header__login .no--logged .login--btn {
   background-color: #ffcd1f;
   border-radius: 10px;
   transition: 0.2s;
 }
-.header__login--login:hover {
+.header__login .no--logged .login--btn:hover {
   background-color: #ffda54;
+}
+.header__login .logged {
+  display: flex;
+  align-items: center;
+}
+.header__login .logged .announcement {
+  width: 44px;
+  height: 44px;
+  background-color: #ffcd1f;
+  border-radius: 44px;
+  text-align: center;
+  margin-right: 0.8rem;
+}
+.header__login .logged .announcement i {
+  line-height: 44px;
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+.header__login .logged img.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 44px;
+  border: 1px solid #4d5fff;
+  vertical-align: middle;
 }
 .header__search--box {
   border-radius: 20px;
@@ -370,7 +394,7 @@ input {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-.exams__pagination .page--item a {
+.exams__pagination .pagination--item a {
   padding: 0.5rem 0.75rem;
   border: solid 1px #cbcbcb;
   font-size: 1.1rem;
@@ -378,10 +402,10 @@ input {
   transition: 0.1s;
   cursor: pointer;
 }
-.exams__pagination .page--item a:hover {
+.exams__pagination .pagination--item a:hover {
   background-color: #f6f7fb;
 }
-.exams__pagination .page--item a.active {
+.exams__pagination .pagination--item a.active {
   color: #ffffff;
   background-color: #4d5fff;
 }

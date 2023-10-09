@@ -7,7 +7,7 @@ export const state = {
     count: 1,
     questionQuantity: 0,
     timeToDo: 0,
-    historyAnwsers: {},
+    historyAnswers: {},
     dataQuestions: [],
     dataAnswers: [],
     allQuestionsAnswers: [],
@@ -16,6 +16,8 @@ export const state = {
     correctAnswersChose: {},
     transformedData: []
 };
+
+export const historySendData = {};
 
 export function handleAudioControl() {
     document.querySelector('.dotest__container').addEventListener('click', (e) => {
@@ -65,16 +67,16 @@ function answerChoice(state) {
 
         const idQues = curQuestion.dataset.ques;
 
-        state.historyAnwsers[idQues] = anwser.dataset.choose;
+        state.historyAnswers[idQues] = anwser.dataset.choose;
 
         const currActive = document.querySelector('.answer.active') ?? null;
         currActive && currActive.classList.remove('active');
         anwser.classList.add('active');
 
         // Check if anwser not true
-        for (const question in state.historyAnwsers) {
-            if (state.correctAnswers[question] !== state.historyAnwsers[question])
-                state.wrongAnswers[question] = state.historyAnwsers[question];
+        for (const question in state.historyAnswers) {
+            if (state.correctAnswers[question] !== state.historyAnswers[question])
+                state.wrongAnswers[question] = state.historyAnswers[question];
         }
     })
 }
@@ -100,9 +102,9 @@ function generateAnswers(dataAnswers, dataQuestions) {
     
     answerContainer.innerHTML = html;
 
-    const isFound = state.historyAnwsers[dataQuestions.ma_cau_hoi];
+    const isFound = state.historyAnswers[dataQuestions.ma_cau_hoi];
     const answered = isFound && 
-            document.querySelector(`[data-choose="${state.historyAnwsers[dataQuestions.ma_cau_hoi]}"]`);
+            document.querySelector(`[data-choose="${state.historyAnswers[dataQuestions.ma_cau_hoi]}"]`);
     answered && answered.classList.add('active');
     answered && answered.click();
 
@@ -135,6 +137,8 @@ const loadQuestions = async function(question) {
         const subUrl = window.location.href.slice(window.location.href.indexOf('?'));
         const idExam = url.searchParams.get('examId');
 
+        historySendData.idExam = idExam;
+
         const res = await fetch(`../controllers/questionController.php${subUrl}&examId=${idExam}&curpage=${question}`);
         const data = await res.json();
 
@@ -159,9 +163,9 @@ const loadQuestions = async function(question) {
         state.correctAnswers = newCorrectAnswer;
 
         const correctAnswersChose = {};
-        for (const question in state.historyAnwsers) {
-            if (newCorrectAnswer[question] == state.historyAnwsers[question])
-                correctAnswersChose[question] = state.historyAnwsers[question];
+        for (const question in state.historyAnswers) {
+            if (newCorrectAnswer[question] == state.historyAnswers[question])
+                correctAnswersChose[question] = state.historyAnswers[question];
         }
 
         state.correctAnswersChose = correctAnswersChose;

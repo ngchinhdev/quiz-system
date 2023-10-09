@@ -1,4 +1,4 @@
-import loadQuestions, { state, countdown, handleAudioControl } from "./ajax/question.js";
+import loadQuestions, { state, historySendData, countdown, handleAudioControl } from "./ajax/question.js";
 
 const startBtn = document.querySelector('.start--btn button[name="start"]');
 const finishBtn = document.querySelector('.start--btn button[name="finish"]');
@@ -14,6 +14,8 @@ const countTimeLabel = document.querySelector('.time--test .timer');
 const restartBtn = document.querySelector('.restart--quiz');
 
 let timer, startTime, endTime, onTime = true;
+
+historySendData.historyAnswers = state.historyAnswers;
 
 const transformDataAllQuestions = function(data, state) {
   data.forEach(qa => {
@@ -101,7 +103,7 @@ const handleResult = function (state) {
 
   handleStyleCorrectAnswers(state.correctAnswers);
   handleStyleInCorrectAnswers(state.wrongAnswers);
-  handleCheckAnswered(state.historyAnwsers);
+  handleCheckAnswered(state.historyAnswers);
 }
 
 const handleTimer = function (timeToDo) {
@@ -143,8 +145,8 @@ const handleStartTimer = function(timeToDo) {
   timer = handleTimer(timeToDo);
 }
 
-const handleFinish = function (historyAnwsers, questionQuantity, correctAnswersChose, correctAnswers) {
-  if (Object.keys(historyAnwsers).length < questionQuantity && onTime) {
+const handleFinish = function (historyAnswers, questionQuantity, correctAnswersChose, correctAnswers) {
+  if (Object.keys(historyAnswers).length < questionQuantity && onTime) {
     Swal.fire({
       title: 'Thông báo',
       text: 'Bạn chưa làm hết các câu hỏi!!',
@@ -159,13 +161,31 @@ const handleFinish = function (historyAnwsers, questionQuantity, correctAnswersC
 
   clearInterval(timer);
 
+  console.log(historySendData);
+
   startBtn.classList.add('hide');
   finishBtn.classList.remove('active');
   containerBoxquest.classList.add('active');
   containerBoxquest.classList.add('hide');
   resultInfomations.classList.add('active');
 
-  displayInforResultsDid(questionQuantity, correctAnswersChose, correctAnswers)
+  displayInforResultsDid(questionQuantity, correctAnswersChose, correctAnswers);
+
+  // SEND DATA TO SERVER
+  fetch('../controllers/historyController.php', {
+    method: 'POST',
+    body: JSON.stringify(historySendData),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(err => {
+    console.error(err);
+  })
 }
 
 const handleRestart = function () {
@@ -173,14 +193,17 @@ const handleRestart = function () {
 }
 
 const displayInforResultsDid = function(questionQuantity, correctAnswersChose, correctAnswers) {
-  const correctChose = Object.keys(correctAnswersChose).length;
-  const percent = (correctChose / Object.keys(correctAnswers).length) * 100;
+  const correctPoints = Object.keys(correctAnswersChose).length;
+  const percent = (correctPoints / Object.keys(correctAnswers).length) * 100;
   const hour = `${Math.trunc(Math.floor((endTime - startTime) / 1000) / 3600)}`.padStart(2, 0);
   const min = `${Math.trunc(Math.floor((endTime - startTime) / 1000) / 60)}`.padStart(2, 0);
   const sec = String(Math.floor((endTime - startTime) / 1000) % 60).padStart(2, 0);
 
+  historySendData.correctPoints = correctPoints;
+  historySendData.timeDid = Math.floor((endTime - startTime) / 1000);
+
   totalPointLabels.forEach(el => el.textContent = questionQuantity);
-  correctAnswersLabel.forEach(el => el.textContent = correctChose);
+  correctAnswersLabel.forEach(el => el.textContent = correctPoints);
   timeDidLabel.textContent = `${hour}:${min}:${sec}`;
   percentLabel.textContent = percent;
 }
@@ -202,7 +225,7 @@ const start = async function (state) {
 
     state.timeToDo === 0 ? handleStartTimer(state.timeToDo) 
                          : startBtn.addEventListener('click', () => handleStartTimer(state.timeToDo));
-    finishBtn.addEventListener('click', () => handleFinish(state.historyAnwsers, state.questionQuantity, 
+    finishBtn.addEventListener('click', () => handleFinish(state.historyAnswers, state.questionQuantity, 
                                                             state.correctAnswersChose, state.correctAnswers));
     showResultBtn.addEventListener('click', () => handleResult(state));   
     restartBtn.addEventListener('click', () => handleRestart());

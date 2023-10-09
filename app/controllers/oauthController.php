@@ -1,5 +1,6 @@
 <?php
     require_once '../../libs/vendor/autoload.php';
+    // require_once '../models/user.php';
 
     // Init configuration
     $clientID = '55287002966-lng5si4mhmpef5d4o8p0srr12k439acd.apps.googleusercontent.com';
@@ -22,12 +23,26 @@
         // Get profile info
         $google_oauth = new Google_Service_Oauth2($client);
         $google_account_info = $google_oauth->userinfo->get();
-        $email = $google_account_info->email;
+
         $name = $google_account_info->name;
+        $email = $google_account_info->email;
+        $avatar = $google_account_info->picture;
 
-        include ("../views/profile.php");
+        $data_user = array(
+            "name" => $name,
+            "email" => $email,
+            "avatar" => $avatar
+        );
 
-        print_r($google_account_info);
+        foreach($data_user as $key => $value) {
+            setcookie($key, $value, time() + 84000, "/");
+        }
+
+        header("Location: userController.php");
+
+        // $_SESSION['data_user'] = $data_user;
+
+        // header("Location: userController.php");
 
     // Now you can use this profile info to create account in your website and make user logged in.
     } else {

@@ -1,3 +1,149 @@
+@import "reset";
+@import "config";
+
 .profile {
-    
+    margin-top: .8rem;
+    &__container {
+        padding: 1rem;
+        width: 1200px;
+        margin: 0 auto;
+
+        &--informations {
+            width: 85%;
+            position: relative;
+            
+            .left--site {
+                display: inline-flex;
+                align-items: center;
+            }
+
+            h3 {
+                margin-bottom: .4rem;
+                font-size: 1.3rem;
+            }
+
+            .avatar img {
+                width: 68px;
+                height: 68px;
+                border-radius: 68px;
+                border: 2px solid $primary-color;
+                margin-right: 1.6rem;
+            }
+
+            a.log--out {
+                display: inline-block;
+                border-radius: 10px;
+                background-color: $primary-color;
+                border: none;
+                outline: none;
+                color: $white-color;
+                padding: .7rem 1.2rem;
+                font-size: .9rem;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+        }
+
+        &--nav {
+            margin-top: 1.6rem;
+            width: 85%;
+
+            .nav--tab {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: $primary-color;
+                display: flex;
+                
+                .tab {
+                    position: relative;
+                    padding: .8rem 0;
+
+                    &.active::after {
+                        content: "";
+                        height: 2px;
+                        width: 100%;
+                        position: absolute;
+                        background-color: $primary-color;
+                        bottom: 0;
+                        left: 0;
+                    }
+                }
+            }
+        }
+
+        &--rows {
+            margin-top: 1.2rem;
+            width: 85%;
+            display: grid;
+            grid-template-columns: repeat(3, $one-third-calc);
+            justify-content: space-between;
+            row-gap: 1.2rem;
+
+            .col {
+                max-width: 310px;
+
+                .history--item {
+                    padding: 1rem 1.2rem;
+                    border-radius: 13px;
+                    border-bottom: 4px solid $secondary-color;
+                    background: $white-color;
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+                    position: relative;
+                    transition: all 0.3s;
+
+                    & > a.hidden {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        @include absoluteType;
+                    }
+                
+                    &:hover {
+                        transform: translateY(-.1rem);
+                    }
+                }
+
+                .fl {
+                    display: flex;
+                    align-items: center;
+                }
+
+                svg {
+                    margin-right: 0.5rem;
+                }
+
+                .txt {
+                    color: $text-color-blur;
+                    font-size: .9rem;
+                    margin-bottom: .3rem;
+                }
+
+                .kit {
+                    font-size: 1rem;
+                }
+
+                .timeline {
+                    color: $text-color-blur;
+                    font-size: .9rem;
+                    margin-top: 1rem;
+                }
+
+                .title {
+                    margin-bottom: .4rem;
+                    font-size: 1.1rem;
+                }
+            }
+        }
+
+        &--pagination {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+            width: 85%;
+
+            @include paginationItem();
+
+        }
+    }
 }

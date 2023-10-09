@@ -12,4 +12,8 @@
     if($isPage && $_GET['page'] === 'login') {
         echo '<link rel="stylesheet" href="../../public/css/login.css">';
     }
+
+    if($isPage && $_GET['page'] === 'profile') {
+        echo '<link rel="stylesheet" href="../../public/css/profile.css">';
+    }
 ?>

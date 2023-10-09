@@ -9,4 +9,8 @@
         // echo '<script src="../../public/js/ajax/question.js"></script>';
         echo '<script type="module" src="../../public/js/start.js"></script>';
     }
+
+    if($isPage && $_GET['page'] === 'profile') {
+        echo '<script src="../../public/js/ajax/history.js"></script>';
+    }
 ?>

@@ -1,5 +1,7 @@
 <?php 
-    require_once "../views/includes/header.php" ?>
+    // session_start();
+    require_once "../views/includes/header.php" 
+?>
 
 <?php 
     $isPage = isset($_GET['page']);

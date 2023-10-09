@@ -30,6 +30,8 @@
             try {
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute($sql_args);
+
+                return $this->conn->lastInsertId();
             } catch(PDOException $e) {
                 throw $e;
             }

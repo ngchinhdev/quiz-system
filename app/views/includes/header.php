@@ -55,7 +55,7 @@
                     <a href="levelpage.html" class="header__nav--link">Đề thi</a>
                 </li>
                 <li class="header__nav--item">
-                    <a href="#" class="header__nav--link">Lịch sử học</a>
+                    <a href="../controllers/historyController.php" class="header__nav--link">Lịch sử học</a>
                 </li>
                 <li class="header__nav--item">
                     <a href="#" class="header__nav--link">Hỗ trợ <i class="fa-sharp fa-regular fa-circle-question"></i></a>
@@ -69,11 +69,27 @@
             </div>
         </div>
         <div class="header__login">
-            <a href="index.php?page=login" class="header__login--register">
-                Đăng ký
-            </a>
-            <a href="#" class="header__login--login">
-                Đăng nhập
-            </a>
+            <?php 
+                if(!isset($_COOKIE['is_user'])) {
+                    echo '<div class="no--logged">
+                            <a href="index.php?page=login" class="register--btn">
+                                Đăng ký
+                            </a>
+                            <a href="#" class="login--btn">
+                                Đăng nhập
+                            </a>
+                        </div>';
+                } else {
+                    echo '<div class="logged">
+                            <div class="announcement">
+                                <i class="fa-sharp fa-regular fa-bell"></i>
+                            </div>
+                            <a href="index.php?page=profile">
+                                <img src="'.$_COOKIE['avatar'].'" alt="" class="avatar">
+                            </a>
+                        </div>';
+                }
+            ?>
+            
         </div>
     </header>
