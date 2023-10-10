@@ -24,22 +24,22 @@
             // echo json_encode($time_did);
         } else {
             $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
-            $per_page = 1;
+            $per_page = 9;
             $offset = ($cur_page - 1) * $per_page;
 
             $data_history = $history->getHistory($user_id, $per_page, $offset);
             $total_records = $history->getTotalRecords($user_id);
+            $pagi_num = ceil($total_records / $per_page);
 
             $res = array(
                 "data" => $data_history,
-                "totalRecords" => $total_records
+                "totalPagi" => $pagi_num
             );
 
             header('Content-Type: application/json');
             echo json_encode($res);
         }
 
-        // header("Location: index.php?page=profile"); 
     } else {
         echo 'cut';
     }

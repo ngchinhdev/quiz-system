@@ -1,10 +1,12 @@
 const historyContainer = document.querySelector('.profile__container--rows');
 const paginationContainer = document.querySelector('.profile__container--pagination');
 
-const generatePagination = function (totalPages, activePage) {
+const generatePagination = function (totalPagi, activePage) {
+
+    console.log(totalPagi);
     let pagination = '';
 
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= totalPagi; i++) {
         pagination += `
             <li class="pagination--item">
                 <a onclick=loadHistory(${i}) class="pagi-link" data-active-page="${i}">${i}</a>       
@@ -19,12 +21,12 @@ const generatePagination = function (totalPages, activePage) {
     active && active.classList.add('active');
 
     let nextBtn = `<li class="pagination--item">
-                        <a onclick=loadHistory(${activePage < totalPages ? activePage + 1 : activePage})>
+                        <a onclick=loadHistory(${activePage < totalPagi ? activePage + 1 : activePage})>
                             <i class="fa-sharp fa-solid fa-angle-right"></i>
                         </a>
                 </li>`;
 
-    if (totalPages > 1) {
+    if (totalPagi > 1) {
         paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
     }
 }
@@ -64,7 +66,7 @@ const generateHistories = function(data) {
                                     </clipPath>
                                 </defs>
                             </svg>
-                            Đã làm vào: <span>${history.thoi_diem}</span>
+                            Đã làm vào: <span> ${history.thoi_diem}</span>
                         </div>
                     </div>
                 </div>`;
@@ -81,7 +83,7 @@ const loadHistory = function(page) {
             console.log(data);
 
             generateHistories(data.data);
-            generatePagination(data.totalRecords, page);
+            generatePagination(data.totalPagi, page);
         })
         .catch(err => console.error(err))
 }
