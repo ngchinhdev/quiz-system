@@ -27,6 +27,14 @@ input {
   outline: none;
 }
 
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .header {
   display: flex;
   align-items: center;
@@ -317,7 +325,7 @@ input {
   grid-template-columns: repeat(5, 200px);
   margin-top: 30px;
 }
-.exams__container--item {
+.exams__container .exam--column {
   box-shadow: 0 4px 0 0 rgba(143, 156, 173, 0.2);
   border: 1px solid #e0e0e0;
   border-radius: 0.65rem;
@@ -327,7 +335,7 @@ input {
   padding-bottom: 3.6rem;
   transition: all 0.3s;
 }
-.exams__container--item > a.hidden {
+.exams__container .exam--column > a.hidden {
   display: block;
   width: 100%;
   height: 100%;
@@ -335,23 +343,23 @@ input {
   top: 0;
   left: 0;
 }
-.exams__container--item:hover {
+.exams__container .exam--column:hover {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   transform: translateY(-0.1rem);
 }
-.exams__container--item h3 {
+.exams__container .exam--column h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
-.exams__container--item span {
+.exams__container .exam--column span {
   font-weight: 600;
   color: #677788;
   line-height: 1.6;
 }
-.exams__container--item span i {
+.exams__container .exam--column span i {
   margin-right: 6px;
 }
-.exams__container--item a.do {
+.exams__container .exam--column a.do {
   text-align: center;
   margin-top: 20px;
   border: 0.5px solid #4d5fff;
@@ -366,11 +374,11 @@ input {
   left: 1rem;
   transition: all 0.2s;
 }
-.exams__container--item a.do:hover {
+.exams__container .exam--column a.do:hover {
   color: #ffffff;
   background-color: #4d5fff;
 }
-.exams__container--item .tag {
+.exams__container .exam--column .tag {
   display: inline-block;
   margin-top: 10px;
   font-size: 12px;

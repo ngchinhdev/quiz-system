@@ -19,6 +19,10 @@
         require_once "oauthController.php";
     } else if($isPage && $_GET['page'] === 'profile') {
         require_once "../views/profile.php";
+    } else if($isPage && $_GET['page'] === 'support') {
+        require_once "../views/feedback.php";
+    } else if($isPage && $_GET['page'] === 'list') {
+        require_once "../views/exam.php";
     } else {
         require_once "../views/home.php";
     }

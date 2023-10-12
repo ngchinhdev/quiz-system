@@ -3,9 +3,9 @@
     <div class="lv__wrapper">
         <div class="lv__content">
             <div class="lv__content--left">
-                <h1>Các <?php echo $title[$_GET['type']] . ' ' .
-                            $title[$_GET['topic']] . ' ' . 'cấp độ ' .
-                            mb_strtoupper($title[$_GET['level']]); ?>
+                <h1><?php echo $_GET['type'] === 'exam' ? 'Thư viện đề thi' : 'Các '.$title[$_GET['type']] . ' ' .
+                            $title[$_GET['topic']] . ' ' . 'cấp độ ' . mb_strtoupper($title[$_GET['level']]); 
+                    ?>
                 </h1>
                 <div class="search--control">
                     <div class="search--box">
@@ -16,21 +16,23 @@
                 </div>
             </div>
             <div class="lv__content--right">
+                <?php if(isset($_COOKIE['is_user'])): ?>
                 <div class="profile">
-                    <img src="../../public/imgs/vocab.jpg" alt="Avatar">
+                    <img src="<?= $_COOKIE['avatar'] ?>" alt="Avatar">
                     <div class="name">
-                        chinhnguyen
+                        <?= substr($_COOKIE['email'], 0, strpos($_COOKIE['email'], '@')) ?>
                     </div>
                     <span class="note">
                         <i class="fa-sharp fa-solid fa-bars-progress"></i>
                         <i>Xem lịch sử bạn đã học</i>
                     </span>
                     <div class="divide"></div>
-                    <a href="#" class="statistic">
+                    <a href="index.php?page=profile" class="statistic">
                         <i class="fa-sharp fa-solid fa-chart-line"></i>
                         Thống kê kết quả
                     </a>
                 </div>
+                <?php endif ?>
             </div>
         </div>
 
@@ -41,7 +43,7 @@
             </ul>
 
             <div class="lv__main--row">
-                <div class="row__left">
+                <div class="exam">
                  
                 </div>
                 <div class="row__right">

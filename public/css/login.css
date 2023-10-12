@@ -27,6 +27,14 @@ input {
   outline: none;
 }
 
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .login {
   padding-top: 2rem;
   padding-bottom: 3rem;

@@ -34,8 +34,15 @@
 
         public function getAudiosData($question_id) {
             $sql = "SELECT duong_dan FROM am_thanh WHERE ma_cau_hoi = $question_id";
-
-            return $this->pdoQueryValue($sql);
+            
+            $countSql = "SELECT COUNT(*) FROM am_thanh WHERE ma_cau_hoi = $question_id";
+            $rowCount = $this->pdoQueryValue($countSql);
+            
+            if ($rowCount > 0) {
+                return $this->pdoQueryValue($sql);
+            } else {
+                return null;
+            }
         }
 
         public function getTimeToDo($ma_de) {

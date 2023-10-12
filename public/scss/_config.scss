@@ -90,7 +90,7 @@ $one-third-calc: calc(100% / 3);
         }
 
         &.correct {
-            border: 2px solid $success-color;
+            border: 2px solid $success-color !important;
         }
 
         &.incorrect {
@@ -181,4 +181,14 @@ $one-third-calc: calc(100% / 3);
     border-#{$position1}: 50px solid transparent;
     #{$position2}: 0;
     #{$position1}: -50px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

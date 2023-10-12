@@ -12,7 +12,6 @@ export const state = {
     dataAnswers: [],
     allQuestionsAnswers: [],
     correctAnswers: [],
-    wrongAnswers: {},
     correctAnswersChose: {},
     transformedData: []
 };
@@ -72,12 +71,6 @@ function answerChoice(state) {
         const currActive = document.querySelector('.answer.active') ?? null;
         currActive && currActive.classList.remove('active');
         anwser.classList.add('active');
-
-        // Check if anwser not true
-        for (const question in state.historyAnswers) {
-            if (state.correctAnswers[question] !== state.historyAnswers[question])
-                state.wrongAnswers[question] = state.historyAnswers[question];
-        }
     })
 }
 
@@ -173,7 +166,6 @@ const loadQuestions = async function(question) {
         containerQuestion.innerHTML = '';
 
         rule.textContent = questionQuantity;
-        countdown.textContent = timeToDo;
 
         generateQuestion(dataQuestions, questionQuantity, audioLink);
         generateAnswers(dataAnswers, dataQuestions);

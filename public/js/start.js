@@ -1,4 +1,5 @@
 import loadQuestions, { state, historySendData, countdown, handleAudioControl } from "./ajax/question.js";
+import { transformDataAllQuestions, handleResult } from "./result.js";
 
 const startBtn = document.querySelector('.start--btn button[name="start"]');
 const finishBtn = document.querySelector('.start--btn button[name="finish"]');
@@ -16,95 +17,6 @@ const restartBtn = document.querySelector('.restart--quiz');
 let timer, startTime, endTime, onTime = true;
 
 historySendData.historyAnswers = state.historyAnswers;
-
-const transformDataAllQuestions = function(data, state) {
-  data.forEach(qa => {
-    const existingQa = state.transformedData.find(q => q.question === qa.cau_hoi && q.explain === qa.giai_thich);
-
-    if (existingQa) {
-      existingQa.answers[qa.ma_phuong_an] = qa.phuong_an;
-    } else {
-      state.transformedData.push({
-        question: qa.cau_hoi,
-        audioLink: qa.duong_dan,
-        explain: qa.giai_thich,
-        answers: {
-          [qa.ma_phuong_an]: qa.phuong_an
-        }
-      })
-    }
-  })
-}
-
-const handleStyleCorrectAnswers = function (list) {
-  const idsCorrect = Object.values(list);
-
-  idsCorrect.forEach(id => {
-    document.querySelector(`[data-id-anwser="${id}"]`).classList.add('correct');
-  });
-}
-
-const handleStyleInCorrectAnswers = function (list) {
-  const idsCorrect = Object.values(list);
-
-  idsCorrect.forEach(id => {
-    document.querySelector(`[data-id-anwser="${id}"]`).classList.add('incorrect');
-  });
-}
-
-const handleCheckAnswered = function (list) {
-  const idsCorrect = Object.values(list);
-
-  idsCorrect.forEach(id => {
-    document.querySelector(`label[data-id-anwser="${id}"] > input`).checked = true;
-  });
-}
-
-const handleResult = function (state) {
-  listResults.innerHTML = '';
-  let html = '';
-
-  state.transformedData.forEach(item => {
-    let answers = '';
-
-    const entriesAnswer = Object.entries(item.answers);
-
-    for (const [id, answer] of entriesAnswer) {
-      answers += `
-          <li class="anwser--item">
-            <label class="answer" for="anwser-${id}" data-id-anwser="${id}">
-                <input type="radio" name="anws-${id}" id="anwser-${id}">
-                ${answer}
-            </label>
-          </li>
-      `;
-    }
-
-    html += `
-           <li class="result--detail">
-               <div class="ques">
-                  <span>${item.question}</span>
-                  ${item.audioLink ? `<span class="audio--btn">
-                      <a href="../../public/audios/${item.audioLink}"></a>
-                  </span>` : ''}
-               </div>
-               <ul class="anwsers--box">
-                  ${answers}
-               </ul>
-               <div class="explaination">
-                   <img src="../../public/imgs/lightbulb.png" alt="">
-                   ${item.explain}
-               </div>
-           </li>
-         `;
-  })
-
-  listResults.insertAdjacentHTML('beforeend', html);
-
-  handleStyleCorrectAnswers(state.correctAnswers);
-  handleStyleInCorrectAnswers(state.wrongAnswers);
-  handleCheckAnswered(state.historyAnswers);
-}
 
 const handleTimer = function (timeToDo) {
   let time = timeToDo;
@@ -216,18 +128,20 @@ const displayTimeToDo = function(time) {
   countdown.textContent = `${hour}:${min}:${sec}`;
 }
 
+
 const start = async function (state) {
   try {
     await loadQuestions(state.count);
     
     displayTimeToDo(state.timeToDo);
-    transformDataAllQuestions(state.allQuestionsAnswers, state);
+    transformDataAllQuestions(state.allQuestionsAnswers, state.transformedData);
 
     state.timeToDo === 0 ? handleStartTimer(state.timeToDo) 
                          : startBtn.addEventListener('click', () => handleStartTimer(state.timeToDo));
     finishBtn.addEventListener('click', () => handleFinish(state.historyAnswers, state.questionQuantity, 
                                                             state.correctAnswersChose, state.correctAnswers));
-    showResultBtn.addEventListener('click', () => handleResult(state));   
+    showResultBtn.addEventListener('click', () => handleResult(state.historyAnswers, state.correctAnswers,
+                                                                state.transformedData, listResults));   
     restartBtn.addEventListener('click', () => handleRestart());
     handleAudioControl();
   } catch (error) {

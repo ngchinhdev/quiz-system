@@ -1,6 +1,10 @@
+import { loadExam } from "./public/js/ajax/exam.js";
+
 const subNav = document.querySelector('.header__subnav');
 const subNavBtn = document.querySelector('.toggle-nav');
 const navLevelLinks = document.querySelectorAll('.nav__level--link');
+const examContainer = document.querySelector('.exams__container');
+const paginationContainer = document.querySelector('.exams__pagination');
 
 subNavBtn.addEventListener('click', function (e) {
     e.preventDefault();
@@ -21,3 +25,5 @@ subNav.addEventListener('mouseover', function (e) {
         l.href = link[i];
     });
 })
+
+loadExam(1, examContainer, paginationContainer);

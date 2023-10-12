@@ -52,7 +52,7 @@
                     </div>
                 </li>
                 <li class="header__nav--item">
-                    <a href="levelpage.html" class="header__nav--link">Đề thi</a>
+                    <a href="index.php?page=list&type=exam" class="header__nav--link">Đề thi</a>
                 </li>
                 <li class="header__nav--item">
                     <a href="<?php echo isset($_COOKIE['is_user']) 
@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="header__nav--item">
-                    <a href="#" class="header__nav--link">Hỗ trợ <i class="fa-sharp fa-regular fa-circle-question"></i></a>
+                    <a href="index.php?page=support" class="header__nav--link">Hỗ trợ <i class="fa-sharp fa-regular fa-circle-question"></i></a>
                 </li>
             </ul>
         </div>

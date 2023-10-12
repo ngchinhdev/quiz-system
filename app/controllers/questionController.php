@@ -9,6 +9,7 @@
     $exam_id = $_GET['examId'];
     $quantity_questions = $question->getQuestionsQuantity($exam_id);
     $question_data = $question->getCurQuestionData($exam_id, $per_page, $off_set);
+    $audio_link = $question->getAudiosData($question_data['ma_cau_hoi']);
     $answer_data = $question->getCurAnswerData($question_data['ma_cau_hoi']);
     $time_to_do = $question->getTimeToDo($exam_id);
     $correct_answers = $question->getCorretAnswers($exam_id);
@@ -17,16 +18,12 @@
     $response = array(
         "dataQuestions" => $question_data,
         "questionQuantity" => $quantity_questions,
+        "audioLink" => $audio_link,
         "dataAnswers" => $answer_data,
         "timeToDo" => $time_to_do,
         "correctAnswers" => $correct_answers,
         "allQuestionsAnswers" => $all_questions_answers
     );
-
-    if(isset($_GET['topic']) && $_GET['topic'] === 'listening') {
-        $audio_link = $question->getAudiosData($question_data['ma_cau_hoi']);
-        $response["audioLink"] = $audio_link;
-    }
 
     $question->closeConnection();
     

@@ -28,5 +28,8 @@
         <ul class="profile__container--pagination">
            
         </ul>
+        <ul class="profile__list--results">
+
+        </ul>
     </div>
 </section>

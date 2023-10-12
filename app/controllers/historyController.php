@@ -14,14 +14,13 @@
             $time_did = (int)$data['timeDid'];
             $history_choose = $data['historyAnswers'];
 
+            $history->addViews($exam_id);
             $last_id = $history->addHistory($time_did, $points, $user_id , $exam_id);
     
             foreach($history_choose as $ques => $ans) {
                 $history->addHistoryAnswers($ans, $last_id, $ques);
             }
     
-            // header('Content-Type: application/json');
-            // echo json_encode($time_did);
         } else {
             $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
             $per_page = 9;
@@ -39,8 +38,5 @@
             header('Content-Type: application/json');
             echo json_encode($res);
         }
-
-    } else {
-        echo 'cut';
     }
 ?>

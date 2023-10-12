@@ -16,4 +16,8 @@
     if($isPage && $_GET['page'] === 'profile') {
         echo '<link rel="stylesheet" href="../../public/css/profile.css">';
     }
+
+    if($isPage && $_GET['page'] === 'support') {
+        echo '<link rel="stylesheet" href="../../public/css/feedback.css">';
+    }
 ?>

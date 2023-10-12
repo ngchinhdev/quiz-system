@@ -1,34 +1,47 @@
+import { transformDataAllQuestions, handleResult } from "../result.js";
+
 const historyContainer = document.querySelector('.profile__container--rows');
 const paginationContainer = document.querySelector('.profile__container--pagination');
+const listHistories = document.querySelector('.profile__list--results');
 
 const generatePagination = function (totalPagi, activePage) {
-
-    console.log(totalPagi);
     let pagination = '';
 
     for (let i = 1; i <= totalPagi; i++) {
         pagination += `
             <li class="pagination--item">
-                <a onclick=loadHistory(${i}) class="pagi-link" data-active-page="${i}">${i}</a>       
+                <a class="pagi-link" data-active="${i}">${i}</a>       
             </li>
         `;
     }
 
+    paginationContainer.addEventListener('click', function(e) {
+        const pagiBtn = e.target.classList.contains('pagi-link');
+
+        if(!pagiBtn) return;
+
+        loadHistory(+e.target.dataset.active);
+    })
+
     paginationContainer.innerHTML = '';
     paginationContainer.insertAdjacentHTML('afterbegin', pagination);
 
-    const active = document.querySelector(`.pagi-link[data-active-page="${activePage}"]`);
+    const active = document.querySelector(`.pagi-link[data-active="${activePage}"]`);
     active && active.classList.add('active');
 
-    let nextBtn = `<li class="pagination--item">
-                        <a onclick=loadHistory(${activePage < totalPagi ? activePage + 1 : activePage})>
+    let nextBtnHmtl = `<li class="pagination--item">
+                        <a class="next--pagi">
                             <i class="fa-sharp fa-solid fa-angle-right"></i>
                         </a>
                 </li>`;
 
     if (totalPagi > 1) {
-        paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
+        paginationContainer.insertAdjacentHTML('beforeend', nextBtnHmtl);
     }
+
+    const btnNext = document.querySelector('.next--pagi')
+    btnNext && btnNext.addEventListener('click', 
+            () => loadHistory(activePage < totalPagi ? activePage + 1 : activePage));
 }
 
 const generateHistories = function(data) {
@@ -36,13 +49,12 @@ const generateHistories = function(data) {
 
     data.forEach(history => {
         html += `<div class="col">
-                    <div class="history--item">
-                        <a href="" class="hidden"></a>
-                        <h3 class="title">
+                    <div class="history--item" data-id="${history.ma_lich_su}">
+                        <h3 class="title" data-exam="${history.ma_de}">
                             ${history.ten_de}
                         </h3>
                         <div class="kit txt">
-                            Bộ đề test: <span>${history.bo_de}</span><span> (${(history.cap_do).toUpperCase()})</span>
+                            Bộ đề test: <span>${history.bo_de}</span><span> (${(history.cap_do)?.toUpperCase()})</span>
                         </div>
                         <div class="time--did fl txt">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -80,7 +92,7 @@ const loadHistory = function(page) {
     fetch(`../controllers/historyController.php?curpage=${page}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            console.log(page);
 
             generateHistories(data.data);
             generatePagination(data.totalPagi, page);
@@ -89,3 +101,70 @@ const loadHistory = function(page) {
 }
 
 loadHistory(1);
+
+
+//////////////////////////////////////////////////////////////////////
+function handleAudioControl() {
+    document.querySelector('.profile__list--results').addEventListener('click', (e) => {
+        const btn = e.target.closest('.audio--btn');
+
+        if (!btn) return;
+
+        e.preventDefault();
+        console.log(btn);
+        const audio = new Audio();
+        audio.src = btn.querySelector('a').href;
+
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    })
+};
+    
+const handleHistoryDetail = function() {
+    historyContainer.addEventListener('click', function(e) {
+        
+        const historyItem = e.target.closest('.history--item');
+        
+        if(!historyItem) return;
+
+        listHistories.classList.remove('show');
+
+        document.querySelector('.history--item.choose')?.classList.remove('choose');
+        historyItem.classList.add('choose');
+
+        const examId = historyItem.querySelector('.title').dataset.exam;
+        const historyId = historyItem.dataset.id;
+
+        fetch(`../controllers/historyDetailController.php?historyId=${historyId}&examId=${examId}`)
+            .then(res => res.json())
+            .then(data => {
+                let transformedData = [], correctAnswers = [], historyAnswers = {};
+
+                transformDataAllQuestions(data.originData, transformedData);
+
+                historyAnswers = data.detailData.reduce((acc, cur) => {
+                    acc[String(cur['ma_cau_hoi'])] = cur['dap_an_chon'];
+
+                    return acc;
+                }, {});
+
+                correctAnswers = data.correctAnswers.reduce((acc, cur) => {
+                    acc[String(cur['ma_cau_hoi'])] = cur['ma_phuong_an'];
+
+                    return acc;
+                }, {});
+
+                listHistories.classList.add('show');
+                handleResult(historyAnswers, correctAnswers, transformedData, listHistories);
+                
+            })
+            .catch(err => console.error(err))
+    })
+}
+
+handleHistoryDetail();
+handleAudioControl();

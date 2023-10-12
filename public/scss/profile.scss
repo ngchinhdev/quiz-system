@@ -84,6 +84,7 @@
                 max-width: 310px;
 
                 .history--item {
+                    cursor: pointer;
                     padding: 1rem 1.2rem;
                     border-radius: 13px;
                     border-bottom: 4px solid $secondary-color;
@@ -91,6 +92,11 @@
                     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
                     position: relative;
                     transition: all 0.3s;
+
+                    &.choose {
+                        border-bottom: 4px solid $primary-color;
+                        transform: translateY(-.1rem);
+                    }
 
                     & > a.hidden {
                         display: block;
@@ -144,6 +150,46 @@
 
             @include paginationItem();
 
+        }
+
+        @include question();
+
+        // Result
+        .profile__list--results {
+            margin-bottom: 6rem;
+            margin-top: 1rem;
+            width: 85%;
+            display: none;
+
+            &.show {
+                display: block;
+            }
+
+            .spinner img {
+                height: 50px;
+                width: 50px;
+                text-align: center;
+                animation: rotate 2s infinite linear;
+            }
+
+            .result--detail > .anwsers--box {
+                pointer-events: none;
+            }
+    
+            .explaination {
+                background-color: #f0f3f6;
+                border: 2px solid #e2e7ed;
+                border-radius: 6px;
+                box-shadow: none;
+                color: #728188;
+                margin: 1em 0;
+                padding: 20px;
+                position: relative;
+    
+                img {
+                    margin-right: 10px;
+                }
+            }
         }
     }
 }
