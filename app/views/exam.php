@@ -1,4 +1,4 @@
-<?php include_once("../models/constants.php") ?>
+<?php include_once("../../configs/constants.php") ?>
 <section class="lv">
     <div class="lv__wrapper">
         <div class="lv__content">

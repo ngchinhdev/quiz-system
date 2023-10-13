@@ -49,7 +49,7 @@
         </div>
     </footer>
     
-    <script type="module" src="../../main.js"></script>
+    <script type="module" src="../../public/js/jsapp/app.js"></script>
     <?php include_once("../controllers/jsController.php") ?>
     
 </body>

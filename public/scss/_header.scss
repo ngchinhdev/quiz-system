@@ -62,7 +62,7 @@
                     display: flex;
                 }
 
-                .wwrr {
+                .header__nav--topic {
                     width: 300px;
                     
                     li {
@@ -73,6 +73,10 @@
                     li:hover {
                         background-color: $bg-color-primary;
                     }
+
+                    li.active {
+                        background-color: $bg-color-primary;
+                    }
                 }
 
 
@@ -80,6 +84,34 @@
                     margin-right: 10px;
                 }
 
+                i.vocab {
+                    color: green;
+                }
+
+                i.gram {
+                    color: red;
+                }
+
+                i.lis {
+                    color: blue;
+                }
+                
+                i.read {
+                    color: orange;
+                }
+
+                i.easy {
+                    color: rgb(0, 128, 255);
+                }
+
+                i.med {
+                    color: rgb(242, 0, 255);
+                }
+
+                i.adv {
+                    color: rgb(0, 255, 13);
+                }
+                    
                 .arrow {
                     float: right;
                     font-size: 0.8rem;
@@ -175,6 +207,7 @@
             padding-top: 10px;
             padding-bottom: 10px;
             background-color: transparent;
+            width: 100%;
         }
         
         i {

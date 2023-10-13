@@ -95,18 +95,42 @@ input {
 .header__nav--list li:first-child .header__subnav.active {
   display: flex;
 }
-.header__nav--list li:first-child .header__subnav .wwrr {
+.header__nav--list li:first-child .header__subnav .header__nav--topic {
   width: 300px;
 }
-.header__nav--list li:first-child .header__subnav .wwrr li {
+.header__nav--list li:first-child .header__subnav .header__nav--topic li {
   padding: 0.7rem 1rem;
   position: relative;
 }
-.header__nav--list li:first-child .header__subnav .wwrr li:hover {
+.header__nav--list li:first-child .header__subnav .header__nav--topic li:hover {
+  background-color: #f6f7fb;
+}
+.header__nav--list li:first-child .header__subnav .header__nav--topic li.active {
   background-color: #f6f7fb;
 }
 .header__nav--list li:first-child .header__subnav i.subject {
   margin-right: 10px;
+}
+.header__nav--list li:first-child .header__subnav i.vocab {
+  color: green;
+}
+.header__nav--list li:first-child .header__subnav i.gram {
+  color: red;
+}
+.header__nav--list li:first-child .header__subnav i.lis {
+  color: blue;
+}
+.header__nav--list li:first-child .header__subnav i.read {
+  color: orange;
+}
+.header__nav--list li:first-child .header__subnav i.easy {
+  color: rgb(0, 128, 255);
+}
+.header__nav--list li:first-child .header__subnav i.med {
+  color: rgb(242, 0, 255);
+}
+.header__nav--list li:first-child .header__subnav i.adv {
+  color: rgb(0, 255, 13);
 }
 .header__nav--list li:first-child .header__subnav .arrow {
   float: right;
@@ -182,6 +206,7 @@ input {
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: transparent;
+  width: 100%;
 }
 .header__search--box i {
   color: #656464;

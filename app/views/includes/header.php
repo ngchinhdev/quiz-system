@@ -22,32 +22,32 @@
                 <li class="header__nav--item">
                     <a href="#" class="header__nav--link toggle-nav">Bài test <i class="fa-sharp fa-solid fa-angle-down"></i></a>
                     <div class="header__subnav">
-                        <ul class="wwrr">
+                        <ul class="header__nav--topic">
                             <li class="header__subnav--item" data-link="0">
-                                <i class="fa-sharp fa-solid fa-pen subject"></i>
+                                <i class="fa-sharp fa-solid fa-pen subject vocab"></i>
                                 Từ vựng
                                 <i class="fa-sharp fa-solid fa-angle-right arrow"></i>
                             </li>
                             <li class="header__subnav--item" data-link="1">
-                                <i class="fa-sharp fa-solid fa-spell-check subject"></i>
+                                <i class="fa-sharp fa-solid fa-spell-check subject gram"></i>
                                 Ngữ pháp
                                 <i class="fa-sharp fa-solid fa-angle-right arrow"></i>
                             </li>
                             <li class="header__subnav--item" data-link="2">
-                                <i class="fa-sharp fa-solid fa-book-open subject"></i>
-                                Đọc hiểu
+                                <i class="fa-sharp fa-solid fa-headphones subject lis"></i>
+                                Kỹ năng nghe
                                 <i class="fa-sharp fa-solid fa-angle-right arrow"></i>
                             </li>
                             <li class="header__subnav--item" data-link="3">
-                                <i class="fa-sharp fa-solid fa-headphones subject"></i>
-                                Kỹ năng nghe
+                                <i class="fa-sharp fa-solid fa-book-open subject read"></i>
+                                Đọc hiểu
                                 <i class="fa-sharp fa-solid fa-angle-right arrow"></i>
                             </li>
                         </ul>
                         <ul class="header__nav--level">
-                            <li><a href="#" class="nav__level--link"><i class="fa-sharp fa-solid fa-bolt"></i> Cơ bản</a></li>
-                            <li><a href="#" class="nav__level--link"><i class="fa-sharp fa-solid fa-hourglass-start"></i> Trung bình</a></li>
-                            <li><a href="#" class="nav__level--link"><i class="fa-sharp fa-solid fa-crown"></i> Nâng cao</a></li>
+                            <li><a href="#" class="nav__level--link"><i class="fa-sharp fa-solid fa-bolt easy"></i> Cơ bản</a></li>
+                            <li><a href="#" class="nav__level--link"><i class="fa-sharp fa-solid fa-hourglass-start med"></i> Trung bình</a></li>
+                            <li><a href="#" class="nav__level--link"><i class="fa-sharp fa-solid fa-crown adv"></i> Nâng cao</a></li>
                         </ul>
                     </div>
                 </li>

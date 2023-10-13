@@ -1,5 +1,5 @@
 <?php
-    include_once ("pdoModel.php");
+    include_once ("../../configs/pdoModel.php");
     class Question extends PDOModel {
 
         public function getAllQuestionsAnswers($ma_de) {
