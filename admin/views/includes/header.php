@@ -39,7 +39,7 @@
         </header>
         <aside>
             <div class="logo">
-                <a href="#<?= $_SERVER['PHP_SELF']?>"><img src="../../public/imgs/logo.png" alt=""></a>
+                <a href="<?= $_SERVER['PHP_SELF']?>"><img src="../../public/imgs/logo.png" alt=""></a>
             </div>
             <ul class="sidebar_menu">
                 <li class="active">
@@ -110,3 +110,5 @@
                 </li>
             </ul>
         </aside>
+        <main>
+            <div class="container">

@@ -21,7 +21,7 @@ body {
 
 .grid_container {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "sidebar header header header"
         "sidebar main main main"
     ;
@@ -75,7 +75,7 @@ header .right_site .icon-box {
     align-items: center;
 }
 
-header .right_site .icon-box > div {
+header .right_site .icon-box>div {
     position: relative;
 }
 
@@ -96,8 +96,8 @@ header .right_site .icon-box .pulse {
     top: -12px;
     right: -4px;
     height: 20px;
-    width: 20px;    
-    z-index: 10;  
+    width: 20px;
+    z-index: 10;
     border: 12px solid #dd0000;
     border-radius: 50px;
     animation: pulse 1s linear infinite;
@@ -134,7 +134,7 @@ aside .sidebar_menu {
     border-top: 1px solid #FFC003;
 }
 
-aside .sidebar_menu > li span {
+aside .sidebar_menu>li span {
     display: block;
     width: 100%;
     padding: 12px 16px 12px 16px;
@@ -144,16 +144,16 @@ aside .sidebar_menu > li span {
     transition: 0.3s;
 }
 
-aside .sidebar_menu > li span:hover {
+aside .sidebar_menu>li span:hover {
     background-color: #dfe0eb;
 }
 
-aside .sidebar_menu > li.active span {
+aside .sidebar_menu>li.active span {
     background-color: #4d5fff;
     color: white;
 }
 
-aside .sidebar_menu > li span {
+aside .sidebar_menu>li span {
     display: flex;
     align-items: center;
 }
@@ -161,13 +161,14 @@ aside .sidebar_menu > li span {
 aside .sidebar_menu .mar {
     margin-right: 20px;
 }
+
 aside .sidebar_menu svg {
     width: 22px;
     height: 22px;
     margin-right: 20px;
 }
 
-aside .sidebar_menu > li.active path {
+aside .sidebar_menu>li.active path {
     fill: white !important;
 }
 
@@ -191,7 +192,7 @@ aside .ctg-prod.active {
     height: 100px;
 }
 
-aside .ctg-prod > li:first-child a {
+aside .ctg-prod>li:first-child a {
     padding-top: 20px;
 }
 
@@ -202,7 +203,7 @@ aside .ctg-prod a {
     cursor: pointer;
 }
 
-aside .ctg-prod > li.active a{
+aside .ctg-prod>li.active a {
     color: #4d5fff;
 }
 
@@ -272,7 +273,8 @@ main table {
     margin-top: 20px;
 }
 
-main table th, main table td {
+main table th,
+main table td {
     padding: 6px;
     text-align: center;
 }
@@ -295,7 +297,8 @@ main table td .box-imgs {
     justify-content: center;
 }
 
-main table td .box-imgs img, img.avt-img {
+main table td .box-imgs img,
+img.avt-img {
     width: 36px;
     max-width: 36px;
     height: 36px;
@@ -331,29 +334,193 @@ main table td .del-btn {
     background-color: #dd0000
 }
 
+.exams__pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5rem;
+}
+
+.exams__pagination li:first-child a {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.exams__pagination li:last-child a {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.exams__pagination .pagination--item a {
+    padding: 0.5rem 0.75rem;
+    border: solid 1px #cbcbcb;
+    font-size: 1.1rem;
+    color: #4d5fff;
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+.exams__pagination .pagination--item a:hover {
+    background-color: #f6f7fb;
+}
+
+.exams__pagination .pagination--item a.active {
+    color: #ffffff;
+    background-color: blue;
+}
+
+.container .err {
+    background-color: #e42d2d;
+    font-size: 1.1rem;
+    padding: .2rem .8rem;
+    display: none;
+    border-radius: .3rem;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.container .err.active {
+    display: inline-block;
+}
+
+.container .questions__row label {
+    width: 88px;
+    display: inline-block;
+}
+
+.general {
+    margin-top: 1.4rem;
+    margin-bottom: 2rem;
+}
+
+.general__row {
+    display: flex;
+    width: 100%;
+}
+
+.general__row.row-1 {
+    justify-content: space-around;
+}
+
+.general__row.row-2 {
+    justify-content: center;
+    margin-top: 2.5rem;
+}
+
+.general input, .questions__row .col .box input {
+    padding: .5rem .8rem;
+    border-radius: .5rem;
+    margin-left: 1rem;  
+    font-size: 1rem;  
+}
+
+.general #member {
+    width: 90px;
+}
+
+.general #time {
+    width: 100px;
+}
+
+.general #feedback-status {
+    width: 60px;
+}
+
+.general .row-2:has(#feedback-content) {
+    display: block;
+    margin-left: 1.2rem;
+}
+
+.general #feedback-content {
+    width: 85%;
+}
+
+.general #exam-level {
+    width: 120px;
+}
+
+.general .box:has(#time) {
+    margin-left: 2rem;
+}
+
+.general #exam-name {
+    width: 300px;
+}
+
+.general .box:has(#date) {
+    margin: 0 2rem;
+}
+
+:disabled {
+    background: #EEE;
+}
+
+.questions__row {
+    padding: 0 1rem;
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.questions__row .col {
+    justify-self: center;
+}
+
+.questions__row .col .box, .questions__row .ques {
+    margin-bottom: 1rem;
+}
+
+.questions__row input[type="file"] {
+    width: 50px;
+    visibility:hidden;
+}
+
+.questions__row label:has(input[type="file"]) {
+    width: 50px;
+    transform: translateY(32px);
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+form input[type="submit"] {
+    padding: .8rem 1rem;
+    width: 120px;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    margin-left: auto;
+    border-radius: .5rem;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    background-color: #4d5fff;
+    cursor: pointer;
+    float: right;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(0);
         opacity: 0.0;
     }
-  
+
     25% {
         transform: scale(0.1);
         opacity: 0.1;
     }
-  
+
     50% {
         transform: scale(0.5);
         opacity: 0.3;
     }
-  
+
     75% {
         transform: scale(0.8);
         opacity: 0.5;
-      }
-  
+    }
+
     100% {
         transform: scale(1);
         opacity: 0.0;
     }
-} 
+}

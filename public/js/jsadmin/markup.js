@@ -10,8 +10,7 @@ export const userRowMarkup = function(data) {
                     <td>${d.ma_vai_tro === 1 ? "Admin" : "User"}</td>
                     <td>
                         <div class="last-td">
-                            <a href="views/edit_user.php?id=<?= $user['user_id'] ?>" class="change-btn">Sửa</a>
-                            <a href="controllers/delete_user.php?id=<?= $user['user_id'] ?>" class="del-btn">Xóa</a>
+                            <a href="../controllers/userController.php?act=delete&user-id=${d.ma_nguoi_dung}" class="del-btn">Xóa</a>
                         </div>
                     </td>
                 </tr>`
@@ -54,8 +53,8 @@ export const feedbackRowMarkup = function(data) {
                     <td>${d.trang_thai === 0 ? 'Ẩn' : 'Hiện'}</td>
                     <td>
                         <div class="last-td">
-                            <a href="views/edit_user.php?id=<?= $user['user_id'] ?>" class="change-btn">Sửa</a>
-                            <a href="controllers/delete_user.php?id=<?= $user['user_id'] ?>" class="del-btn">Xóa</a>
+                            <a href="index.php?page=edit-feedback&id=${d.ma_phan_hoi}" class="change-btn">Sửa</a>
+                            <a href="../controllers/feedbackController.php?act=delete&id=${d.ma_phan_hoi}" class="del-btn">Xóa</a>
                         </div>
                     </td>
                 </tr>`
@@ -77,8 +76,8 @@ export const examRowMarkup = function(data) {
                     <td>${d.nguoi_tham_gia}</td>
                     <td>
                         <div class="last-td">
-                            <a href="views/edit_user.php?id=<?= $user['user_id'] ?>" class="change-btn">Sửa</a>
-                            <a href="controllers/delete_user.php?id=<?= $user['user_id'] ?>" class="del-btn">Xóa</a>
+                            <a href="index.php?page=edit-exam&id=${d.ma_de}" class="change-btn">Sửa</a>
+                            <a href="../controllers/examController.php?act=delete&id=${d.ma_de}" class="del-btn">Xóa</a>
                         </div>
                     </td>
                 </tr>`
@@ -100,8 +99,8 @@ export const testRowMarkup = function(data) {
                     <td>${d.nguoi_tham_gia}</td>
                     <td>
                         <div class="last-td">
-                            <a href="views/edit_user.php?id=<?= $user['user_id'] ?>" class="change-btn">Sửa</a>
-                            <a href="controllers/delete_user.php?id=<?= $user['user_id'] ?>" class="del-btn">Xóa</a>
+                            <a href="../controllers/examController.php?page=edit-exam&examId=${d.ma_de}" class="change-btn">Sửa</a>
+                            <a href="../controllers/examController.php?act=delete&id=${d.ma_de}" class="del-btn">Xóa</a>
                         </div>
                     </td>
                 </tr>`

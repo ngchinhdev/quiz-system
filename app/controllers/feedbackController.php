@@ -12,6 +12,8 @@
 
             if(!(strlen(trim($text)) === 0))
                 $add_feedback = $feedback->addFeedback($text, $ma_nguoi_dung);
+
+            header("Location: index.php?page=support");
         } 
     } else {
         header("Location: index.php?page=login");

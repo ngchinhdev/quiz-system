@@ -6,8 +6,6 @@
     $row = $user->getUser($_COOKIE['email']);
     setcookie("is_user", $row['ma_nguoi_dung'], time() + 84000, "/");
 
-    var_dump($row);;
-
     if(!empty($row)) {
         header("Location: index.php?page=profile");
     } else {

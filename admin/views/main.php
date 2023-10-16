@@ -1,5 +1,4 @@
-<main>
-    <div class="container">
+
         <div class="nav">
             <div class="add-new">
                 <a href="views/add_user.php">+ Thêm mới</a>
@@ -51,5 +50,3 @@
             </tr>
             <!-- <?php } ?> -->
         </table>
-    </div>
-</main>

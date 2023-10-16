@@ -13,14 +13,6 @@ function generatePagination(totalPages, activePage, itemContainer, paginationCon
         `;
     }
 
-    paginationContainer.removeEventListener('click', function(e) {
-        const pagiBtn = e.target.closest('.pagi-link');
-
-        if(!pagiBtn) return;
-
-        loadExam(+pagiBtn.dataset.activePage, itemContainer, paginationContainer);
-    })
-
     paginationContainer.addEventListener('click', function(e) {
         const pagiBtn = e.target.closest('.pagi-link');
 

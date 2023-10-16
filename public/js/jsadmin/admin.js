@@ -1,24 +1,24 @@
-var container = document.querySelector(".container");
-var toggleUl = document.querySelectorAll('.ctg-prod');
-var arrowRotate = document.querySelectorAll('.fa-chevron-right');
-var sidebarLinks = document.querySelectorAll('.sidebar_menu > li > a');
-var ctgProdLinks = document.querySelectorAll("aside .ctg-prod > li a");
+const container = document.querySelector(".container");
+const toggleUl = document.querySelectorAll('.ctg-prod');
+const arrowRotate = document.querySelectorAll('.fa-chevron-right');
+const sidebarLinks = document.querySelectorAll('.sidebar_menu > li > a');
+const ctgProdLinks = document.querySelectorAll("aside .ctg-prod > li a");
 
 // Handle sidebar menu clicks
-for (var i = 0; i < sidebarLinks.length; i++) {
+for (let i = 0; i < sidebarLinks.length; i++) {
     sidebarLinks[i].addEventListener("click", function (e) {
         e.preventDefault();
-        var activeSidebarItem = document.querySelector('.sidebar_menu > li.active');
+        const activeSidebarItem = document.querySelector('.sidebar_menu > li.active');
         activeSidebarItem.classList.remove('active');
         this.parentNode.classList.add('active');
 
         if (this.parentNode.classList.contains('toggle')) {
-            for (var j = 0; j < toggleUl.length; j++) {
+            for (let j = 0; j < toggleUl.length; j++) {
                 toggleUl[j].classList.toggle('active');
                 arrowRotate[j].classList.toggle('rotate');
             }
         } else {
-            for (var k = 0; k < toggleUl.length; k++) {
+            for (const k = 0; k < toggleUl.length; k++) {
                 toggleUl[k].classList.remove('active');
             }
         }
@@ -26,16 +26,55 @@ for (var i = 0; i < sidebarLinks.length; i++) {
 }
 
 // Handle category product clicks
-for (var l = 0; l < ctgProdLinks.length; l++) {
+for (let l = 0; l < ctgProdLinks.length; l++) {
     ctgProdLinks[l].addEventListener("click", function (e) {
         e.preventDefault();
-        var activeCtgProdItem = document.querySelector('aside .ctg-prod > li.active');
+        const activeCtgProdItem = document.querySelector('aside .ctg-prod > li.active');
         activeCtgProdItem.classList.remove('active');
         this.parentNode.classList.add('active');
-
-        var href = this.getAttribute("href");
-        var cateId = href.split("?cate=")[1];
-        document.cookie = "cateId=" + cateId + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "cateId=" + cateId + "; expires=Thu, 31 Dec 2037 23:59:59 UTC; path=/;";
     });
 }
+
+////////////////////////////////////////////////
+// Admin add exam
+const inputChecks = document.querySelectorAll('.inp');
+const errLabel = document.querySelector('.err');
+const form = document.querySelector('form');
+
+function validateRadioButtons() {
+    const questions = document.querySelectorAll('.questions__row .col');
+    const timeInput = document.querySelector('.time-add');
+
+    for (let i = 0; i < questions.length; i++) {
+        const radioButtons = questions[i].querySelectorAll('input[type="radio"]');
+        let isRadioChecked = false;
+
+        for (let j = 0; j < radioButtons.length; j++) {
+            if (radioButtons[j].checked) {
+                isRadioChecked = true;
+                break;
+            }
+        }
+
+        if (!isRadioChecked) return false;
+    }
+
+    if(isNaN(Number(timeInput.value))) {
+        return false;
+    } 
+
+    return true;
+}
+
+form && inputChecks && errLabel && form.addEventListener('submit', (e) => {
+    inputChecks.forEach(inp => {
+        if(inp.value === '' || !validateRadioButtons()) {
+            e.preventDefault();
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            errLabel.textContent = 'Vui lòng nhập đầy đủ và chính xác các trường!';
+            errLabel.classList.add('active');
+            return;
+        }
+    })
+})

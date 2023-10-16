@@ -23,10 +23,54 @@ const navsTable = {
     'history': ['Tên người dùng', 'Tên đề', 'Thời gian làm', 'Thời điểm', 'Điểm số'],
 }
 
+function generatePagination(totalPages, activePage) {
+    const paginationContainer = document.querySelector('.exams__pagination');
+    let pagination = '';
+    paginationContainer.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        pagination += `
+            <li class="pagination--item">
+                <a class="pagi-link" data-active-page=${i}>${i}</a>
+            </li>
+        `;
+    }
+
+    paginationContainer.addEventListener('click', function(e) {
+        const pagiBtn = e.target.closest('.pagi-link');
+
+        if(!pagiBtn) return;
+
+        loadContents(+pagiBtn.dataset.activePage, curLinkPage);
+    })
+    
+    paginationContainer.insertAdjacentHTML('afterbegin', pagination);
+
+    const active = document.querySelector(`.pagi-link[data-active-page="${activePage}"]`);
+    active && active.classList.add('active');
+
+    let nextBtn = `<li class="pagination--item">
+                        <a class="next--pagi">
+                            <i class="fa-sharp fa-solid fa-angle-right"></i>
+                        </a>
+                </li>`;
+
+    if (totalPages > 1) {
+        paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
+    }
+
+    console.log(paginationContainer);
+
+    document.querySelector('.next--pagi')?.addEventListener('click', 
+            () => loadContents(activePage < totalPages ? activePage + 1 : activePage, curLinkPage));
+}
+
 const generateRows = function(data, type) {
+    const linkAdd = type === 'lib_exam' ? '<a href="index.php?page=add-exam">+ Thêm mới</a>' 
+                                        : '<a href="index.php?page=add-test">+ Thêm mới</a>' 
     const above = `<div class="nav">
                             <div class="add-new">
-                                <a href="views/add_user.php">+ Thêm mới</a>
+                                ${(type === 'user' || type === 'feedback' || type === 'history') ? '' : linkAdd}
                             </div>
                             <div class="above_table">
                                 <div class="ctg_name">
@@ -45,6 +89,9 @@ const generateRows = function(data, type) {
                                 <th>Thao tác</th>
                             </tr>
                         </table>
+                        <ul class="exams__pagination">
+                
+                        </ul>
                         </div>
                     </main>`;
 
@@ -63,6 +110,7 @@ const generateRows = function(data, type) {
 }
 
 const loadContents = function(page, curLinkPage) {
+    console.log(page);
     const path = (curLinkPage === 'lib_test' || curLinkPage === 'lib_exam' || curLinkPage === 'lib') ? 'exam' : curLinkPage;
     console.log(path);
     console.log(curLinkPage);
@@ -72,7 +120,8 @@ const loadContents = function(page, curLinkPage) {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            generateRows(data, curLinkPage);
+            generateRows(data.data, curLinkPage);
+            generatePagination(data.totalPages, page);
         })
         .catch(err => console.error(err));
 }

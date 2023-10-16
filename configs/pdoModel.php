@@ -24,6 +24,16 @@
             $this->conn = null;
         }
 
+        public function getCountRecords($table, $id, $type) {
+            if(isset($type)) {
+                $sql = "SELECT COUNT($id) AS `totalPages` FROM $table WHERE loai = $type";
+            } else {
+                $sql = "SELECT COUNT($id) AS `totalPages` FROM $table";
+            }
+
+            return $this->pdoQueryValue($sql);
+        }
+
         public function pdoExecute($sql){
             $sql_args = array_slice(func_get_args(), 1);
 
