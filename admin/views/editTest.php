@@ -21,40 +21,42 @@
             </div>
             <div class="box">
                 <label for="date">Ngày tạo đề</label>
-                <input type="text" name="" id="date"  value="<?= $dataExamEdit['thoi_diem_tao'] ?>" disabled>
+                <input type="text" name="" id="date"  value="<?= $dataTestEdit['thoi_diem_tao'] ?>" disabled>
             </div>
             <div class="box">
                 <label for="member">Người tham gia</label>
-                <input type="text" name="" id="member" value=" value="<?= $dataExamEdit['nguoi_tham_gia'] ?>"" disabled>
+                <input type="text" name="" id="member" value="<?= $dataTestEdit['nguoi_tham_gia'] ?>" disabled>
             </div>
         </div>
     </div>
     <hr>
     <div class="questions__row">
         <?php
-        for ($i = 0; $i <= 9; $i++) {
+        for ($i = 0; $i < count($dataQuestionsEdit); $i++) {
             echo '<div class="col">';
             echo '<div class="box">';
             echo '<div class="ques">';
                 echo '<label for="question-' . $i . '"><strong>Câu hỏi ' . ($i + 1) . '</strong></label>';
-                echo '<input type="text" name="question[]" id="question-' . $i . '" class="inp ques-add">';
+                echo '<input type="text" name="question[]" id="question-' . $i . '" class="inp ques-add" value="'. $dataQuestionsEdit[$i]['cau_hoi'] .'">';
                 echo '<label for="audio-' . $i . '">Audio<input type="file" size="60" name="audio[]" id="audio-' . $i . '"></label>';
             echo '</div>';
             echo '<div class="expl">';
                 echo '<label for="explain-' . $i . '">Giải thích</label>';
-                echo '<input type="text" name="explain[]" id="explain-' . $i . ' class="inp"">';
+                echo '<input type="text" name="explain[]" id="explain-' . $i . '" class="inp" value="'. $dataQuestionsEdit[$i]['giai_thich'] .'">';
             echo '</div>';
             echo '</div>';
             for ($j = 1; $j <= 4; $j++) {
+                $answerIndex = $i * 4 + $j - 1; 
+                $isChecked = $dataAnswersEdit[$answerIndex]['phuong_an_dung'] === 1 ? 'checked' : '';
                 echo '<div class="box">';
                 echo '<label for="answer-' . $i . '-' . $j . '">Phương án</label>';
-                echo '<input type="text" name="answer[' . $i . '][]" id="answer-' . $i . '-' . $j . '" class="inp">';
-                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp">';
+                echo '<input type="text" name="answer[' . $i . '][]" id="answer-' . $i . '-' . $j . '" class="inp" value="'. $dataAnswersEdit[$answerIndex]['phuong_an'] .'">';
+                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp"'.$isChecked.' >';
                 echo '</div>';
             }
             echo '</div>';
         }
         ?>
-        <input type="submit" name="submit" class="btn-submit" value="Thêm đề">
+        <input type="submit" name="submit" class="btn-submit" value="Sửa đề">
     </div>
 </form>

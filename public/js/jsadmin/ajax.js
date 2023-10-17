@@ -1,4 +1,5 @@
-import { userRowMarkup, feedbackRowMarkup, examRowMarkup, testRowMarkup, historyRowMarkup} from "./markup.js";
+import { userRowMarkup, feedbackRowMarkup, examRowMarkup, 
+        testRowMarkup, historyRowMarkup, dashboardMarkup} from "./markup.js";
 
 const navAside = document.querySelector('.sidebar_menu');
 const mainContainer = document.querySelector('main .container');
@@ -67,7 +68,9 @@ function generatePagination(totalPages, activePage) {
 
 const generateRows = function(data, type) {
     const linkAdd = type === 'lib_exam' ? '<a href="index.php?page=add-exam">+ Thêm mới</a>' 
-                                        : '<a href="index.php?page=add-test">+ Thêm mới</a>' 
+                                        : '<a href="index.php?page=add-test">+ Thêm mới</a>';
+    const notDashboard = type !== 'dashboard'; 
+
     const above = `<div class="nav">
                             <div class="add-new">
                                 ${(type === 'user' || type === 'feedback' || type === 'history') ? '' : linkAdd}
@@ -85,7 +88,7 @@ const generateRows = function(data, type) {
                         <table border="1">
                             <tr>
                                 <th>#</th>
-                                ${navsTable[type === 'lib' ? 'lib_exam' : type].map(n => `<th>${n}</th>`).join('')}
+                                ${notDashboard && navsTable[type === 'lib' ? 'lib_exam' : type].map(n => `<th>${n}</th>`).join('')}
                                 <th>Thao tác</th>
                             </tr>
                         </table>
@@ -96,9 +99,10 @@ const generateRows = function(data, type) {
                     </main>`;
 
     mainContainer.innerHTML = '';
-    mainContainer.insertAdjacentHTML('beforeend', above);
+    notDashboard && mainContainer.insertAdjacentHTML('beforeend', above);
 
     let html = '';
+    type === 'dashboard' && (html = dashboardMarkup(data));
     type === 'user' && (html = userRowMarkup(data));
     type === 'history' && (html = historyRowMarkup(data));
     type === 'feedback' && (html = feedbackRowMarkup(data));
@@ -106,11 +110,12 @@ const generateRows = function(data, type) {
     type === 'lib_test' && (html = testRowMarkup(data));
 
     const tableContainer = document.querySelector('main table');
-    tableContainer.insertAdjacentHTML("beforeend", html);
+    notDashboard && tableContainer.insertAdjacentHTML("beforeend", html);
+    !notDashboard && mainContainer.insertAdjacentHTML("beforeend", html);
 }
 
 const loadContents = function(page, curLinkPage) {
-    console.log(page);
+    const notDashboard = curLinkPage !== 'dashboard'; 
     const path = (curLinkPage === 'lib_test' || curLinkPage === 'lib_exam' || curLinkPage === 'lib') ? 'exam' : curLinkPage;
     console.log(path);
     console.log(curLinkPage);
@@ -120,8 +125,42 @@ const loadContents = function(page, curLinkPage) {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            generateRows(data.data, curLinkPage);
-            generatePagination(data.totalPages, page);
+            if(notDashboard) {
+                generateRows(data.data, curLinkPage);
+                generatePagination(data.totalPages, page);
+            } else {
+                generateRows(data, curLinkPage);
+
+                const chartTest = document.querySelector('#chart-test');
+                chartTest && new Chart(chartTest, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [data.percentTest, 100 - data.percentTest],
+                            backgroundColor: [
+                                '#4d5fff',
+                                '#F1F1F1'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    }
+                })
+
+                const chartExam = document.querySelector('#chart-exam');
+                chartExam && new Chart(chartExam, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [data.percentExam, 100 - data.percentExam],
+                            backgroundColor: [
+                                '#FFC003',
+                                '#F1F1F1'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    }
+                })
+            }
         })
         .catch(err => console.error(err));
 }

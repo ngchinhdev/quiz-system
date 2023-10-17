@@ -24,6 +24,8 @@
             default:
                 include_once("../views/main.php");
         }
+    } else {
+        include_once("../views/main.php");
     }
 ?>
 

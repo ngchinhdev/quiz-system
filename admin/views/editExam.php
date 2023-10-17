@@ -32,7 +32,7 @@
     <hr>
     <div class="questions__row">
         <?php
-        for ($i = 0; $i <= count($dataQuestionsEdit); $i++) {
+        for ($i = 0; $i < count($dataQuestionsEdit); $i++) {
             echo '<div class="col">';
             echo '<div class="box">';
             echo '<div class="ques">';
@@ -45,14 +45,14 @@
                 echo '<input type="text" name="explain[]" id="explain-' . $i . '" class="inp" value="'. $dataQuestionsEdit[$i]['giai_thich'] .'">';
             echo '</div>';
             echo '</div>';
-            for($set = 1; $set <= count($dataAnswersEdit); $set+=4) {
-                for ($j = 1; $j <= 4; $j++) {
-                    echo '<div class="box">';
-                    echo '<label for="answer-' . $i . '-' . $j . '">Phương án</label>';
-                    echo '<input type="text" name="answer[' . $i . '][]" id="answer-' . $i . '-' . $j . '" class="inp" value="'. $dataAnswersEdit[$set + $j - 1]['phuong_an'] .'">';
-                    echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp" >';
-                    echo '</div>';
-                }
+            for ($j = 1; $j <= 4; $j++) {
+                $answerIndex = $i * 4 + $j - 1; 
+                $isChecked = $dataAnswersEdit[$answerIndex]['phuong_an_dung'] === 1 ? 'checked' : '';
+                echo '<div class="box">';
+                echo '<label for="answer-' . $i . '-' . $j . '">Phương án</label>';
+                echo '<input type="text" name="answer[' . $i . '][]" id="answer-' . $i . '-' . $j . '" class="inp" value="'. $dataAnswersEdit[$answerIndex]['phuong_an'] .'">';
+                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp" >';
+                echo '</div>';
             }
             echo '</div>';
         }

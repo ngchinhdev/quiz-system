@@ -210,7 +210,7 @@ aside .ctg-prod>li.active a {
 main {
     grid-area: main;
     background-color: #f5f7ff;
-    padding: 40px 20px 0;
+    padding: 10px 20px 0;
 }
 
 span.success {
@@ -224,6 +224,7 @@ span.success {
 
 main .add-new {
     float: right;
+    margin-top: 20px;
 }
 
 main .add-new a {
@@ -497,6 +498,68 @@ form input[type="submit"] {
     cursor: pointer;
     float: right;
 }
+
+.statistical {
+    display: grid;
+    padding: 0 2rem;
+    margin-top: 1.6rem;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3rem;
+}
+
+.statistical > div {
+    border-radius: .4rem;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+}
+
+.statistical .left.chart {
+    position: relative;
+}
+
+.statistical .left.chart .percent {
+    position: absolute;
+    top: 45%;
+    left: 34%;
+}
+
+.statistical .members-box, .statistical .history-box {
+    grid-column-start: span 3;
+}
+
+.statistical .number {
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.statistical .left h3 {
+    margin-top: .6rem;
+    margin-bottom: .2rem;
+}
+
+.statistical .left p {
+    color: #9a9a9a;
+}
+
+.statistical .left p .status {
+    color: #2bc155;
+}
+
+.statistical .fl {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.statistical .exam-box, .statistical .test-box, .statistical .feedback-box {
+    grid-column-start: span 2;
+}
+
+.statistical .test-box {}
+
+.statistical .feedback-box {}
+
 
 @keyframes pulse {
     0% {

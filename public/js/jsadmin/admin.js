@@ -18,7 +18,7 @@ for (let i = 0; i < sidebarLinks.length; i++) {
                 arrowRotate[j].classList.toggle('rotate');
             }
         } else {
-            for (const k = 0; k < toggleUl.length; k++) {
+            for (let k = 0; k < toggleUl.length; k++) {
                 toggleUl[k].classList.remove('active');
             }
         }
@@ -78,3 +78,7 @@ form && inputChecks && errLabel && form.addEventListener('submit', (e) => {
         }
     })
 })
+
+///////////////////////////////////////////////
+
+
