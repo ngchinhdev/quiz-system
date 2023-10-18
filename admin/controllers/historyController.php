@@ -4,7 +4,7 @@
         $history = new History();
 
         $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
-        $per_page = 5;
+        $per_page = 10;
         $off_set = ($cur_page - 1) * $per_page;
         $total_records = $history->getCountRecords('lich_su_lam_bai', 'ma_lich_su', null);
         $total_pages = ceil($total_records / $per_page);

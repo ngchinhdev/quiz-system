@@ -31,5 +31,11 @@
 
             return $this->pdoQueryValue($sql);
         }
+
+        function queryExam($ten_de) {
+            $sql = "SELECT * FROM `de` WHERE ten_de LIKE '%$ten_de%' OR bo_de LIKE '%$ten_de%'";
+
+            return $this->pdoQuery($sql);
+        }
     }
 ?>

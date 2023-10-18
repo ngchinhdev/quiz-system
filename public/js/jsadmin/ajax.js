@@ -1,9 +1,10 @@
+import { handleResult, transformDataAllQuestions } from "../jsapp/result.js";
 import { userRowMarkup, feedbackRowMarkup, examRowMarkup, 
         testRowMarkup, historyRowMarkup, dashboardMarkup} from "./markup.js";
 
 const navAside = document.querySelector('.sidebar_menu');
 const mainContainer = document.querySelector('main .container');
-
+const listHistories = document.querySelector('.history__list--results');
 
 let curLinkPage = '';
 
@@ -60,8 +61,6 @@ function generatePagination(totalPages, activePage) {
         paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
     }
 
-    console.log(paginationContainer);
-
     document.querySelector('.next--pagi')?.addEventListener('click', 
             () => loadContents(activePage < totalPages ? activePage + 1 : activePage, curLinkPage));
 }
@@ -114,67 +113,152 @@ const generateRows = function(data, type) {
     !notDashboard && mainContainer.insertAdjacentHTML("beforeend", html);
 }
 
-const loadContents = function(page, curLinkPage) {
+const loadContents = async function(page, curLinkPage) {
     const notDashboard = curLinkPage !== 'dashboard'; 
     const path = (curLinkPage === 'lib_test' || curLinkPage === 'lib_exam' || curLinkPage === 'lib') ? 'exam' : curLinkPage;
-    console.log(path);
-    console.log(curLinkPage);
+
     let url = `../controllers/${path}Controller.php?page=${curLinkPage == 'lib' ? 'lib_exam' : curLinkPage}&curpage=${page}`;
 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if(notDashboard) {
-                generateRows(data.data, curLinkPage);
-                generatePagination(data.totalPages, page);
-            } else {
-                generateRows(data, curLinkPage);
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error(`Fetch failed with status ${res.status}`);
+        }
 
-                const chartTest = document.querySelector('#chart-test');
-                chartTest && new Chart(chartTest, {
-                    type: 'doughnut',
-                    data: {
-                        datasets: [{
-                            data: [data.percentTest, 100 - data.percentTest],
-                            backgroundColor: [
-                                '#4d5fff',
-                                '#F1F1F1'
-                            ],
-                            hoverOffset: 4
-                        }]
-                    }
-                })
+        const data = await res.json();
 
-                const chartExam = document.querySelector('#chart-exam');
-                chartExam && new Chart(chartExam, {
-                    type: 'doughnut',
-                    data: {
-                        datasets: [{
-                            data: [data.percentExam, 100 - data.percentExam],
-                            backgroundColor: [
-                                '#FFC003',
-                                '#F1F1F1'
-                            ],
-                            hoverOffset: 4
-                        }]
-                    }
-                })
-            }
-        })
-        .catch(err => console.error(err));
+        if (notDashboard) {
+            generateRows(data.data, curLinkPage);
+            generatePagination(data.totalPages, page);
+        } else {
+            generateRows(data, curLinkPage);
+
+            const chartTest = document.querySelector('#chart-test');
+            chartTest && new Chart(chartTest, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [data.percentTest, 100 - data.percentTest],
+                        backgroundColor: [
+                            '#4d5fff',
+                            '#F1F1F1'
+                        ],
+                        hoverOffset: 4
+                    }]
+                }
+            })
+
+            const chartExam = document.querySelector('#chart-exam');
+            chartExam && new Chart(chartExam, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [data.percentExam, 100 - data.percentExam],
+                        backgroundColor: [
+                            '#FFC003',
+                            '#F1F1F1'
+                        ],
+                        hoverOffset: 4
+                    }]
+                }
+            })
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 const handleClick = () => {
-    navAside.addEventListener('click', function(e) {
+    navAside.addEventListener('click', async function(e) {
+        const url = new URL(window.location.href);
+        url.search = '';
+        history.replaceState(null, '', url.href);
+
+        mainContainer.classList.remove('hide');
+        listHistories.classList.remove('show');
+
         const linkEl = e.target.closest('.link');
     
         if(!linkEl) return;
     
         curLinkPage = linkEl.getAttribute('href');
-        loadContents(1, curLinkPage);
+
+        await loadContents(1, curLinkPage);
+        const ok = document.querySelector('table');
+        curLinkPage === 'history' && handleResultHistoryAdmin(ok);
     });
 }
 
+
+const handleResultHistoryAdmin = function(table) {
+    function handleAudioControl() {
+        document.querySelector('.history__list--results').addEventListener('click', (e) => {
+            const btn = e.target.closest('.audio--btn');
+    
+            if (!btn) return;
+    
+            e.preventDefault();
+            const audio = new Audio();
+            audio.src = btn.querySelector('a').href;
+    
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        })
+    };
+        
+    const handleHistoryDetail = function() {
+        table.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const historyItem = e.target.closest('.see-btn');
+            
+            if(!historyItem) return;
+    
+            mainContainer.classList.add('hide');
+    
+            const examId = historyItem.dataset.exam;
+            const historyId = historyItem.closest('.last-row').dataset.id;
+            
+            fetch(`../../app/controllers/historyDetailController.php?historyId=${historyId}&examId=${examId}`)
+                .then(res => res.json())
+                .then(data => {
+                    let transformedData = [], correctAnswers = [], historyAnswers = {};
+    
+                    transformDataAllQuestions(data.originData, transformedData);
+    
+                    historyAnswers = data.detailData.reduce((acc, cur) => {
+                        acc[String(cur['ma_cau_hoi'])] = cur['dap_an_chon'];
+    
+                        return acc;
+                    }, {});
+    
+                    correctAnswers = data.correctAnswers.reduce((acc, cur) => {
+                        acc[String(cur['ma_cau_hoi'])] = cur['ma_phuong_an'];
+    
+                        return acc;
+                    }, {});
+    
+                    listHistories.classList.add('show');
+                    handleResult(historyAnswers, correctAnswers, transformedData, listHistories);
+                    
+                })
+                .catch(err => console.error(err))
+        })
+    }
+    
+    handleHistoryDetail();
+    // handleAudioControl();
+}
+
+
+window.addEventListener('load', function() {
+    if(new URL(this.location.href).search === '') {
+        loadContents(1, 'dashboard');
+    }
+})
 handleClick();
 

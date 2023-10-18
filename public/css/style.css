@@ -36,17 +36,21 @@ input {
   }
 }
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%;
   position: fixed;
-  background-color: #ffffff;
   z-index: 999;
   top: 0;
   left: 0;
-  width: 100%;
-  padding: 0 1.25rem;
+  background-color: #ffffff;
   border: 1px solid #cbcbcb;
+}
+.header__container {
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1250px;
+  margin: 0 auto;
 }
 .header__nav--list {
   display: flex;
@@ -218,7 +222,7 @@ input {
 
 .banner {
   position: relative;
-  background: url(../imgs/banner.png) no-repeat top/contain;
+  background: url(../imgs/banner.png) no-repeat top/cover;
   height: 540px;
 }
 .banner__contents {

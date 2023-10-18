@@ -49,6 +49,7 @@
         </div>
     </footer>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script type="module" src="../../public/js/jsapp/app.js"></script>
     <?php include_once("../controllers/jsController.php") ?>
     

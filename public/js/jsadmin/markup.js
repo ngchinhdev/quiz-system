@@ -1,3 +1,10 @@
+const displayTimeToDo = function(time) {
+    const min = `${Math.trunc(time % 3600 / 60)}`.padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+  
+    return `${min}:${sec}`;
+}
+
 export const userRowMarkup = function(data) {
     let html = '';
 
@@ -23,16 +30,16 @@ export const historyRowMarkup = function(data) {
     let html = '';
 
     data.forEach((d, i) => {
-        html += `<tr>
-                    <td data-id="${d.ma_lich_su}">${i + 1}</td>
+        html += `<tr class="last-row" data-id="${d.ma_lich_su}">
+                    <td>${i + 1}</td>
                     <td>${d.ten_nguoi_dung}</td>
                     <td>${d.ten_de}</td>
-                    <td>${d.thoi_gian_lam}</td>
-                    <td>${d.thoi_diem}</td>
+                    <td>${displayTimeToDo(d.thoi_gian_lam)}</td>
+                    <td>${moment(d.thoi_diem).utcOffset(7).format("HH:mm:ss DD-MM-YYYY")}</td>
                     <td>${d.diem_so}</td>
                     <td>
                         <div class="last-td">
-                            <a href="views/edit_user.php?id=<?= $user['user_id'] ?>" class="change-btn">Xem</a>
+                            <a data-exam="${d.ma_de}" href="" class="see-btn">Xem</a>
                         </div>
                     </td>
                 </tr>`
@@ -49,7 +56,7 @@ export const feedbackRowMarkup = function(data) {
                     <td data-id="${d.ma_phan_hoi}">${i + 1}</td>
                     <td>${d.ten_nguoi_dung}</td>
                     <td>${d.noi_dung}</td>
-                    <td>${d.thoi_diem}</td>
+                    <td>${moment(d.thoi_diem).utcOffset(7).format("HH:mm:ss DD-MM-YYYY")}</td>
                     <td>${d.trang_thai === 0 ? 'Ẩn' : 'Hiện'}</td>
                     <td>
                         <div class="last-td">
@@ -71,8 +78,8 @@ export const examRowMarkup = function(data) {
                     <td data-id="${d.ma_de}">${i + 1}</td>
                     <td>${d.ten_de}</td>
                     <td>${d.bo_de}</td>
-                    <td>${d.thoi_diem_tao}</td>
-                    <td>${d.thoi_gian_lam_bai}</td>
+                    <td>${moment(d.thoi_diem_tao).utcOffset(7).format("HH:mm:ss DD-MM-YYYY")}</td>
+                    <td>${displayTimeToDo(d.thoi_gian_lam_bai)}</td>
                     <td>${d.nguoi_tham_gia}</td>
                     <td>
                         <div class="last-td">

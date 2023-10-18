@@ -2,12 +2,12 @@
     <div class="ribbon">
         <div class="lt-tail"></div>
         <div class="lb-tail"></div>
-        <span>box-sizing: border-box;</span>
+        <span>Bắt đầu làm bàiiiiiiiiiiii</span>
         <div class="rt-tail"></div>
         <div class="rb-tail"></div>
     </div>
     <div class="dotest__container">
-        <h2 class="dotest__container--title"><span>Tổng Quan Bài Test</span></h2>
+        <h2 class="dotest__container--title"><span>Tổng Quan Bài</span></h2>
         <div class="dotest__container--info">
             <ul class="rules--test">
                 <li class="rule">Có <span class="rule-1">0</span> câu hỏi trong bài test này.</li>

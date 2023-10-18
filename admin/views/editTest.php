@@ -51,7 +51,7 @@
                 echo '<div class="box">';
                 echo '<label for="answer-' . $i . '-' . $j . '">Phương án</label>';
                 echo '<input type="text" name="answer[' . $i . '][]" id="answer-' . $i . '-' . $j . '" class="inp" value="'. $dataAnswersEdit[$answerIndex]['phuong_an'] .'">';
-                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp"'.$isChecked.' >';
+                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp" '.$isChecked.' >';
                 echo '</div>';
             }
             echo '</div>';

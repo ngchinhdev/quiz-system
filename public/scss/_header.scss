@@ -1,15 +1,20 @@
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    width: 100%;
     position: fixed;
-    background-color: $white-color;
     z-index: 999;
     top: 0;
     left: 0;
-    width: 100%;
-    padding: 0 1.25rem;
+    background-color: $white-color;
     border: 1px solid $border-color;
+    
+    &__container {
+        padding: 0 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 1250px;
+        margin: 0 auto;
+    }
 
     &__nav--list {
         display: flex;

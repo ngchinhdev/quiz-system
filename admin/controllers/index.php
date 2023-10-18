@@ -1,4 +1,11 @@
-<?php include_once("../views/includes/header.php") ?>
+<?php 
+    if(!isset($_COOKIE['is_admin'])) {
+        header("Location: ../../app/controllers/index.php?page=login");
+        return;
+    }
+
+    include_once("../views/includes/header.php");
+?>
 
 <?php
     if(isset($_GET['page'])) {

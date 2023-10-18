@@ -64,6 +64,34 @@
             return $this->pdoExecute($sql);
         }
 
+        public function updateExam($exam_name, $exam_kit, $time, $exam_id) {
+            $sql = "UPDATE de SET ten_de = '$exam_name',
+                                  bo_de = '$exam_kit',
+                                  thoi_gian_lam_bai = '$time' WHERE ma_de = $exam_id";
+
+            return $this->pdoExecute($sql);
+        }
+
+        public function updateQuestion($content, $explain, $question_id) {
+            $sql = "UPDATE cau_hoi SET noi_dung = '$content',
+                                       giai_thich = '$explain' WHERE ma_cau_hoi = $question_id";
+
+            return $this->pdoExecute($sql);
+        }
+
+        public function updateAudio($link, $audio_id) {
+            $sql = "UPDATE am_thanh SET duong_dan = '$link' WHERE ma_am_thanh = $audio_id";
+
+            return $this->pdoExecute($sql);
+        }
+
+        public function updateAnswer($content, $correct, $answer_id) {
+            $sql = "UPDATE phuong_an SET noi_dung = '$content',
+                                         phuong_an_dung = '$correct' WHERE ma_phuong_an = $answer_id";
+
+            return $this->pdoExecute($sql);
+        }
+
         public function deleteExam($exam_id) {
             $sql = "DELETE FROM de WHERE ma_de = $exam_id";
 

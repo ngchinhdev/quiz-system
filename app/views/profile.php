@@ -3,7 +3,7 @@
         <div class="profile__container--informations">
             <div class="left--site">
                 <?php 
-                    if(isset($_COOKIE['is_user'])) {
+                    if(isset($_COOKIE['email'])) {
                         echo '<div class="avatar">
                                 <img src="'.$_COOKIE['avatar'].'" alt="">
                             </div>

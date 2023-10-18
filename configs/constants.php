@@ -8,6 +8,10 @@
         "reading" => "RE",
         "easy" => "dễ",
         "medium" => "trung bình",
-        "advance" => "nâng cao"
+        "advance" => "nâng cao",
+        "VO" => "TỪ VỰNG",
+        "LI" => "KỸ NĂNG NGHE",
+        "GR" => "NGỮ PHÁP",
+        "RE" => "ĐỌC HIỂU"
     )
 ?>

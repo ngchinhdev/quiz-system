@@ -4,9 +4,9 @@
     class History extends PDOModel {
 
         public function getHistory($ma_nguoi_dung, $limit, $offset) {
-            $sql = "SELECT ls.*, d.ten_de, d.bo_de, d.cap_do FROM lich_su_lam_bai ls 
-                    JOIN de d ON ls.ma_de = d.ma_de WHERE ma_nguoi_dung = $ma_nguoi_dung
-                    ORDER BY ls.thoi_diem DESC LIMIT $limit OFFSET $offset";
+            $sql = "SELECT ls.*, d.ten_de, d.bo_de, d.cap_do, COUNT(ch.ma_cau_hoi) so_cau_hoi FROM lich_su_lam_bai ls 
+                    JOIN de d ON ls.ma_de = d.ma_de JOIN cau_hoi ch ON ch.ma_de = d.ma_de WHERE ma_nguoi_dung = $ma_nguoi_dung
+                    GROUP BY ls.ma_lich_su ORDER BY ls.thoi_diem DESC LIMIT $limit OFFSET $offset";
 
             return $this->pdoQuery($sql);
         }

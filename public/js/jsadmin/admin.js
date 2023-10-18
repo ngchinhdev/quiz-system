@@ -80,5 +80,6 @@ form && inputChecks && errLabel && form.addEventListener('submit', (e) => {
 })
 
 ///////////////////////////////////////////////
+// Confirm delete action
 
 

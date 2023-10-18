@@ -1,6 +1,13 @@
 const itemContainer = document.querySelector('.exam');
 const paginationContainer = document.querySelector('.exams__pagination');
 
+export const displayTimeToDo = function(time) {
+    const min = `${Math.trunc(time % 3600 / 60)}`.padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+  
+    return ` ${min}:${sec}`;
+}
+
 function generatePagination(totalPages, activePage, itemContainer, paginationContainer) {
     let pagination = '';
     paginationContainer.innerHTML = '';
@@ -45,7 +52,7 @@ function generatePagination(totalPages, activePage, itemContainer, paginationCon
 function generateExam(dataExams, totalPages, urlToStart, container) {
     let html = '';
 
-    if(!totalPages) {
+    if(dataExams.length === 0) {
         html = `
             <div class="empty-exam">
                 Không có bài kiểm tra nào.
@@ -53,8 +60,12 @@ function generateExam(dataExams, totalPages, urlToStart, container) {
         `;
     }
 
+    urlToStart = new URL(urlToStart);
+    urlToStart.search = urlToStart.search !== '' ? '' : urlToStart.search;
+    urlToStart = urlToStart.href;
+
     dataExams.forEach(exam => {
-        html += `
+        html += ` 
             <div class="exam--column">
                 <a href="${urlToStart.includes('page=start') ? urlToStart : urlToStart.concat('?page=start&type=exam')}&examId=${exam.ma_de}" class="hidden"></a>
                 <div class="above">
@@ -63,7 +74,7 @@ function generateExam(dataExams, totalPages, urlToStart, container) {
                     <br>
                     <span>
                         <i class="fa-sharp fa-regular fa-clock"></i> 
-                        Thời gian: ${exam.thoi_gian_lam_bai}
+                        Thời gian: ${displayTimeToDo(exam.thoi_gian_lam_bai)}
                     </span>
                     <br>
                     <span>
@@ -80,7 +91,7 @@ function generateExam(dataExams, totalPages, urlToStart, container) {
                 </div>
                 <br>
                 <div class="bottom">
-                    <a href="${urlToStart}&id=${exam.ma_de}" class="do">Làm bài</a>
+                    <a href="${urlToStart.includes('page=start') ? urlToStart : urlToStart.concat('?page=start&type=exam')}&examId=${exam.ma_de}" class="do">Làm bài</a>
                 </div>
             </div>
         `;
@@ -92,8 +103,10 @@ function generateExam(dataExams, totalPages, urlToStart, container) {
 
 export function loadExam(page, itemContainer, paginationContainer) {
     const curUrl = window.location.href;
-
+    
     let url = '';
+    const query = new URL(curUrl).searchParams.get('q');
+
     if(curUrl.includes("type=test")) {
         const subUrl = curUrl.slice(curUrl.indexOf('?'));
         url = `../controllers/examController.php${subUrl}&curpage=${page}`;
@@ -104,6 +117,7 @@ export function loadExam(page, itemContainer, paginationContainer) {
     if(curUrl.split('?')[1] === undefined) {
         url = `../controllers/examController.php?page=list&type=exam&isHome=true&curpage=${page}`;
     }
+    if(query) url = `../controllers/examController.php?q=${query}`;
 
     const urlToStart = curUrl.replace('list', 'start');
 

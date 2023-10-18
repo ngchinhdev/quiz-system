@@ -4,7 +4,7 @@
     if(isset($_GET['page']) && $_GET['page'] === 'user') {
 
         $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
-        $per_page = 5;
+        $per_page = 10;
         $off_set = ($cur_page - 1) * $per_page;
         $total_records = $user->getCountRecords('nguoi_dung', 'ma_nguoi_dung', null);
         $total_pages = ceil($total_records / $per_page);

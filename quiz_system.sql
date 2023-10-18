@@ -150,7 +150,7 @@ CREATE TABLE `de` (
   `cap_do` varchar(50) DEFAULT NULL,
   `thoi_diem_tao` timestamp NOT NULL DEFAULT current_timestamp(),
   `thoi_gian_lam_bai` int(10) NOT NULL,
-  `nguoi_tham_gia` int(10) NOT NULL
+  `nguoi_tham_gia` int(10) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `nguoi_dung` (
   `ten_nguoi_dung` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `hinh_anh` varchar(150) NOT NULL,
-  `ma_vai_tro` int(4) NOT NULL
+  `ma_vai_tro` int(4) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -204,6 +204,7 @@ CREATE TABLE `phan_hoi` (
   `ma_phan_hoi` int(10) NOT NULL,
   `noi_dung` mediumtext NOT NULL,
   `thoi_diem` timestamp NOT NULL DEFAULT current_timestamp(),
+  `trang_thai` int(1) NOT NULL DEFAULT 0,
   `ma_nguoi_dung` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

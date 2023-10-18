@@ -2,18 +2,19 @@
 <section class="lv">
     <div class="lv__wrapper">
         <div class="lv__content">
+            <?php if(isset($_GET['type'])): ?>
             <div class="lv__content--left">
-                <h1><?php echo $_GET['type'] === 'exam' ? 'Thư viện đề thi' : 'Các '.$title[$_GET['type']] . ' ' .
-                            $title[$_GET['topic']] . ' ' . 'cấp độ ' . mb_strtoupper($title[$_GET['level']]); 
-                    ?>
+                <h1>
+                    <?= $_GET['type'] === 'exam' ? 'Thư viện đề thi' : 'Các '.$title[$_GET['type']] . ' ' .
+                    $title[$title[$_GET['topic']]] . ' ' . 'cấp độ ' . mb_strtoupper($title[$_GET['level']]); ?> 
                 </h1>
-                <div class="search--control">
+                <form action="../controllers/searchController.php" method="get" class="search--control">
                     <div class="search--box">
-                        <input type="text" placeholder="Nhập tên bài kiểm tra, bài test ...">
+                        <input type="text" name="q" placeholder="Nhập tên bài kiểm tra, bài test ...">
                         <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <button>Tìm kiếm</button>
-                </div>
+                    <button type="submit">Tìm kiếm</button>
+                </form>
             </div>
             <div class="lv__content--right">
                 <?php if(isset($_COOKIE['is_user'])): ?>
@@ -34,12 +35,15 @@
                 </div>
                 <?php endif ?>
             </div>
+            <?php endif ?>
+            <?php if(isset($_GET['q'])): ?>
+                <h2>Kết quả tìm kiếm cho "<?= $_GET['q'] ?>" </h2>
+            <?php endif ?>
         </div>
 
         <div class="lv__main">
             <ul class="lv__main--navtab">
                 <li><a href="#" class="active">Tất cả</a></li>
-                <li><a href="#">Bộ đề thi</a></li>
             </ul>
 
             <div class="lv__main--row">

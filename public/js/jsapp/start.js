@@ -126,8 +126,8 @@ const displayTimeToDo = function(time) {
   const sec = String(time % 60).padStart(2, 0);
 
   countdown.textContent = `${hour}:${min}:${sec}`;
+  return `${hour}:${min}:${sec}`;
 }
-
 
 const start = async function (state) {
   try {

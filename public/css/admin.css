@@ -121,7 +121,10 @@ header .right_site .icon-box img {
 aside {
     grid-area: sidebar;
     padding: 16px 12px;
-    box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 8px 0px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 0px;
+    height: 100%;
+    width: 260px;
+    position: fixed;
 }
 
 aside .logo img {
@@ -327,7 +330,7 @@ main table .last-td a {
     border-radius: 4px;
 }
 
-main table td .change-btn {
+main table td .change-btn, main table td .see-btn {
     background-color: blue;
 }
 
@@ -339,7 +342,7 @@ main table td .del-btn {
     margin-top: 40px;
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 5rem;
+    margin-bottom: 1rem;
 }
 
 .exams__pagination li:first-child a {
@@ -378,6 +381,10 @@ main table td .del-btn {
     border-radius: .3rem;
     color: #ffffff;
     font-weight: normal;
+}
+
+.container.hide {
+    display: none;
 }
 
 .container .err.active {
@@ -540,6 +547,7 @@ form input[type="submit"] {
 
 .statistical .left p {
     color: #9a9a9a;
+    /* opacity: 0; */
 }
 
 .statistical .left p .status {
@@ -560,6 +568,84 @@ form input[type="submit"] {
 
 .statistical .feedback-box {}
 
+.history__list--results .ques {
+    padding-top: 0.9rem;
+    padding-bottom: 0.7rem;
+}
+
+.history__list--results .ques span:first-child {
+    margin-right: 20px;
+}
+
+.history__list--results .ques .audio--btn::after {
+    background-size: 26px 26px;
+    content: "";
+    vertical-align: middle;
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-image: url("../imgs/btnaudio.png");
+    cursor: pointer;
+}
+
+.history__list--results .anwser--item {
+    margin-top: 0.9rem;
+}
+
+.history__list--results .answer {
+    display: flex;
+    width: 100%;
+    border: 2px solid #e9e9e9;
+    border-radius: 6px;
+    padding: 1rem 1.4rem;
+}
+
+.history__list--results .answer.active {
+    border: 2px solid #4d5fff;
+}
+
+.history__list--results .answer.correct {
+    border: 2px solid #00c349 !important;
+}
+
+.history__list--results .answer.incorrect {
+    border: 2px solid #dc3545;
+}
+
+.history__list--results .answer input {
+    margin-right: 1.4rem;
+}
+
+.history__list--results {
+    margin-bottom: 6rem;
+    margin-top: 1rem;
+    width: 100%;
+    display: none;
+}
+
+.history__list--results.show {
+    display: block;
+}
+
+.history__list--results .result--detail>.anwsers--box {
+    pointer-events: none;
+}
+
+.history__list--results .explaination {
+    background-color: #f0f3f6;
+    border: 2px solid #e2e7ed;
+    border-radius: 6px;
+    box-shadow: none;
+    color: #728188;
+    margin: 1em 0;
+    padding: 20px;
+    position: relative;
+}
+
+.history__list--results .explaination img {
+    margin-right: 10px;
+}
 
 @keyframes pulse {
     0% {

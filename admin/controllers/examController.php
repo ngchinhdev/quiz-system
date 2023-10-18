@@ -4,7 +4,7 @@
 
     if(isset($_GET['page'])) {
         $cur_page = isset($_GET['curpage']) ? $_GET['curpage'] : 1;
-        $per_page = 5;
+        $per_page = 10;
         $off_set = ($cur_page - 1) * $per_page;
 
          if($_GET['page'] === 'lib_test'){
@@ -72,6 +72,8 @@
                         $exam->addAnswer($answer, $isCorrect, $question_id);
                     }
                 }
+                
+                header("Location: index.php?page=lib");
             }
         }
 
@@ -112,6 +114,8 @@
                         $exam->addAnswer($answer, $isCorrect, $question_id);
                     }
                 }
+                
+                header("Location: index.php?page=lib");
             }
         }
 
@@ -121,7 +125,44 @@
             $dataQuestionsEdit = $exam->getQuestionsEdit($exam_id);
             $dataAnswersEdit = $exam->getAnswersEdit($exam_id);
 
-            // var_dump($dataAnswersEdit);
+            if(isset($_POST['submit'])) {
+                $exam_name = $_POST['exam-name'];
+                $exam_kit = $_POST['exam-kit'];
+                $time = $_POST['time'];
+
+                $questions = $_POST['question'];
+                $audios = $_FILES['audio'];
+                $explains = $_POST['explain'];
+                $answers = $_POST['answer'];
+                $corrects = $_POST['correct'];
+
+                $exam->updateExam($exam_name, $exam_kit, $time, $exam_id);
+
+                for($i = 0; $i < count($questions); $i++) {
+                    $question = $questions[$i];
+                    $explain = $explains[$i];
+
+                    $question_id = $exam->addQuestion($question, $explain, $exam_id);
+
+                    if(!empty($audios)) {
+                        $audio = $audios['name'][$i];
+                        $destination =  "../../public/audios/$audio";
+                        $tmp_name = $audios['tmp_name'][$i];
+
+                        if(move_uploaded_file($tmp_name, $destination)) {
+                            $exam->addAudio($audio, $question_id);
+                        } 
+                    }
+
+                    for($j = 0; $j < count($answers[$i]); $j++) {
+                        $answer = $answers[$i][$j];
+                        $isCorrect = ($corrects[$i] == $j + 1) ? 1 : 0;
+
+                        $exam->addAnswer($answer, $isCorrect, $question_id);
+                    }
+                }
+                // header("Location: index.php?page=lib");
+            }
         }
 
         if($_GET['page'] === 'edit-test') {
@@ -130,9 +171,13 @@
             $dataQuestionsEdit = $exam->getQuestionsEdit($test_id);
             $dataAnswersEdit = $exam->getAnswersEdit($test_id);
 
-            // var_dump($dataAnswersEdit);
+            if(isset($_POST['submit'])) {
+                header("Location: index.php?page=lib");
+            }
         }
     }
+
+
 
     // Delete for both exam and test
     if(isset($_GET['act']) && $_GET['act'] === 'delete') {

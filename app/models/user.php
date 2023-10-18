@@ -11,7 +11,7 @@
 
         public function addUser($name, $email, $avatar) {
             $sql = "INSERT INTO nguoi_dung VALUES
-                    (null, '$name', '$email', '$avatar', 1)";
+                    (null, '$name', '$email', '$avatar', 2)";
 
             return $this->pdoExecute($sql);
         }

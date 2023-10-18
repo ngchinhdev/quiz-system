@@ -4,10 +4,10 @@
         <p class="banner__paragraph">EnglishTestPro cung cấp kho tài liệu trắc nghiệm tiếng anh miễn phí
             và chất lượng giúp học tập hiệu quả, ôn tập đơn giản!
         </p>
-        <div class="banner__input">
-            <input type="text" placeholder="Bài kiểm tra, đề thi...">
-            <button>Làm bài ngay</button>
-        </div>
+        <form action="../controllers/searchController.php" method="get" class="banner__input">
+            <input type="text" name="q" placeholder="Bài kiểm tra, đề thi...">
+            <button type="submit">Làm bài ngay</button>
+        </form>
     </div>
 </section>
 <section class="topics">
