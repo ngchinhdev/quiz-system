@@ -1,5 +1,5 @@
 <?php date_default_timezone_set('Asia/Ho_Chi_Minh'); ?>
-<form action="../controllers/examController.php?page=edit-test" method="POST" enctype="multipart/form-data">
+<form action="../controllers/examController.php?page=edit-test&id=<?= $dataTestEdit['ma_de'] ?>" method="POST" enctype="multipart/form-data">
     <div class="title">
         <h2>Sửa bài test <span class="err"></span></h2>
     </div>
@@ -36,9 +36,11 @@
             echo '<div class="col">';
             echo '<div class="box">';
             echo '<div class="ques">';
-                echo '<label for="question-' . $i . '"><strong>Câu hỏi ' . ($i + 1) . '</strong></label>';
+                echo '<label for="question-' . $i . '">Câu hỏi ' . ($i + 1) . '</label>';
                 echo '<input type="text" name="question[]" id="question-' . $i . '" class="inp ques-add" value="'. $dataQuestionsEdit[$i]['cau_hoi'] .'">';
-                echo '<label for="audio-' . $i . '">Audio<input type="file" size="60" name="audio[]" id="audio-' . $i . '"></label>';
+                echo '<input type="hidden" name="ques-id-hidden[]" value="'. $dataQuestionsEdit[$i]['ma_cau_hoi'] .'">';
+                echo '<label for="audio-' . $i . '">Audio<input type="file" size="60" name="audio[]" id="audio-' . $i . '" value="'. ($dataAudioEdit[$i]['duong_dan'] ?? '' ).'"></label>';
+                echo '<input type="hidden" name="audio-id-hidden[]" value="'. ($dataAudioEdit[$i]['ma_am_thanh'] ?? '').'">';
             echo '</div>';
             echo '<div class="expl">';
                 echo '<label for="explain-' . $i . '">Giải thích</label>';
@@ -51,7 +53,8 @@
                 echo '<div class="box">';
                 echo '<label for="answer-' . $i . '-' . $j . '">Phương án</label>';
                 echo '<input type="text" name="answer[' . $i . '][]" id="answer-' . $i . '-' . $j . '" class="inp" value="'. $dataAnswersEdit[$answerIndex]['phuong_an'] .'">';
-                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp" '.$isChecked.' >';
+                echo '<input type="hidden" name="ans-id-hidden[' . $i . '][]" value="'. $dataAnswersEdit[$answerIndex]['ma_phuong_an'] .'">';
+                echo '<input type="radio" name="correct[' . $i . ']" value="' . $j . '" class="inp" '.$isChecked.'>';
                 echo '</div>';
             }
             echo '</div>';

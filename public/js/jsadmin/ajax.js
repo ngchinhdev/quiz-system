@@ -251,7 +251,7 @@ const handleResultHistoryAdmin = function(table) {
     }
     
     handleHistoryDetail();
-    // handleAudioControl();
+    handleAudioControl();
 }
 
 

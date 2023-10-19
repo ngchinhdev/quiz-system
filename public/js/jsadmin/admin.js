@@ -25,7 +25,6 @@ for (let i = 0; i < sidebarLinks.length; i++) {
     });
 }
 
-// Handle category product clicks
 for (let l = 0; l < ctgProdLinks.length; l++) {
     ctgProdLinks[l].addEventListener("click", function (e) {
         e.preventDefault();
@@ -44,6 +43,7 @@ const form = document.querySelector('form');
 function validateRadioButtons() {
     const questions = document.querySelectorAll('.questions__row .col');
     const timeInput = document.querySelector('.time-add');
+    const inputRole = document.querySelector('.user--role');
 
     for (let i = 0; i < questions.length; i++) {
         const radioButtons = questions[i].querySelectorAll('input[type="radio"]');
@@ -59,9 +59,13 @@ function validateRadioButtons() {
         if (!isRadioChecked) return false;
     }
 
-    if(isNaN(Number(timeInput.value))) {
+    if(timeInput && isNaN(Number(timeInput.value))) {
         return false;
-    } 
+    }
+    
+    if(inputRole && isNaN(Number(inputRole.value))) {
+        return false;
+    }
 
     return true;
 }
@@ -80,6 +84,6 @@ form && inputChecks && errLabel && form.addEventListener('submit', (e) => {
 })
 
 ///////////////////////////////////////////////
-// Confirm delete action
+
 
 

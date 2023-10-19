@@ -16,14 +16,22 @@
         }
 
         public function getQuestionsEdit($exam_id) {
-            $sql = "SELECT ch.noi_dung AS cau_hoi, ch.giai_thich, `at`.duong_dan FROM cau_hoi ch 
+            $sql = "SELECT ch.ma_cau_hoi, ch.noi_dung AS cau_hoi, ch.giai_thich, `at`.duong_dan FROM cau_hoi ch 
                     LEFT JOIN am_thanh `at` ON ch.ma_cau_hoi = `at`.`ma_cau_hoi` WHERE ch.ma_de = $exam_id";
 
             return $this->pdoQuery($sql);
         }
 
+        public function getAudioEdit($exam_id) {
+            $sql = "SELECT `at`.ma_am_thanh, `at`.duong_dan, ch.ma_cau_hoi FROM am_thanh `at` 
+                    RIGHT JOIN cau_hoi ch ON ch.ma_cau_hoi = `at`.`ma_cau_hoi` JOIN de d 
+                    ON d.ma_de = ch.ma_de WHERE d.ma_de = $exam_id";
+
+            return $this->pdoQuery($sql);
+        }
+
         public function getAnswersEdit($exam_id) {
-            $sql = "SELECT pa.noi_dung AS `phuong_an`, pa.phuong_an_dung FROM phuong_an pa JOIN cau_hoi ch 
+            $sql = "SELECT pa.noi_dung AS `phuong_an`, pa.phuong_an_dung, pa.ma_phuong_an FROM phuong_an pa JOIN cau_hoi ch 
                     ON ch.ma_cau_hoi = pa.ma_cau_hoi JOIN de d ON d.ma_de = ch.ma_de WHERE d.ma_de = $exam_id";
 
             return $this->pdoQuery($sql);
@@ -68,6 +76,14 @@
             $sql = "UPDATE de SET ten_de = '$exam_name',
                                   bo_de = '$exam_kit',
                                   thoi_gian_lam_bai = '$time' WHERE ma_de = $exam_id";
+
+            return $this->pdoExecute($sql);
+        }
+
+        public function updateTest($exam_name, $exam_kit, $level, $exam_id) {
+            $sql = "UPDATE de SET ten_de = '$exam_name',
+                                  bo_de = '$exam_kit',
+                                  cap_do = '$level' WHERE ma_de = $exam_id";
 
             return $this->pdoExecute($sql);
         }

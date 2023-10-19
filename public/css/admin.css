@@ -338,6 +338,11 @@ main table td .del-btn {
     background-color: #dd0000
 }
 
+.title h2 {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
 .exams__pagination {
     margin-top: 40px;
     display: flex;
@@ -645,6 +650,15 @@ form input[type="submit"] {
 
 .history__list--results .explaination img {
     margin-right: 10px;
+}
+
+.btn-submit-user {
+    float: none !important;
+    margin: 0 !important;
+}
+
+.user--role {
+    margin-right: 3rem;
 }
 
 @keyframes pulse {

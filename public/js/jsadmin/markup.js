@@ -17,7 +17,8 @@ export const userRowMarkup = function(data) {
                     <td>${d.ma_vai_tro === 1 ? "Admin" : "User"}</td>
                     <td>
                         <div class="last-td">
-                            <a href="../controllers/userController.php?act=delete&user-id=${d.ma_nguoi_dung}" class="del-btn">Xóa</a>
+                            <a href="index.php?page=edit-user&id=${d.ma_nguoi_dung}" class="change-btn">Sửa</a>
+                            <a href="../controllers/userController.php?act=delete&user-id=${d.ma_nguoi_dung}&email=${d.email}" class="del-btn">Xóa</a>
                         </div>
                     </td>
                 </tr>`
@@ -133,7 +134,7 @@ export const dashboardMarkup = function(data) {
                             ${data.quantityUser}
                         </div>
                         <h3>Thành viên</h3>
-                        <p><span class="status">+ 0.5%</span> so voi thang truoc</p>
+                        <p>Số người đã đăng nhập ứng dụng</p>
                     </div>
                     <div class="right">
                         <svg xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78" fill="none">
@@ -147,7 +148,7 @@ export const dashboardMarkup = function(data) {
                         ${data.quantityHistory}
                         </div>
                         <h3>Lịch sử làm bài</h3>
-                        <p><span class="status">+ 0.5%</span> so voi thang truoc</p>
+                        <p>Tổng số lịch sử làm bài của thành viên</p>
                     </div>
                     <div class="right">
                         <svg xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78" fill="none">

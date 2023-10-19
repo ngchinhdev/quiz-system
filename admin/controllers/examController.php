@@ -124,12 +124,16 @@
             $dataExamEdit = $exam->getExamEdit($exam_id);
             $dataQuestionsEdit = $exam->getQuestionsEdit($exam_id);
             $dataAnswersEdit = $exam->getAnswersEdit($exam_id);
-
+            $dataAudioEdit = $exam->getAudioEdit($exam_id);
+            
             if(isset($_POST['submit'])) {
                 $exam_name = $_POST['exam-name'];
                 $exam_kit = $_POST['exam-kit'];
                 $time = $_POST['time'];
-
+                $question_id_hidden = $_POST['ques-id-hidden'];
+                $answer_id_hidden = $_POST['ans-id-hidden'];
+                $audio_id_hidden = $_POST['audio-id-hidden'];
+                
                 $questions = $_POST['question'];
                 $audios = $_FILES['audio'];
                 $explains = $_POST['explain'];
@@ -141,8 +145,8 @@
                 for($i = 0; $i < count($questions); $i++) {
                     $question = $questions[$i];
                     $explain = $explains[$i];
-
-                    $question_id = $exam->addQuestion($question, $explain, $exam_id);
+                    $question_id = $question_id_hidden[$i];
+                    $exam->updateQuestion($question, $explain, $question_id);
 
                     if(!empty($audios)) {
                         $audio = $audios['name'][$i];
@@ -150,34 +154,74 @@
                         $tmp_name = $audios['tmp_name'][$i];
 
                         if(move_uploaded_file($tmp_name, $destination)) {
-                            $exam->addAudio($audio, $question_id);
+                            $exam->updateAudio($audio, $audio_id_hidden[$i]);
                         } 
                     }
 
                     for($j = 0; $j < count($answers[$i]); $j++) {
                         $answer = $answers[$i][$j];
+                        $answer_id = $answer_id_hidden[$i][$j];
                         $isCorrect = ($corrects[$i] == $j + 1) ? 1 : 0;
 
-                        $exam->addAnswer($answer, $isCorrect, $question_id);
+                        $exam->updateAnswer($answer, $isCorrect, $answer_id);
                     }
                 }
-                // header("Location: index.php?page=lib");
+                header("Location: index.php?page=lib");
             }
         }
 
         if($_GET['page'] === 'edit-test') {
-            $test_id = (int)$_GET['id'];
-            $dataTestEdit = $exam->getExamEdit($test_id);
-            $dataQuestionsEdit = $exam->getQuestionsEdit($test_id);
-            $dataAnswersEdit = $exam->getAnswersEdit($test_id);
+            $exam_id = (int)$_GET['id'];
+            $dataTestEdit = $exam->getExamEdit($exam_id);
+            $dataQuestionsEdit = $exam->getQuestionsEdit($exam_id);
+            $dataAnswersEdit = $exam->getAnswersEdit($exam_id);
+            $dataAudioEdit = $exam->getAudioEdit($exam_id);
 
             if(isset($_POST['submit'])) {
+                $exam_name = $_POST['exam-name'];
+                $exam_kit = $_POST['exam-kit'];
+                $exam_level = $_POST['exam-level'];
+                $question_id_hidden = $_POST['ques-id-hidden'];
+                $answer_id_hidden = $_POST['ans-id-hidden'];
+                $audio_id_hidden = $_POST['audio-id-hidden'];
+
+                $questions = $_POST['question'];
+                $audios = $_FILES['audio'];
+                $explains = $_POST['explain'];
+                $answers = $_POST['answer'];
+                $corrects = $_POST['correct'];
+
+                $exam->updateTest($exam_name, $exam_kit, $exam_level, $exam_id);
+
+                for($i = 0; $i < count($questions); $i++) {
+                    $question = $questions[$i];
+                    $explain = $explains[$i];
+                    $question_id = $question_id_hidden[$i];
+                    $exam->updateQuestion($question, $explain, $question_id);
+
+                    if(!empty($audios)) {
+                        $audio = $audios['name'][$i];
+                        $destination =  "../../public/audios/$audio";
+                        $tmp_name = $audios['tmp_name'][$i];
+
+                        if(move_uploaded_file($tmp_name, $destination)) {
+                            $exam->updateAudio($audio, $audio_id_hidden[$i]);
+                        } 
+                    }
+
+                    for($j = 0; $j < count($answers[$i]); $j++) {
+                        $answer = $answers[$i][$j];
+                        $answer_id = $answer_id_hidden[$i][$j];
+                        $isCorrect = ($corrects[$i] == $j + 1) ? 1 : 0;
+
+                        $exam->updateAnswer($answer, $isCorrect, $answer_id);
+                    }
+                }
+                
                 header("Location: index.php?page=lib");
             }
         }
     }
-
-
 
     // Delete for both exam and test
     if(isset($_GET['act']) && $_GET['act'] === 'delete') {

@@ -28,6 +28,10 @@
                 include_once("feedbackController.php");
                 include_once("../views/editFeedback.php");
                 break;
+            case 'edit-user': 
+                include_once("userController.php");
+                include_once("../views/editUser.php");
+                break;
             default:
                 include_once("../views/main.php");
         }

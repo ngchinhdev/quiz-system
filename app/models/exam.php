@@ -13,7 +13,7 @@
 
         function getExam($per_page, $offset) {
             $sql = "SELECT de.*, count(*) AS so_cau_hoi FROM de JOIN cau_hoi ON de.ma_de = cau_hoi.ma_de 
-            WHERE de.loai = 1  GROUP BY de.ma_de LIMIT $per_page OFFSET $offset";
+            WHERE de.loai = 1 GROUP BY de.ma_de ORDER BY de.thoi_diem_tao DESC LIMIT $per_page OFFSET $offset";
 
             return $this->pdoQuery($sql);
         }
@@ -33,7 +33,8 @@
         }
 
         function queryExam($ten_de) {
-            $sql = "SELECT * FROM `de` WHERE ten_de LIKE '%$ten_de%' OR bo_de LIKE '%$ten_de%'";
+            $sql = "SELECT de.*, count(*) AS so_cau_hoi FROM de JOIN cau_hoi ON de.ma_de = cau_hoi.ma_de
+                    WHERE ten_de LIKE '%$ten_de%' OR bo_de LIKE '%$ten_de%' GROUP BY de.ma_de";
 
             return $this->pdoQuery($sql);
         }

@@ -55,6 +55,6 @@
             echo '</div>';
         }
         ?>
-        <input type="submit" name="submit" class="btn-submit" value="Sửa đề">
+        <input type="submit" name="submit" class="btn-submit" value="Thêm đề">
     </div>
 </form>

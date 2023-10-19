@@ -106,8 +106,8 @@ function generateAnswers(dataAnswers, dataQuestions) {
 
 function generateButtonsControl(questionQuantity) {
     const html = `
-            <button class="move--ques prev">Prev</button>
-            <button class="move--ques next">Next</button>
+            <button class="move--ques prev">Trước</button>
+            <button class="move--ques next">Sau</button>
         `;
 
     containerQuestion.insertAdjacentHTML('beforeend', html);

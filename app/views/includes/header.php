@@ -56,7 +56,7 @@
                         <a href="index.php?page=list&type=exam" class="header__nav--link">Đề thi</a>
                     </li>
                     <li class="header__nav--item">
-                        <a href="<?php echo isset($_COOKIE['is_user']) 
+                        <a href="<?php echo isset($_COOKIE['email']) 
                                             ? 'index.php?page=profile' 
                                             : 'index.php?page=login' ?>" class="header__nav--link">
                             Lịch sử học
@@ -75,7 +75,7 @@
             </div>
             <div class="header__login">
                 <?php 
-                    if(!isset($_COOKIE['is_user'])) {
+                    if(!isset($_COOKIE['email'])) {
                         echo '<div class="no--logged">
                                 <a href="index.php?page=register" class="register--btn">
                                     Đăng ký

@@ -19,12 +19,26 @@
         echo json_encode($response);
     }
 
+    if(isset($_GET['page']) && $_GET['page'] === 'edit-user') {
+        $user_id = $_GET['id'];
+
+        if(isset($_POST['submit'])) {
+            $new_role = $_POST['role-user'];
+            $user->updateUser($user_id, (int)$new_role);
+            header("Location: index.php");
+        }
+    }
+
     if(isset($_GET['act']) && $_GET['act'] === 'delete') {
-        $user_id = $_GET['user-id'];
-        $user->deleteFeedback($user_id);
-        $user->deleteChoseAnswers($user_id);
-        $user->deleteHistory($user_id);
-        $user->deleteUser($user_id);
-        header("Location: index.php?page=user");
+        if($_GET['email'] === $_COOKIE['email']) {
+            echo '<script>alert("Bạn không thể xóa chính mình"); history.back();</script>';
+        } else {
+            $user_id = $_GET['user-id'];
+            $user->deleteFeedback($user_id);
+            $user->deleteChoseAnswers($user_id);
+            $user->deleteHistory($user_id);
+            $user->deleteUser($user_id);
+            header("Location: index.php?page=user");
+        }
     }
 ?>

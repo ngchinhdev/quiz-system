@@ -9,6 +9,12 @@
             return $this->pdoQuery($sql);
         }
 
+        public function updateUser($user_id, $role) {
+            $sql = "UPDATE nguoi_dung SET ma_vai_tro = $role WHERE ma_nguoi_dung = $user_id";
+
+            return $this->pdoExecute($sql);
+        }
+
         public function deleteFeedback($user_id) {
             $sql = "DELETE FROM phan_hoi WHERE ma_nguoi_dung = $user_id";
 
