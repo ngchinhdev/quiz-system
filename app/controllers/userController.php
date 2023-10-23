@@ -9,6 +9,9 @@
     if(!empty($row)) {
         if($row['ma_vai_tro'] === 1) {
             setcookie("is_admin", true, time() + 84000, "/");
+            setcookie("name", "", time() - 3600, "/");
+            setcookie("email", "", time() - 3600, "/");
+            setcookie("avatar", "", time() - 3600, "/");
             header("Location: ../../admin/controllers/index.php");
         } else {
             header("Location: index.php?page=profile");

@@ -5,7 +5,7 @@
 
     $feedbacks = $feedback->getFeedback();
 
-    if(isset($_COOKIE['is_user'])) {
+    if(isset($_COOKIE['email'])) {
         if(isset($_POST['text-feedback']) && isset($_POST['send-feedback'])) {
             $ma_nguoi_dung = $_COOKIE['is_user'];
             $text = $_POST['text-feedback'];

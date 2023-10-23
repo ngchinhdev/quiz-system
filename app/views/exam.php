@@ -17,7 +17,7 @@
                 </form>
             </div>
             <div class="lv__content--right">
-                <?php if(isset($_COOKIE['is_user'])): ?>
+                <?php if(isset($_COOKIE['email'])): ?>
                 <div class="profile">
                     <img src="<?= $_COOKIE['avatar'] ?>" alt="Avatar">
                     <div class="name">

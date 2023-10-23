@@ -49,7 +49,7 @@ function generatePagination(totalPages, activePage, itemContainer, paginationCon
             () => loadExam(activePage < totalPages ? activePage + 1 : activePage, itemContainer, paginationContainer));
 }
 
-function generateExam(dataExams, totalPages, urlToStart, container) {
+function generateExam(dataExams, urlToStart, container) {
     let html = '';
 
     if(dataExams.length === 0) {
@@ -126,7 +126,7 @@ export function loadExam(page, itemContainer, paginationContainer) {
         .then(data => {
             const { data: dataExams, totalPages } = data;
             
-            generateExam(dataExams, totalPages, urlToStart, itemContainer);
+            generateExam(dataExams, urlToStart, itemContainer);
             generatePagination(totalPages, page, itemContainer, paginationContainer);
         })
         .catch(error => {

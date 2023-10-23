@@ -47,6 +47,15 @@ const generatePagination = function (totalPagi, activePage) {
 
 const generateHistories = function(data) {
     let html = '';
+
+    if(data.length === 0) {
+        html = `
+            <div class="empty-exam">
+                Chưa có lịch sử nào.
+            </div>
+        `;
+    }
+
     data.forEach(history => {
         html += `<div class="col">
                     <div class="history--item" data-id="${history.ma_lich_su}">
