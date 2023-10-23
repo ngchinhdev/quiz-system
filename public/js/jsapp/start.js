@@ -73,8 +73,6 @@ const handleFinish = function (historyAnswers, questionQuantity, correctAnswersC
 
   clearInterval(timer);
 
-  console.log(historySendData);
-
   startBtn.classList.add('hide');
   finishBtn.classList.remove('active');
   containerBoxquest.classList.add('active');
@@ -90,10 +88,6 @@ const handleFinish = function (historyAnswers, questionQuantity, correctAnswersC
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
   })
   .catch(err => {
     console.error(err);

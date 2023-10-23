@@ -85,12 +85,3 @@ export const handleResult = function (historyAnswers, correctAnswers, transforme
     handleStyleCorrectAnswers(correctAnswers);
     handleCheckAnswered(historyAnswers);
 }
-
-export function renderSpinner(parentEl) {
-    const markup = `
-      <div class="spinner">
-        <img src="../../public/imgs/loading-icon.png" />
-      </div>
-    `
-    parentEl.insertAdjacentHTML('beforeend', markup)
-}

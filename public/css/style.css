@@ -43,6 +43,10 @@ input {
   left: 0;
   background-color: #ffffff;
   border: 1px solid #cbcbcb;
+  height: 62px;
+}
+.header__menu--mobile {
+  display: none;
 }
 .header__container {
   padding: 0 1.25rem;
@@ -51,6 +55,7 @@ input {
   justify-content: space-between;
   width: 1250px;
   margin: 0 auto;
+  height: 100%;
 }
 .header__nav--list {
   display: flex;
@@ -473,7 +478,6 @@ input {
 }
 .footer__container--column {
   flex: 1 1 0;
-  width: 0;
 }
 .footer__container--column .logo--footer {
   width: 180px;
@@ -503,4 +507,121 @@ input {
   padding: 2rem 0;
   font-size: 0.8rem;
   color: #677788;
+}
+
+@media screen and (max-width: 768px) {
+  .topics__container {
+    grid-template-columns: repeat(1, 280px) !important;
+    width: 100%;
+  }
+  .banner__contents {
+    top: 30% !important;
+    left: 6% !important;
+    width: 85% !important;
+  }
+  .exams {
+    width: 100%;
+  }
+  .exams__container {
+    grid-template-columns: repeat(2, 170px) !important;
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .hide--mobile {
+    display: none;
+  }
+  .header__menu--mobile {
+    display: block;
+  }
+  .banner {
+    height: 435px;
+  }
+  .header__container {
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .banner__contents {
+    top: 42%;
+    left: 6%;
+    width: 75%;
+  }
+  .banner__title {
+    font-size: 1.75rem;
+  }
+  .banner__paragraph {
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  }
+  .banner__input input, .banner__input button {
+    padding: 0.9rem 0.9rem;
+    font-size: 0.8rem;
+  }
+  .topics__container {
+    grid-template-columns: repeat(2, 280px);
+    width: 100%;
+  }
+  .exams {
+    width: 100%;
+  }
+  .exams__container {
+    grid-template-columns: repeat(4, 170px);
+    gap: 20px;
+  }
+  .exams__container .exam--column h3 {
+    font-size: 1rem;
+  }
+  .exams__container .exam--column span {
+    font-size: 0.85rem;
+  }
+  .exams__pagination {
+    width: 100%;
+    justify-content: center;
+  }
+  .exams__banner {
+    height: 130px;
+    margin: 2rem 0;
+  }
+  .footer__container--column .logo--footer {
+    width: auto;
+  }
+  .footer__container--row {
+    width: 100%;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 3rem;
+  }
+  .footer__container--row .footer__container--column {
+    flex-basis: 200px;
+    margin-bottom: 0.9rem;
+    margin-right: 1rem;
+  }
+  .footer__container--row .col-1 {
+    flex-basis: 100%;
+  }
+}
+@media screen and (max-width: 320px) {
+  .header__logo img {
+    width: 180px;
+    height: 50px;
+  }
+  .banner__contents {
+    top: 22% !important;
+    left: 6% !important;
+    width: 84% !important;
+  }
+  .banner__input input, .banner__input button {
+    font-size: 0.6rem;
+  }
+  .topics__container {
+    justify-items: center;
+  }
+  .topics__container--item {
+    width: 90%;
+  }
+  .exams__container {
+    grid-template-columns: repeat(1, 170px) !important;
+  }
 }

@@ -6,6 +6,11 @@
     left: 0;
     background-color: $white-color;
     border: 1px solid $border-color;
+    height: 62px;
+
+    &__menu--mobile {
+        display: none;
+    }
     
     &__container {
         padding: 0 1.25rem;
@@ -14,6 +19,7 @@
         justify-content: space-between;
         width: 1250px;
         margin: 0 auto;
+        height: 100%;
     }
 
     &__nav--list {

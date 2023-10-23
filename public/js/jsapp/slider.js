@@ -1,6 +1,6 @@
-const slides = document.querySelectorAll('.slide')
-const btnNextSLide = document.querySelector('.slider__btn--right')
-const btnPrevSLide = document.querySelector('.slider__btn--left')
+const slides = document.querySelectorAll('.slide');
+const btnNextSLide = document.querySelector('.slider__btn--right');
+const btnPrevSLide = document.querySelector('.slider__btn--left');
 
 const slider = function() {
     let curSlide = 0;

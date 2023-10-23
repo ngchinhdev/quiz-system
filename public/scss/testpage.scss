@@ -240,3 +240,54 @@
         }
     }
 }
+
+@include largerDevices-md {
+    .dotest__container {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@include mediumDevices-md {
+    .dotest .ribbon {
+        font-size: 1.5rem;
+        padding: 1.2rem 1.5rem;
+    }
+
+    .dotest__container--info .rules--test {
+        font-size: 1rem;
+    }
+
+    .dotest__container--info .time--test .down {
+        font-size: 1.2rem;
+    }
+}
+
+@include smallDevices-md {
+    .dotest__container--info {
+        flex-direction: column;
+    }
+
+    .dotest__container--info .time--test {
+        margin-top: 2rem;
+    }
+
+    .dotest__container--info .time--test .start--btn {
+        position: unset;
+        margin-top: 1rem;
+    }
+
+    .dotest .ribbon {
+        font-size: .8rem;
+        padding: .8rem 1rem;
+
+        & > div {
+            display: none;
+        }
+    }
+
+    .dotest__container--boxquest .move--ques {
+        padding: 0.5rem 1rem;
+    }
+}

@@ -55,8 +55,3 @@ navTopicLinks.addEventListener('mouseover', function(e) {
     });
 })
 
-// navTopicLinks.addEventListener('mouseout', function(e) {
-//     document.querySelectorAll('.header__subnav--item').forEach(el => el.classList.remove('active'));
-// })
-
-

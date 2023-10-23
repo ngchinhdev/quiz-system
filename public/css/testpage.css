@@ -298,3 +298,45 @@ input {
 .dotest__container .explaination img {
   margin-right: 10px;
 }
+
+@media screen and (max-width: 992px) {
+  .dotest__container {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .dotest .ribbon {
+    font-size: 1.5rem;
+    padding: 1.2rem 1.5rem;
+  }
+  .dotest__container--info .rules--test {
+    font-size: 1rem;
+  }
+  .dotest__container--info .time--test .down {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .dotest__container--info {
+    flex-direction: column;
+  }
+  .dotest__container--info .time--test {
+    margin-top: 2rem;
+  }
+  .dotest__container--info .time--test .start--btn {
+    position: unset;
+    margin-top: 1rem;
+  }
+  .dotest .ribbon {
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+  }
+  .dotest .ribbon > div {
+    display: none;
+  }
+  .dotest__container--boxquest .move--ques {
+    padding: 0.5rem 1rem;
+  }
+}

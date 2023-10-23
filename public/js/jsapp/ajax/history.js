@@ -101,8 +101,6 @@ const loadHistory = function(page) {
     fetch(`../controllers/historyController.php?curpage=${page}`)
         .then(res => res.json())
         .then(data => {
-            console.log(page);
-
             generateHistories(data.data);
             generatePagination(data.totalPagi, page);
         })

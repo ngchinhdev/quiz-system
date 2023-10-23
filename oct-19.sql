@@ -791,7 +791,7 @@ INSERT INTO `phuong_an` (`ma_phuong_an`, `noi_dung`, `phuong_an_dung`, `ma_cau_h
 (622, 'mine', 1, 167),
 (623, 'the mine', 0, 167),
 (624, 'my', 0, 167),
-(625, 'the expulsion the explosion.', 0, 168),
+(625, 'the expulsion', 0, 168),
 (626, 'the explosion', 1, 168),
 (627, 'the extension', 0, 168),
 (628, 'the extraction', 0, 168),

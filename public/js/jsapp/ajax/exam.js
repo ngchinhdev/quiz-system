@@ -43,8 +43,6 @@ function generatePagination(totalPages, activePage, itemContainer, paginationCon
         paginationContainer.insertAdjacentHTML('beforeend', nextBtn);
     }
 
-    console.log(totalPages);
-
     document.querySelector('.next--pagi')?.addEventListener('click', 
             () => loadExam(activePage < totalPages ? activePage + 1 : activePage, itemContainer, paginationContainer));
 }
@@ -70,7 +68,7 @@ function generateExam(dataExams, urlToStart, container) {
                 <a href="${urlToStart.includes('page=start') ? urlToStart : urlToStart.concat('?page=start&type=exam')}&examId=${exam.ma_de}" class="hidden"></a>
                 <div class="above">
                     <h3>${exam.ten_de}</h3>
-                    <span>Bộ đề test: ${exam.bo_de}</span>
+                    <span>Bộ đề: ${exam.bo_de}</span>
                     <br>
                     <span>
                         <i class="fa-sharp fa-regular fa-clock"></i> 
@@ -87,7 +85,7 @@ function generateExam(dataExams, urlToStart, container) {
                         Số câu hỏi: ${exam.so_cau_hoi}
                     </span>
                     <br>
-                    <span class="tag">${exam.loai === 0 ? '#DETEST' : ''}</span>
+                    <span class="tag">${exam.loai === 0 ? '#DETEST' : '#DETHI'}</span>
                 </div>
                 <br>
                 <div class="bottom">

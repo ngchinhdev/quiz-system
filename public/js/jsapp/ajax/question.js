@@ -25,7 +25,6 @@ export function handleAudioControl() {
         if (!btn) return;
 
         e.preventDefault();
-        console.log(btn);
         const audio = new Audio();
         audio.src = btn.querySelector('a').href;
 
@@ -37,7 +36,6 @@ export function handleAudioControl() {
         }
     })
 };
-
 
 function generateQuestion(dataQuestions, questionQuantity, audioLink) {
     const html = `
@@ -71,6 +69,14 @@ function answerChoice(state) {
         const currActive = document.querySelector('.answer.active') ?? null;
         currActive && currActive.classList.remove('active');
         anwser.classList.add('active');
+
+        const correctAnswersChose = {};
+        for (const question in state.historyAnswers) {
+            if (state.correctAnswers[question] == state.historyAnswers[question])
+                correctAnswersChose[question] = state.historyAnswers[question];
+        }
+
+        state.correctAnswersChose = correctAnswersChose;
     })
 }
 
@@ -154,17 +160,7 @@ const loadQuestions = async function(question) {
         }, {});
 
         state.correctAnswers = newCorrectAnswer;
-
-        const correctAnswersChose = {};
-        for (const question in state.historyAnswers) {
-            if (newCorrectAnswer[question] == state.historyAnswers[question])
-                correctAnswersChose[question] = state.historyAnswers[question];
-        }
-
-        state.correctAnswersChose = correctAnswersChose;
-
         containerQuestion.innerHTML = '';
-
         rule.textContent = questionQuantity;
 
         generateQuestion(dataQuestions, questionQuantity, audioLink);

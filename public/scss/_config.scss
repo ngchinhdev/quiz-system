@@ -192,3 +192,22 @@ $one-third-calc: calc(100% / 3);
         transform: rotate(360deg);
     }
 }
+
+// Responsive Breakpoints
+@mixin smallDevices-md {
+    @media screen and (max-width: 320px) {
+        @content;
+    }
+}
+
+@mixin mediumDevices-md {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin largerDevices-md {
+    @media screen and (max-width: 992px) {
+        @content;
+    }
+}

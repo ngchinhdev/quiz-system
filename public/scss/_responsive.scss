@@ -1,0 +1,143 @@
+@include mediumDevices-md {
+    .topics__container {
+        grid-template-columns: repeat(1, 280px) !important;
+        width: 100%;
+    }
+
+    .banner__contents {
+        top: 30% !important;
+        left: 6% !important;
+        width: 85% !important;
+    }
+
+    .exams {
+        width: 100%;
+    }
+
+    .exams__container {
+        grid-template-columns: repeat(2, 170px) !important;
+        gap: 20px;
+    }
+}
+
+@include largerDevices-md {
+    .hide--mobile {
+        display: none;
+    }
+
+    .header__menu--mobile {
+        display: block;
+    }
+
+    .banner {
+        height: 435px;
+    }
+
+    .header__container {
+        justify-content: space-between;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .banner__contents {
+        top: 42%;
+        left: 6%;
+        width: 75%;
+    }
+
+    .banner__title {
+        font-size: 1.75rem;
+    }
+
+    .banner__paragraph {
+        font-size: 0.9rem;
+        line-height: 1.4rem;
+    }
+
+    .banner__input input, .banner__input button {
+        padding: .9rem .9rem;
+        font-size: .8rem;
+    }
+
+    .topics__container {
+        grid-template-columns: repeat(2, 280px);
+        width: 100%;
+    }
+
+    .exams {
+        width: 100%;
+    }
+
+    .exams__container {
+        grid-template-columns: repeat(4, 170px);
+        gap: 20px;
+    }
+
+    .exams__container .exam--column h3 {
+        font-size: 1rem;
+    }
+
+    .exams__container .exam--column span {
+        font-size: .85rem;
+    }
+
+    .exams__pagination {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .exams__banner {
+        height: 130px;
+        margin: 2rem 0;
+    }
+
+    .footer__container--column .logo--footer {
+        width: auto;
+    }
+
+    .footer__container--row {
+        width: 100%;
+        flex-wrap: wrap;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 3rem;
+
+        .footer__container--column {
+            flex-basis: 200px;
+            margin-bottom: .9rem;
+            margin-right: 1rem;
+        }
+
+        .col-1 {
+            flex-basis: 100%;
+        }
+    }
+}
+
+@include smallDevices-md {
+    .header__logo img {
+        width: 180px;
+        height: 50px;
+    }
+    .banner__contents {
+        top: 22% !important;
+        left: 6% !important;
+        width: 84% !important;
+    }
+
+    .banner__input input, .banner__input button {
+        font-size: 0.6rem;
+    }
+
+    .topics__container {
+        justify-items: center;
+    }
+
+    .topics__container--item {
+        width: 90%;
+    }
+
+    .exams__container {
+        grid-template-columns: repeat(1, 170px) !important;
+    }
+}
